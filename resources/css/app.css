@@ -1,0 +1,13 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* html {
+  overflow-x: hidden;
+  margin-right: calc(-1 * (100vw - 100%));
+} */

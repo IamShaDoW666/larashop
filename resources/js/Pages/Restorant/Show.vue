@@ -1,0 +1,228 @@
+<template>
+  <Head title="Products" />
+  <BreezeAuthenticatedLayout>
+    <template #header>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        Products
+      </h2>
+    </template>
+    <div v-if="categories.length" class="justify-center flex items-center flex-wrap md:gap-x-3 gap-x-2 gap-y-2">
+      <div @click="resetCategory" class="p-4 cursor-pointer rounded lg:rounded-t-0 hover:bg-gray-200 bg-gray-300"
+      :class="[active[0] ? 'bg-gray-400 hover:bg-gray-400' : 'bg-gray-300']">
+      All Category
+    </div>
+    <div @click="categoryFilter(category.id)" :class="[active[category.id] ? 'bg-gray-400 hover:bg-gray-400 disabled' : 'bg-gray-300']" v-for="category in categories" :key="category.id" class="p-4 cursor-pointer rounded lg:rounded-t-0 hover:bg-gray-200 bg-gray-300">
+      {{ category.name }}
+    </div>
+  </div>
+
+  <!-- Sidebar Cart -->
+  <transition appear v-if="cart.items.length > 0" name="slide-fade">
+    <aside class="hidden sm:block w-1/3 float-right ml-5 sticky top-20 right-0 static py-10" aria-label="Sidebar">
+      <div class="py-4 px-3 rounded dark:bg-gray-800">
+        <ul class="space-y-2 bg-gray-50 rounded">
+          <li>
+            <div class="text-md md:text-xl divide-solid divide-y bg-gray-300 text-center p-2 rounded-lg text-base font-bold"><i class="pr-2 fa-solid fa-cart-shopping"></i>Cart ({{ cart.getTotalItems }})</div>
+          </li>
+          <transition v-for="(item, index) in cart.items" :key="item.id" appear leave name="slide-fade">
+            <li class="odd:bg-gray-100 rounded-lg">
+              <div class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white">
+                <div class="font-bold flex-1 ml-3">
+                  {{ item.name }}
+                </div>
+                <span>${{ item.price }} <strong>x</strong> </span>
+                <button @click="fromCart(item.id, index)" class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 hover:ring-2 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200">
+                  {{ item.quantity }}
+                </button>
+              </div>
+            </li>
+          </transition>
+          <li>
+            <div class="flex flex-col space-y-4">
+              <div class="px-4 font-bold rounded shadow-lg bg-white text-center flex gap-x-2 justify-between items-center p-3 text-base text-gray-900 rounded-lg dark:text-white">
+                <div>Subtotal: <span class="ml-2 text-green-700">${{ cart.getSubTotal }}</span></div>
+                <div>Delivery Fee: <span class="ml-2 text-green-700">${{ cart.getSubTotal }}</span></div>
+              </div>
+              <div class="font-bold rounded shadow-lg bg-white text-center flex items-center p-3 text-base text-gray-900 rounded-lg dark:text-white">
+                Total: <span class="ml-2 text-green-700">${{ cart.getSubTotal }}</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <!-- Checkout Options -->
+        <form @submit.prevent="checkout">
+          <div class="flex items-center my-4 px-4">
+            <input v-model="form.checked" id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree to terms and conditions</label>
+          </div>
+          <div class="mt-4 flex gap-x-4 justify-between">
+            <div class="p-3">
+              <select v-model="form.order_type" class="rounded group ring-0 shadow active:text-black hover:text-black font-bold text-white bg-gray-600 hover:bg-gray-100" name="order_type" id="orderType">
+                <option value="1">Delivery</option>
+                <option value="2">Pickup</option>
+                <option value="3">Dine-in</option>
+              </select>
+            </div>
+            <div class="p-3">
+              <button class="bg-green-500 px-4 py-2 rounded shadow hover:bg-green-700 text-white font-bold">
+                Checkout
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </aside>
+  </transition>
+
+  <!-- Empty Cart -->
+  <transition name="slide-fade" v-else>
+    <aside class="hidden sm:block w-1/3 float-right ml-5 px-4 sticky top-20 right-0 static py-10">
+      <div class="text-center font-bold shadow-md overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800">
+        <i class="pr-2 fa-solid fa-cart-shopping"></i>Cart Empty...
+      </div>
+      <div class="mt-4 font-bold rounded shadow-lg bg-white text-center flex items-center p-3 text-base text-gray-900 rounded-lg dark:text-white">
+        Total: <span class="ml-2 text-green-700">${{ cart.getSubTotal }}</span>
+      </div>
+    </aside>
+  </transition>
+
+  <div class="py-10">
+    <div class="max-w-7xl  sm:px-6 lg:px-8">
+      <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg shadow-lg">
+        <div class="p-6 bg-white border-b border-gray-200">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-y-8">
+            <div class="px-4 py-2" v-for="(product, index) in prod" :key="product.id">
+              <div class="shadow md:transform md:transition md:duration-300 md:hover:scale-110 rounded">
+                <img :src="product.imglarge" class="shadow rounded w-full h-48 max-h-48 h-full">
+              </div>
+              <div class="-mt-1 flex items-end pl-4 pb-2 pt-6 pr-2 justify-between bg-gray-300 rounded-lg shadow-md">
+                <div>
+                  <h1 class="font-bold">{{ product.name }}</h1>
+                  <h1>${{ product.price }}</h1>
+                </div>
+                <div>
+                  <button @click="toCart(product.id, index)" class="px-2 py-2 active:bg-blue-200 hover:ring-blue-900 text-white font-bold rounded bg-blue-500 hover:bg-blue-400">Add To Cart</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div data-modal-toggle="small-modal" class="flex justify-between mx-4 hover:bg-blue-300 shadow sm:hidden bg-blue-400 rounded sticky p-4 mb-4 bottom-2">
+    <div class="font-bold">
+      <i class="pr-2 fa-solid fa-cart-shopping"></i>Cart({{ cart.getTotalItems }})
+    </div>
+    <div class="font-bold text-black">
+    </div>
+  </div>
+  <CartModal :cart="cart" :fromCart="fromCart" />
+</BreezeAuthenticatedLayout>
+</template>
+
+<script>
+import { Head, useForm } from '@inertiajs/inertia-vue3';
+import { onMounted, computed, ref, reactive, toRefs } from 'vue';
+import { useCart } from '@/Stores/cart.js';
+import { Inertia } from '@inertiajs/inertia';
+import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+import CartModal from '@/Components/CartModal.vue';
+import useProducts from '@/Composables/products';
+
+
+export default {
+  components: {
+    BreezeAuthenticatedLayout,
+    CartModal,
+    Head
+  },
+
+  props: {
+    categories: Object,
+    products: Object,
+    restorant: Object
+
+  },
+
+  setup(props) {
+
+    const { filter, prod, active } = useProducts(props);
+
+    const cart = useCart();
+
+    const form = useForm({
+      order_type: '1',
+      checked: false
+
+    });
+
+    const checked = () => {
+      return form.checked
+    }
+
+    const checkout = () => {
+      form.get(route('orders.checkin', {
+        items: JSON.stringify(cart.items),
+        subtotal: cart.getSubTotal,
+        restorant_id: props.restorant.id
+      }));
+    };
+
+    const categoryFilter = async (id) => {
+      await filter(id)
+    }
+
+    onMounted(() => {
+      cart.getProps(props)
+    })
+
+    const resetCategory = () => {
+      prod.value = props.products;
+      console.log('prod.data')
+      active.value = []
+
+    }
+
+    const toCart = (p_id, id) => {
+      console.log('ID CLICKED : '+p_id)
+      cart.addCart(p_id, id);
+    }
+
+    const fromCart = (p_id, id) => {
+      console.log(p_id + " ||| " + id)
+      cart.removeFromCart(p_id, id);
+    }
+
+    return {
+      categoryFilter,
+      resetCategory,
+      active,
+      toCart,
+      fromCart,
+      form,
+      checkout,
+      cart,
+      prod
+
+    }
+  }
+
+}
+
+</script>
+<style>
+.slide-fade-enter-active {
+  transition: all 0.6s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.8s ease-out;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+</style>
