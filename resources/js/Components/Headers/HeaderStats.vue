@@ -20,7 +20,7 @@
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
             <card-stats
               statSubtitle="CATEGORIES"
-              :statTitle="$page.props.auth.user.restorant.id"
+              :statTitle="$page.props.auth.restorant.counts.categories_count"
               statIconName="view_list"
               statIconColor="bg-orange-500"
             />
@@ -28,7 +28,7 @@
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
             <card-stats
               statSubtitle="PRODUCTS"
-              :statTitle="$page.props.auth.user.restorant.id"
+              :statTitle="$page.props.auth.restorant.counts.products_count"
               statIconName="lunch_dining"
               statIconColor="bg-pink-500"
             />

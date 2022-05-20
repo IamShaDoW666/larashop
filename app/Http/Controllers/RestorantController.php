@@ -28,7 +28,6 @@ class RestorantController extends Controller
   public function index()
   {
     $restorant = auth()->user()->restorant;
-
     if (auth()->user()->hasRole('Owner')) {
       return inertia('views/admin/Restorant', compact('restorant'));
     }
@@ -94,7 +93,7 @@ class RestorantController extends Controller
   */
   public function edit($id)
   {
-    //
+    //  
   }
 
   /**
