@@ -4,7 +4,7 @@
   <div class="rounded-t bg-white mb-0 px-6 py-6">
     <div class="text-center flex justify-between">
       <h6 class="text-gray-700 text-xl font-bold">My Account</h6>
-      <Link v-if="user.restorant" :href="route('restorant.index')"
+      <Link v-if="user.restorant" :href="route('owner.restorant.index')"
       class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
       type="button">
       Restorant Settings

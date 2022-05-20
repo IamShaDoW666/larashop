@@ -1,7 +1,7 @@
 <template>
   <Admin :headerStats="true">
     <Head title="Dashboard" />
-    <div v-if="$page.props.auth.user.restorant">
+    <div>
       <div class="flex flex-wrap">
         <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
           <card-line-chart />

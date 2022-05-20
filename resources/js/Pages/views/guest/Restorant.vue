@@ -8,9 +8,8 @@
 </template>
 
 <script setup>
-import CardProfile from "@/Components/Cards/CardProfile.vue";
 import NotOwner from "@/Layouts/NotOwner.vue";
 import RegisterRestorant from "@/Components/Restorant/Create.vue";
-import { Head, Link} from '@inertiajs/inertia-vue3';
+import { Head} from '@inertiajs/inertia-vue3';
 
 </script>

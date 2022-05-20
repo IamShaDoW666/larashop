@@ -191,7 +191,7 @@ onMounted(() => {
 })
 
 const update = () => {
-  form.patch(route('restorant.update', {restorant: props.restorant.id}), {
+  form.patch(route('owner.restorant.update', {restorant: props.restorant.id}), {
     onSuccess: () => {
       Swal.fire({
         icon: 'success',

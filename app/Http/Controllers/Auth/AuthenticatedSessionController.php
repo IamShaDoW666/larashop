@@ -23,7 +23,7 @@ class AuthenticatedSessionController extends Controller
           if (auth()->user()->hasRole('Owner')) {
             return redirect(route('admin.dashboard'));
           } else {
-            return redirect(route('guest.index'));
+            return redirect(route('guest.restorant.create'));
           }
         }
         return Inertia::render('Auth/Login', [
@@ -47,7 +47,7 @@ class AuthenticatedSessionController extends Controller
         if (auth()->user()->hasRole('Owner')) {
           return redirect()->intended(route('admin.dashboard'));
         } else {
-          return redirect()->intended(route('guest.index'));
+          return redirect()->intended(route('guest.restorant.create'));
         }
     }
 

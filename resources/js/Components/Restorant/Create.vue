@@ -125,7 +125,7 @@ const form = useForm({
 
 const register = () => {
   console.log(form);
-  form.post(route('restorant.store'), {
+  form.post(route('guest.restorant.store'), {
     onSuccess: () => {
       Swal.fire({
         icon: 'success',

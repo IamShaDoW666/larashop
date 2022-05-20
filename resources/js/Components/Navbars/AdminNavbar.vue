@@ -4,7 +4,7 @@
     class="bg-gray-100 md:shadow-lg top-0 left-0 w-full z-10 bg-transparent md:flex-row flex-nowrap flex items-center p-4 pb-7"
   >
     <div
-      class="w-full mx-autp items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4"
+      class="w-full mx-auto items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4"
     >
       <!-- Brand -->
       <Link :href="route('admin.dashboard')" v-if="$page.props.auth.user.restorant"

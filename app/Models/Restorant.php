@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Area;
 use App\Models\Order;
+use App\Models\Config;
 use App\Models\Category;
 
 class Restorant extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $appends = ['productscount'];
 
     public function user()
     {
@@ -21,6 +23,7 @@ class Restorant extends Model
 
     public function categories()
     {
+      dd($this->categories());
       return $this->hasMany(Category::class);
     }
 
@@ -34,10 +37,17 @@ class Restorant extends Model
       return $this->hasMany(Area::class);
     }
 
-    public function getCategoriesCountAttribute()
+    public function config()
     {
-      return $this->categories()->count();
+      return $this->hasOne(Config::class);
     }
+
+    // public function getCountsAttribute()
+    // {
+    //   return [
+    //     'categories_count' => $this->categories()->with()->count(),
+    //   ];
+    // }
 
     public function getProductsCountAttribute()
     {
