@@ -2,7 +2,7 @@
   <Admin :headerStats="true">
     <Head title="Restaurant" />
     <div class="w-full px-4">
-      <Restorant :restorant="restorant" />
+      <Restorant />
     </div>
   </Admin>
 </template>
@@ -20,10 +20,6 @@ export default {
     CardProfile,
     Admin,
   },
-
-  props: {
-    restorant: Object
-  }
 
 };
 </script>

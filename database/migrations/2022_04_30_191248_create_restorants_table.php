@@ -25,10 +25,6 @@ class CreateRestorantsTable extends Migration
             $table->string('city')->nullable();
             $table->string('country')->nullable();
             $table->string('postal_code')->nullable();
-            $table->boolean('delivery')->default(false);
-            $table->boolean('dinein')->default(false);
-            $table->boolean('pickup')->default(false);
-            $table->integer('minimum_order')->default(0)->nullable();
             $table->timestamps();
         });
     }

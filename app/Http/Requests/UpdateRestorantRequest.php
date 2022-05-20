@@ -14,7 +14,7 @@ class UpdateRestorantRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->hasRole('Owner');
     }
 
     //Prepare slug from name
@@ -39,9 +39,9 @@ class UpdateRestorantRequest extends FormRequest
           'minimum_order'=> [],
           'country'=> ['string', 'min:3', 'max:25'],
           'address'=> ['string', 'min:6', 'max:55'],
-          'delivery'=> [],
-          'dinein'=> [],
-          'pickup'=> [],
+          'can_deliver'=> [],
+          'can_dinein'=> [],
+          'can_pickup'=> [],
           'city'=> ['string', 'min:4', 'max:30'],
           'postal_code' => ['numeric', 'max:100000000'],
           'slug' => ['string']

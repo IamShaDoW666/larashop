@@ -28,6 +28,7 @@ class RestorantController extends Controller
   public function index()
   {
     $restorant = auth()->user()->restorant;
+    $config = $restorant->config;
     if (auth()->user()->hasRole('Owner')) {
       return inertia('views/admin/Restorant', compact('restorant'));
     }
@@ -106,15 +107,25 @@ class RestorantController extends Controller
   public function update(UpdateRestorantRequest $request, $id)
   {
     $restorant = auth()->user()->restorant;
-    if ($restorant->id != Restorant::where('id', $id)->first()->id) {
-      abort(403);
-    }
-
+    //Need to validate if the owner is of the restorant
     $oldSlug = $restorant->slug; //Define the previous slug
-
     //Update Restaurant
-    $restaurant = $restorant->update($request->validated());
-
+    $restaurant = $restorant->update([
+      'name' => $request->name,
+      'phone' => $request->phone,
+      'country' => $request->country,
+      'address' => $request->address,
+      'city' => $request->city,
+      'postal_code' => $request->postal_code,
+      'slug' => $request->slug
+    ]);
+    //Update Restorant Config
+    $config = $restorant->config()->update([
+      'can_deliver' => $request->can_deliver,
+      'can_dinein' => $request->can_dinein,
+      'can_pickup' => $request->can_pickup,
+      'minimum_order' => $request->minimum_order,
+    ]);
     //Rename Images Folder
     if (File::exists($this->imagePath.$oldSlug)) {
       $copyDirectory = File::copyDirectory (

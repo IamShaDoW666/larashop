@@ -10,7 +10,7 @@
         <i class="fas fa-bars"></i>
       </button>
       <!-- Brand -->
-      <Link :href="route('guest.restorant.create')"
+      <Link :href="route('guest.restorant.create')" preserve-scroll
         class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
         Create Restaurant
       </Link>
@@ -63,7 +63,7 @@
           <li :class="{ 'text-black font-bold': route().current('guest.settings') }"
             class="items-center hover:text-gray-500">
             <div>
-              <Link :href="route('guest.settings')">
+              <Link :href="route('guest.settings')" preserve-scroll>
               <i class="fas fa-tools mr-2 text-sm"></i>
               Settings
               </Link>
@@ -73,7 +73,7 @@
           <li :class="{ 'text-black font-bold': route().current('guest.restorant.create') }"
             class="items-center hover:text-gray-500">
             <div>
-              <Link :href="route('guest.restorant.create')">
+              <Link :href="route('guest.restorant.create')" preserve-scroll>
               <i class="mr-2 text-sm lni lni-restaurant"></i>
               Restaurant
               </Link>

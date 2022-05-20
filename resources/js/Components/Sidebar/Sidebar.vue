@@ -63,7 +63,7 @@
           <li :class="{ 'text-black font-bold': route().current('admin.settings') }"
             class="items-center hover:text-gray-500">
             <div>
-              <Link :href="route('admin.settings')">
+              <Link :href="route('admin.settings')" preserve-scroll>
               <i class="fas fa-tools mr-2 text-sm"></i>
               Settings
               </Link>
@@ -73,7 +73,7 @@
           <li :class="{ 'text-black font-bold': route().current('owner.restorant.index') }"
             class="items-center hover:text-gray-500">
             <div>
-              <Link :href="route('owner.restorant.index')">
+              <Link :href="route('owner.restorant.index')" preserve-scroll>
               <i class="mr-2 text-sm lni lni-restaurant"></i>
               Restaurant
               </Link>
@@ -83,7 +83,7 @@
           <li :class="{ 'text-black font-bold': route().current('products.index') }"
             class="items-center hover:text-gray-500">
             <div>
-              <Link :href="route('products.index')">
+              <Link :href="route('products.index')" preserve-scroll>
               <i class="fa-solid fa-utensils mr-2 text-sm"></i>
               Menu
               </Link>
@@ -93,7 +93,7 @@
           <li :class="{ 'text-black font-bold': route().current('areas.index') }"
             class="items-center hover:text-gray-500">
             <div>
-              <Link :href="route('areas.index')">
+              <Link :href="route('areas.index')" preserve-scroll>
               <i class="fa-solid fa-truck mr-2 text-sm"></i>
               Delivery Areas
               </Link>

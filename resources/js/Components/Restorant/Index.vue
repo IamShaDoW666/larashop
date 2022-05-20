@@ -4,7 +4,7 @@
       <div class="rounded-t bg-white mb-0 px-6 py-6">
          <div class="text-center flex justify-between">
             <h6 class="text-gray-700 text-xl font-bold">Restaurant Settings</h6>
-            <Link :href="route('restorants.show', {restorant: restorant.slug})"
+            <Link :href="route('restorants.show', {restorant: $page.props.auth.restorant.slug})"
                class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                type="button">
             View
@@ -113,21 +113,21 @@
                        <div class="flex items-center">
                          <label class="mr-2 block uppercase text-blueGray-600 text-xs" for="Delivery">Delivery</label>
                          <input
-                         type="checkbox" v-model="form.delivery"
+                         type="checkbox" v-model="form.can_deliver"
                          class="border-0 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
                          value="Delivery"/>
                        </div>
                        <div class="flex items-center">
                          <label class="mr-2 block uppercase text-blueGray-600 text-xs" for="Delivery">Pickup</label>
                          <input
-                         type="checkbox" v-model="form.pickup"
+                         type="checkbox" v-model="form.can_pickup"
                          class="border-0 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
                          value="Pickup"/>
                        </div>
                        <div class="flex items-center">
                          <label class="mr-2 block uppercase text-blueGray-600 text-xs" for="Delivery">Dine-in</label>
                          <input
-                         type="checkbox" v-model="form.dinein"
+                         type="checkbox" v-model="form.can_dinein"
                          class="border-0 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
                          value="Dine-in"/>
                        </div>
@@ -161,42 +161,34 @@
 </template>
 
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import { onMounted, ref } from 'vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import Swal from 'sweetalert2';
 
-const hasRestorant = ref(false);
-
-const props = defineProps({
-  restorant: Object
-});
+let restorant = usePage().props.value.auth.restorant;
+let conf = usePage().props.value.auth.restorant.config;
 
 const form = useForm({
-    name: props.restorant ? props.restorant.name: '',
-    phone: props.restorant ? props.restorant.phone: '',
-    minimum_order: 0,
-    country: props.restorant ? props.restorant.country: '',
-    address: props.restorant ? props.restorant.address: '',
-    delivery: Boolean(props.restorant ? props.restorant.delivery: false),
-    dinein: Boolean(props.restorant ? props.restorant.dinein: false),
-    pickup: Boolean(props.restorant ? props.restorant.pickup: false),
-    city: props.restorant ? props.restorant.city: '',
-    postal_code: props.restorant ? props.restorant.postal_code: ''
+    name: restorant ? restorant.name: '',
+    phone: restorant ? restorant.phone: '',
+    minimum_order: conf ? conf.minimum_order : 0,
+    country: restorant ? restorant.country: '',
+    address: restorant ? restorant.address: '',
+    can_deliver: conf ? Boolean(Number(conf.can_deliver)) : false,
+    can_dinein: conf ? Boolean(Number(conf.can_dinein)) : false,
+    can_pickup: conf ? Boolean(Number(conf.can_pickup)) : false,
+    city: restorant ? restorant.city: '',
+    postal_code: restorant ? restorant.postal_code: ''
 });
 
-onMounted(() => {
-  if (props.restorant)
-    hasRestorant.value = true;
-})
-
 const update = () => {
-  form.patch(route('owner.restorant.update', {restorant: props.restorant.id}), {
+  form.patch(route('owner.restorant.update', {restorant: usePage().props.value.auth.restorant.id}), {
     onSuccess: () => {
       Swal.fire({
         icon: 'success',
         title: "Updated Successfully!",
-        timer: 1500
+        timer: 1000
       })
     }
   })
