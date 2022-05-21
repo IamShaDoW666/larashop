@@ -1,24 +1,47 @@
 <template>
   <div class="flex space-x-1 justify-around mt-8 sm:mt-0 bg-white rounded shadow-lg p-8 pr-0">
-    <form class="flex flex-col">
+    <form method="POST" @submit.prevent="submit" class="flex flex-col">
       <label class="font-semibold text-xs" for="name">Name</label>
-      <input class="flex items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2" type="text">
+      <input v-model="form.customer_name" class="flex items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2"
+        type="text">
       <label class="font-semibold text-xs mt-3" for="phonenumber">Phone Number</label>
-      <input class="flex items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2" type="text">
-      <label class="font-semibold text-xs mt-3" for="address">Address</label>
-      <textarea rows="4" class="flex items-center px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2" type="text"></textarea>
-      <div class="flex items-center my-4 px-4">
-        <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree to terms and conditions</label>
+      <input v-model="form.customer_phone" class="flex items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2"
+        type="text">
+      <label class="font-semibold text-xs mt-3" for="address">Order type</label>
+      <div class="flex gap-x-2">
+        <div>
+          <input v-model="form.order_type" value="1" type="radio" name="order_type" id="delivery"><span class="ml-2">Delivery</span>
+        </div>
+        <div>
+          <input v-model="form.order_type" value="3" type="radio" name="order_type" id="dinein"><span class="ml-2">Dine-in</span>
+        </div>
+        <div>
+          <input v-model="form.order_type" value="2" type="radio" name="order_type" id="pickup"><span class="ml-2">Pickup</span>
+        </div>
       </div>
-      <button class="flex items-center justify-center h-12 px-6 w-64 bg-green-600 mt-8 rounded font-semibold text-sm text-green-100 hover:bg-green-700">Place Order</button>
+      <label class="font-semibold text-xs mt-3" for="address">Address</label>
+      <textarea v-model="form.address" rows="4" class="flex items-center px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2"
+        type="text"></textarea>
+      <div class="flex items-center my-4 px-4">
+        <input id="default-checkbox" type="checkbox" v-model="form.checked"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+        <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree to terms
+          and conditions</label>
+      </div>
+      <button type="submit" :disabled="!form.checked || form.processing"
+        :class="{ 'opacity-25 hover:bg-green-600' : !form.checked || form.processing }"
+        class="flex items-center justify-center h-12 px-6 w-64 bg-green-600 mt-8 rounded font-semibold text-sm text-green-100 hover:bg-green-700">Place
+        Order</button>
     </form>
     <div class="py-3 rounded w-1/3">
       <!-- <button id="dropdownDefault" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none w-full font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown button <i class="fa-solid fa-caret-down"></i></button> -->
       <span v-if="areas.length" class="font-bold">Select Delivery Area</span>
-      <select v-if="areas.length" v-model="cart.delivery" class="w-full text-sm mt-2 rounded group ring-0 shadow active:text-black hover:text-black font-bold text-white bg-gray-600 hover:bg-gray-100" aria-labelledby="dropdownDefaselectt">
+      <select v-if="areas.length" v-model="cart.delivery"
+        class="w-full text-sm mt-2 rounded group ring-0 shadow active:text-black hover:text-black font-bold text-white bg-gray-600 hover:bg-gray-100"
+        aria-labelledby="dropdownDefaselectt">
         <option :value="area.delivery_fee" v-for="area in areas" :key="area.id">
-          <span class="block text-sm py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ area.name }}  ${{ area.delivery_fee }}</span>
+          <span class="block text-sm py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ area.name
+          }} ${{ area.delivery_fee }}</span>
         </option>
       </select>
 
@@ -39,11 +62,26 @@
 </template>
 
 <script setup>
+import { useForm } from '@inertiajs/inertia-vue3';
 import { onMounted } from 'vue';
 const props = defineProps({
   areas: Object,
   cart: Object
 })
+
+const form = useForm({
+  customer_name: '',
+  customer_phone: '',
+  address: '',
+  checked: false,
+  order_type: 1,
+  cart: props.cart
+  
+})
+
+const submit = () => {
+  form.post(route('orders.store'))
+}
 
 onMounted(() => {
   if (props.cart.delivery) {

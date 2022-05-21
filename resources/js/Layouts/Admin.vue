@@ -6,7 +6,6 @@
       <header-stats v-if="showStats"/>
       <div class="px-4 md:px-10 mx-auto w-full" :class="{ '-m-24': showStats }">
         <slot />
-        <!-- <footer-admin /> -->
       </div>
     </div>
   </div>
@@ -15,7 +14,6 @@
 import AdminNavbar from "@/Components/Navbars/AdminNavbar.vue";
 import Sidebar from "@/Components/Sidebar/Sidebar.vue";
 import HeaderStats from "@/Components/Headers/HeaderStats.vue";
-// import FooterAdmin from "@/Components/Footers/FooterAdmin.vue";
 import { onMounted, ref } from 'vue';
 export default {
   name: "admin-layout",

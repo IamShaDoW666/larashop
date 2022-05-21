@@ -104,6 +104,7 @@ const submit = () => {
   } else {
     form.post(route('categories.store'), {
       onSuccess: () => {
+        form.reset()
         closeModal()
         Swal.fire({
           icon: 'success',

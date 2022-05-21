@@ -23,7 +23,7 @@
           <div class="shadow border select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 items-center p-4">
             <div class="flex flex-col w-10 h-10 justify-center items-center mr-4">
               <a href="#" class="block relative">
-                <img alt="profil" src="https://picsum.photos/200/200" class="mx-auto object-cover rounded-full h-10 w-10"/>
+                <img alt="profil" :src="item.imglarge" class="mx-auto object-cover rounded-full h-10 w-10"/>
               </a>
             </div>
             <div class="flex-1 pl-1 md:mr-16">
@@ -52,9 +52,11 @@
 
 <script setup>
 import CustomerForm from '@/Components/Forms/CustomerForm.vue';
+import { useCart } from '@/Stores/cart.js';
+import { onMounted } from 'vue';
 
+const cart = useCart();
 const props = defineProps({
-  cart: Object,
   areas: Object
 });
 </script>

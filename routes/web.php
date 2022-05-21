@@ -14,11 +14,12 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DebugController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-
-
 //Models
 use App\Models\User;
+use App\Models\Category;
 
+use Akaunting\Money\Currency;
+use Akaunting\Money\Money;
 
 
 
@@ -45,7 +46,8 @@ require __DIR__.'/auth.php';
 //Public Routes
 Route::get('/products/filter/{id}', [ProductController::class, 'filter'])->name('products.filter');
 Route::get('/restorants/{restorant:slug}', [RestorantController::class, 'show'])->name('restorants.show'); //restorantS.show for public
-Route::get('/order', [OrderController::class, 'checkin'])->name('orders.checkin');
+Route::post('/order', [OrderController::class, 'checkin'])->name('orders.checkin');
+Route::post('/checkout', [OrderController::class, 'store'])->name('orders.store');
 
 // Guest routes
 Route::group(['middleware' => ['auth', 'role:Guest'], 'prefix' => 'guest'], function () {
@@ -62,7 +64,11 @@ Route::group(['middleware' => ['auth', 'role:Guest'], 'prefix' => 'guest'], func
 
 // DEBUGS
 Route::get('/debug', function() {
-  return Inertia::render('Debug');
+  $categories = Category::all();
+  $input = 5.5;
+  $money = money($input, 'INR', true);
+  dd($money->absolute());
+  return Inertia::render('Debug', compact('categories', 'money'));
 })->name('debug');
 
 Route::post('/debug/test', [DebugController::class, 'test'])->name('debug.test');

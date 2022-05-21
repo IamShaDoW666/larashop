@@ -82,7 +82,7 @@ export const useCart = defineStore('cart', {
     enabled: true,
     strategies: [
       {
-        storage: localStorage,
+        storage: sessionStorage,
       },
     ],
   }

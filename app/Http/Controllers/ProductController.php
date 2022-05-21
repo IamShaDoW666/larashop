@@ -14,6 +14,9 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Image;
 
+use Akaunting\Money\Currency;
+use Akaunting\Money\Money;
+
 class ProductController extends Controller
 {
 
