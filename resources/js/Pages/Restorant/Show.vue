@@ -7,14 +7,14 @@
         Products
       </h2>
     </template>
-    <div v-if="categories.length" class="justify-center flex items-center flex-wrap md:gap-x-3 gap-x-2 gap-y-2">
+    <div v-if="restaurant.categories" class="justify-center flex items-center flex-wrap md:gap-x-3 gap-x-2 gap-y-2">
       <div @click="resetCategory" class="p-4 cursor-pointer rounded lg:rounded-t-0 hover:bg-gray-200 bg-gray-300"
         :class="[active[0] ? 'bg-gray-400 hover:bg-gray-400' : 'bg-gray-300']">
         All Category
       </div>
       <div @click="categoryFilter(category.id)"
         :class="[active[category.id] ? 'bg-gray-400 hover:bg-gray-400 disabled' : 'bg-gray-300']"
-        v-for="category in categories" :key="category.id"
+        v-for="category in restaurant.categories" :key="category.id"
         class="p-4 cursor-pointer rounded lg:rounded-t-0 hover:bg-gray-200 bg-gray-300">
         {{ category.name }}
       </div>
@@ -28,7 +28,8 @@
             <li>
               <div
                 class="text-md md:text-xl divide-solid divide-y bg-gray-300 text-center p-2 rounded-lg text-base font-bold">
-                <i class="pr-2 fa-solid fa-cart-shopping"></i>Cart ({{ cart.getTotalItems }})</div>
+                <i class="pr-2 fa-solid fa-cart-shopping"></i>Cart ({{ cart.getTotalItems }})
+              </div>
             </li>
             <transition v-for="(item, index) in cart.items" :key="item.id" appear leave name="slide-fade">
               <li class="odd:bg-gray-100 rounded-lg">
@@ -60,7 +61,8 @@
           <!-- Checkout Options -->
           <form @submit.prevent="checkout">
             <div class="p-3 mt-4 flex gap-x-4 justify-between float-right">
-              <button :class="{ 'opacity-25 hover:bg-green-500' : form.processing }" :disabled="form.processing" class="bg-green-500 px-4 py-2 rounded shadow hover:bg-green-700 text-white font-bold">
+              <button :class="{ 'opacity-25 hover:bg-green-500': form.processing }" :disabled="form.processing"
+                class="bg-green-500 px-4 py-2 rounded shadow hover:bg-green-700 text-white font-bold">
                 Checkout
               </button>
             </div>
@@ -108,7 +110,7 @@
         </div>
       </div>
     </div>
-    <CartModal :cart="cart" :fromCart="fromCart" />
+    <!-- <CartModal :cart="cart" :fromCart="fromCart" /> -->
   </BreezeAuthenticatedLayout>
 </template>
 
@@ -130,10 +132,8 @@ export default {
   },
 
   props: {
-    categories: Object,
-    products: Object,
-    restorant: Object
-
+    restaurant: Object,
+    products: Object
   },
 
   setup(props) {
@@ -143,7 +143,7 @@ export default {
     const cart = useCart();
 
     const form = useForm({
-      restorant_id: props.restorant.id,
+      restorant_id: props.restaurant.id,
     });
 
     const checkout = () => {

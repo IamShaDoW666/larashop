@@ -18,8 +18,8 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Models\User;
 use App\Models\Category;
 
-use Akaunting\Money\Currency;
-use Akaunting\Money\Money;
+use Cknow\Money\Currency;
+use Cknow\Money\Money;
 
 
 
@@ -65,14 +65,11 @@ Route::group(['middleware' => ['auth', 'role:Guest'], 'prefix' => 'guest'], func
 // DEBUGS
 Route::get('/debug', function() {
   $categories = Category::all();
-  $input = 5.5;
-  $money = money($input, 'INR', true);
-  dd($money->absolute());
-  return Inertia::render('Debug', compact('categories', 'money'));
+  return Inertia::render('Debug', compact('categories'));
 })->name('debug');
 
 Route::post('/debug/test', [DebugController::class, 'test'])->name('debug.test');
-
+Route::get('/debug/newtest', [DebugController::class, 'newtest'])->name('debug.newtest');
 Route::post('/debug/upload', function(Request $request) {
   $path = $request->file('product_image')->store('imgs/product', 'public');
   return $path;

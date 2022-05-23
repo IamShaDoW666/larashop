@@ -57,7 +57,7 @@
 </template>
 
 <script setup>
-import { ref, inject, reactive, onMounted } from 'vue'
+import { inject, onMounted } from 'vue'
 import {
   Listbox,
   ListboxLabel,

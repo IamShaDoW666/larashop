@@ -45,17 +45,6 @@ class HandleInertiaRequests extends Middleware
         'role' => $request->user() ? $request->user()->roles()->first()->name : null,
       ],
 
-      // 'restaurant' => [
-      //   'categoriesCount' => $request->user()->restorant ? $request->user()
-      //   ->restorant
-      //   ->getCategoriesCountAttribute() : null,
-      //
-      //   'productsCount' => $request->user()->restorant ? $request->user()
-      //   ->restorant
-      //   ->getProductsCountAttribute() : null,
-      //
-      // ],
-
       'ziggy' => function () {
         return (new Ziggy)->toArray();
       },

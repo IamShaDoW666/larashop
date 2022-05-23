@@ -21,6 +21,7 @@ class CreateConfigsTable extends Migration
             $table->boolean('can_dinein')->default(false);
             $table->boolean('can_pickup')->default(false);
             $table->integer('minimum_order')->default(0);
+            $table->string('currency')->default('INR');
             $table->integer('minimum_order_free')->nullable()->default(null);
             $table->timestamps();
         });

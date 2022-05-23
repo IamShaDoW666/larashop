@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Restorant;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\RestorantResource;
 use App\Http\Resources\CategoryResource;
 
 use App\Http\Requests\StoreRestorantRequest;
@@ -75,15 +76,12 @@ class RestorantController extends Controller
   * @param  int  $id
   * @return \Illuminate\Http\Response
   */
-  public function show(Restorant $restorant)
+  public function show($slug)
   {
-    $categories = Category::where('restorant_id', $restorant->id)->whereHas('products')->get();
-    $categoryIds = $categories->pluck('id');
-
-    $products = ProductResource::collection(Product::whereIn('category_id', $categoryIds)
-      ->get());
-    $categories = CategoryResource::collection($categories);
-    return inertia('Restorant/Show', compact('products', 'categories', 'restorant'));
+    $restaurant = RestorantResource::make(Restorant::with('categories.products')
+      ->where('slug', $slug)
+      ->firstOrFail());
+    return inertia('Restorant/Show', compact('restaurant'));
   }
 
   /**

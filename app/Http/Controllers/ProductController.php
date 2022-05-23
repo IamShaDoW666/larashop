@@ -12,10 +12,12 @@ use App\Http\Resources\ProductResource;
 use App\Http\Resources\CategoryResource;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\RestorantResource;
+use App\Models\Restorant;
 use Image;
 
-use Akaunting\Money\Currency;
-use Akaunting\Money\Money;
+use Cknow\Money\Currency;
+use Cknow\Money\Money;
 
 class ProductController extends Controller
 {
@@ -28,17 +30,13 @@ class ProductController extends Controller
   */
   public function index()
   {
-    $categories = Category::where('restorant_id', auth()->user()->restorant->id)->get();
-
-    $products = collect();
-    $collection = $categories->each(function($category) use ($products) {
-      return $products->push($category->products);
-    });
-    $categories = CategoryResource::collection($categories);
-    return inertia('Product/Index', compact('categories', 'collection'));
+    $restaurant = RestorantResource::make(Restorant::with('categories.products')
+      ->get()
+      ->find(auth()->user()->restorant->id));
+    return inertia('Product/Index', compact('restaurant'));
   }
 
-  /**
+  /** 
   * Show the form for creating a new resource.
   *
   * @return \Illuminate\Http\Response
@@ -60,25 +58,22 @@ public function store(StoreProductRequest $request)
   {
     //Save Image Versions
     if ($request->hasFile('product_image')) {
-      //Check if folder exists and make if not
       $imgpath = $this->uploadimage($request->product_image);
     }
-    //Create Product
     if (!isset($imgpath)) {
       $imgpath = 'default';
     }
-
+    //Create Product
     $product = Product::create([
       'name' => $request->name,
       'description' => $request->description,
-      'price' => $this->formatprice($request->price),
+      'price' => money($request->price, config('global.currency'), true)->getAmount(),
       'image' => $imgpath,
     ]);
 
     //Assign Category
     $category = Category::where('id', $request->category['id'])->first();
     $product->category()->associate($category)->save();
-    $product = new ProductResource($product);
     return back();
   }
 
@@ -122,11 +117,10 @@ public function store(StoreProductRequest $request)
     } else {
       $imgpath = $product->image;
     }
-
     $data = [
       'name' => $request->name,
       'description' => $request->description,
-      'price' => $this->formatprice($request->price),
+      'price' => money($request->price, env('APP_CURRENCY'), true)->getAmount(),
       'image' => $imgpath
     ];
     $product->update($data);

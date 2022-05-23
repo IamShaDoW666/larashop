@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\DebugController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RestorantController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +26,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/products', function() {
     return Product::all();
 });
+Route::get('/debug', [DebugController::class, 'test']);
+Route::get('/restorants/{restorant:slug}', [DebugController::class, 'show']);

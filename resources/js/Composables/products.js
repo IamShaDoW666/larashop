@@ -1,5 +1,5 @@
 import axios from "axios";
-import { onMounted, ref, reactive } from 'vue';
+import { ref } from 'vue';
 
 export default function useProducts(props) {
   const prod = ref(props.products);

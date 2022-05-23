@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Resources\CategoryResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
@@ -15,7 +16,6 @@ class Restorant extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $appends = ['counts'];
 
     public function user()
     {
@@ -25,6 +25,11 @@ class Restorant extends Model
     public function categories()
     {
       return $this->hasMany(Category::class);
+    }
+
+    public function products()
+    {
+      return $this->hasManyThrough(Product::class, Category::class);
     }
 
     public function orders()
@@ -40,16 +45,5 @@ class Restorant extends Model
     public function config()
     {
       return $this->hasOne(Config::class);
-    }
-
-    public function getCountsAttribute()
-    {
-      $categoryIds = $this->categories->pluck('id');
-      $categories_count = $categoryIds->count();
-      $products_count = Product::whereIn('category_id', $categoryIds)->count();
-      return [
-        'categories_count' => $categories_count,
-        'products_count' => $products_count
-      ];
     }
 }

@@ -13,7 +13,7 @@
         </div>
         <div class="w-full sm:mt-4 bg-gray-100 rounded-lg px-4 py-12">
           <BreezeValidationErrors class="mb-4" />
-          <div v-for="category in collection" :key="category.id">
+          <div v-for="category in restaurant.categories" :key="category.id">
             <div class="py-5 flex justify-between text-white my-2 px-4 font-bold bg-gray-800 shadow mb-4 rounded-md">
               <h1>{{ category.name }}</h1>
               <div class="flex items-center gap-x-2">
@@ -40,7 +40,7 @@
                 <div class="-mt-1 flex items-end pl-4 pb-2 pt-6 pr-2 justify-between bg-gray-300 rounded-lg shadow-md">
                   <div>
                     <h1 class="font-bold">{{ product.name }}</h1>
-                    <h1>${{ (product.price / 100).toFixed(2)  }}</h1>
+                    <h1>{{ product.price }}</h1>
                   </div>
                 </div>
               </div>
@@ -70,8 +70,7 @@ import CardStats from "@/Components/Cards/CardStats.vue";
 import Swal from 'sweetalert2';
 
 const props = defineProps({
-  categories: Object,
-  collection: Object
+  restaurant: Object
 })
 const form = useForm({
   category: null
@@ -114,7 +113,8 @@ const deleteCategory = (id) => {
         onSuccess: () => {
           Swal.fire({
             icon: 'success',
-            title: 'Deleted Successfully!'
+            title: 'Deleted Successfully!',
+            timer: 1000
           })
         }
       })
@@ -126,9 +126,9 @@ const deleteCategory = (id) => {
 
 
 provide('data', {
-  categories: props.categories,
+  categories: props.restaurant.categories,
   categoryOpen,
-  categoryOpenEdit,
+  categoryOpenEdit, 
   productOpenEdit,
   productOpen,
   dCategory,

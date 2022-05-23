@@ -11,8 +11,8 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\Restorant;
 
-use Akaunting\Money\Currency;
-use Akaunting\Money\Money;
+use Cknow\Money\Currency;
+use Cknow\Money\Money;
 
 class OrderController extends Controller
 {

@@ -57,7 +57,7 @@
 
                     <div>
                       <BreezeLabel for="price" value="Price" />
-                      <input id="price" type="number" class="mt-2 border-gray-300 w-full sm:w-2/3 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" v-model="form.price" required>
+                      <input id="price" type="text" class="mt-2 border-gray-300 w-full sm:w-2/3 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" v-model="form.price" required>
                     </div>
 
                     <div>
@@ -124,7 +124,7 @@ import Swal from 'sweetalert2';
 
 const emit = defineEmits(['input'])
 
-const { productOpenEdit, dProduct, dCategory, categories } = inject('data')
+const { productOpenEdit, dProduct, dCategory } = inject('data')
 
 const previewImage = ref(dProduct.value.imglarge)
 const fileInput = ref();
@@ -132,7 +132,7 @@ const fileInput = ref();
 const form = useForm({
   name: dProduct.value.name,
   description: dProduct.value.description,
-  price: (dProduct.value.price/100).toFixed(2),
+  price: dProduct.value.price_int,
   category: dCategory.value,
   product_image: dProduct.value.imglarge
 
