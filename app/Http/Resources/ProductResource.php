@@ -16,11 +16,11 @@ class ProductResource extends JsonResource
    */
   public function toArray($request)
   {
-    $price = money($this->price, env('APP_CURRENCY'));
+    $price = money($this->price, config('global.currency'));
     return [
       'id' => $this->id,
       'name' => $this->name,
-      'description' => substr($this->description, 0, 20) . '...',
+      'description' =>  ($this->description), 0, 20 . '...',
       'price' => $price->format(),
       'price_int' => $price->formatByDecimal(),
       'category_id' => $this->category_id,

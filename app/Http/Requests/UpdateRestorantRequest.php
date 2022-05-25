@@ -44,7 +44,8 @@ class UpdateRestorantRequest extends FormRequest
           'can_pickup'=> [],
           'city'=> ['string', 'min:4', 'max:30'],
           'postal_code' => ['numeric', 'max:100000000'],
-          'slug' => ['string']
+          'slug' => ['string'],
+          'currency' => ['required']
         ];
     }
 }

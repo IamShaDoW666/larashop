@@ -15,17 +15,17 @@ use App\Http\Resources\CategoryResource;
 
 use App\Http\Requests\StoreRestorantRequest;
 use App\Http\Requests\UpdateRestorantRequest;
-
+use App\Services\ConfChanger;
 use Spatie\Permission\Traits\HasRoles;
 
 class RestorantController extends Controller
 {
   private $imagePath = 'imgs/restorants/';
   /**
-  * Display a listing of the resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
   public function index()
   {
     $restorant = auth()->user()->restorant;
@@ -37,25 +37,24 @@ class RestorantController extends Controller
     if (auth()->user()->hasRole('Guest')) {
       return inertia('views/guest/Restorant');
     }
-
   }
 
   /**
-  * Show the form for creating a new resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
   public function create()
   {
     return inertia('Restorant/Create');
   }
 
   /**
-  * Store a newly created resource in storage.
-  *
-  * @param  \Illuminate\Http\Request  $request
-  * @return \Illuminate\Http\Response
-  */
+   * Store a newly created resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
   public function store(StoreRestorantRequest $request)
   {
     $restorant = auth()->user()->restorant;
@@ -66,42 +65,49 @@ class RestorantController extends Controller
       return redirect(route('admin.dashboard'));;
     } else {
       abort(403, 'You have a restaurant');
-
     }
   }
 
   /**
-  * Display the specified resource.
-  *
-  * @param  int  $id
-  * @return \Illuminate\Http\Response
-  */
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
   public function show($slug)
   {
-    $restaurant = RestorantResource::make(Restorant::with('categories.products')
-      ->where('slug', $slug)
-      ->firstOrFail());
-    return inertia('Restorant/Show', compact('restaurant'));
+    $restorant = Restorant::where('slug', $slug)
+      ->with(['categories' => function ($q) {
+        $q->whereHas('products');
+      }])
+      ->with('products')
+      ->firstOrFail();
+    ConfChanger::switchCurrency($restorant);
+    $restaurant = RestorantResource::make($restorant);
+
+
+    $products = ProductResource::collection($restaurant->products);
+    return inertia('Restorant/Show', compact('restaurant', 'products'));
   }
 
   /**
-  * Show the form for editing the specified resource.
-  *
-  * @param  int  $id
-  * @return \Illuminate\Http\Response
-  */
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
   public function edit($id)
   {
     //  
   }
 
   /**
-  * Update the specified resource in storage.
-  *
-  * @param  \Illuminate\Http\Request  $request
-  * @param  int  $id
-  * @return \Illuminate\Http\Response
-  */
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
   public function update(UpdateRestorantRequest $request, $id)
   {
     $restorant = auth()->user()->restorant;
@@ -123,26 +129,26 @@ class RestorantController extends Controller
       'can_dinein' => $request->can_dinein,
       'can_pickup' => $request->can_pickup,
       'minimum_order' => $request->minimum_order,
+      'currency' => $request->currency
     ]);
     //Rename Images Folder
-    if (File::exists($this->imagePath.$oldSlug)) {
-      $copyDirectory = File::copyDirectory (
-        $this->imagePath.$oldSlug,
-        $this->imagePath.$restorant->slug
+    if (File::exists($this->imagePath . $oldSlug)) {
+      $copyDirectory = File::copyDirectory(
+        $this->imagePath . $oldSlug,
+        $this->imagePath . $restorant->slug
       );
-      $deleteDirectory = File::deleteDirectory($this->imagePath.$oldSlug);
+      $deleteDirectory = File::deleteDirectory($this->imagePath . $oldSlug);
     }
 
     return back();
-
   }
 
   /**
-  * Remove the specified resource from storage.
-  *
-  * @param  int  $id
-  * @return \Illuminate\Http\Response
-  */
+   * Remove the specified resource from storage.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
   public function destroy($id)
   {
     //

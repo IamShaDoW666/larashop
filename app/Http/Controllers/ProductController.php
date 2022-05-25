@@ -14,6 +14,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\RestorantResource;
 use App\Models\Restorant;
+use App\Services\ConfChanger;
 use Image;
 
 use Cknow\Money\Currency;
@@ -145,14 +146,9 @@ public function store(StoreProductRequest $request)
 
   public function filter($id)
   {
-    $products = Product::where('category_id', $id)->get();
-    if (!empty($products)) {
-      return ProductResource::collection($products);
-    } else {
-      throw Exception("Error Processing Request", 404);
-
-    }
-
+    $restaurant = Category::findOrFail($id)->restorant;
+    ConfChanger::switchCurrency($restaurant);
+    return ProductResource::collection(Product::where('category_id', $id)->get());
   }
 
   private function formatprice($price)

@@ -39,9 +39,14 @@ class HandleInertiaRequests extends Middleware
         'message' => session('message')
       ],
 
+      'app' => [
+        'locale' => config('app.locale'),
+        'faker_locale' => config('app.faker_locale')
+      ],
+
       'auth' => [
         'user' => $request->user() ?? '',
-        'restorant' => $request->user() ? $request->user()->restorant : null,
+        'restorant' => $request->user() ? $request->user()->restorant->load('config') : null,
         'role' => $request->user() ? $request->user()->roles()->first()->name : null,
       ],
 

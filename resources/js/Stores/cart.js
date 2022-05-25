@@ -1,4 +1,6 @@
-import { defineStore } from 'pinia'
+import { unformat } from 'accounting-js';
+import { defineStore } from 'pinia';
+
 
 export const useCart = defineStore('cart', {
   state: () => ({
@@ -7,7 +9,7 @@ export const useCart = defineStore('cart', {
     subTotal: 0,
     totalItems: 0,
     products: [],
-    delivery: 0
+    delivery: 0,
   }),
 
   getters: {
@@ -15,20 +17,20 @@ export const useCart = defineStore('cart', {
       let i  = 0;
       state.subTotal = 0;
       for (i = 0; i < state.items.length; i++) {
-        state.subTotal+= Number(state.items[i].price) * Number(state.items[i].quantity)
+        state.subTotal+= unformat(state.items[i].price) * unformat(state.items[i].quantity)
       }
       return state.subTotal.toFixed(2)
     },
 
     getTotal: (state) => {
-      return state.total = Number(state.delivery) ? Number(state.delivery) + Number(state.subTotal) : Number(state.subTotal)
+      return state.total = unformat(state.delivery) ? unformat(state.delivery) + unformat(state.subTotal) : unformat(state.subTotal)
     },
 
     getTotalItems: (state) => {
       let i  = 0;
       state.totalItems = 0;
       for (i = 0; i < state.items.length; i++) {
-        state.totalItems+= Number(state.items[i].quantity)
+        state.totalItems+= unformat(state.items[i].quantity)
       }
       return state.totalItems
     }
@@ -63,6 +65,10 @@ export const useCart = defineStore('cart', {
 
     getProps(props) {          //Function to assign props state
       this.products = props.products
+    },
+    
+    getFormatter(formatter) {       //Function to assign formatter
+      this.formatter = formatter;
     },
 
     removeFromCart(id, index) {

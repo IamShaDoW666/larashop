@@ -57,7 +57,7 @@ class OrderController extends Controller
 
     public function checkin(Request $request)
     {
-        $restorant = Restorant::find($request->restorant_id);
+        $restorant = Restorant::with('config')->find($request->restorant_id);
         $areas = AreaResource::collection($restorant->areas);
 
         return inertia('Order/Checkout', compact(

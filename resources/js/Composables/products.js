@@ -2,7 +2,7 @@ import axios from "axios";
 import { ref } from 'vue';
 
 export default function useProducts(props) {
-  const prod = ref(props.products);
+  const prod = ref(props.restaurant.products);
   const active = ref([]);
   const filter = async (id) => {
     active.value = []

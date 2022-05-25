@@ -1,5 +1,5 @@
 <?php   
 
 return [
-    'currency' => env('APP_CURRENCY', 'INR')
+    'currency' => env('APP_CURRENCY', 'INR'),
 ];

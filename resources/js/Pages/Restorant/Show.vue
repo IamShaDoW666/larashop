@@ -37,7 +37,7 @@
                   <div class="font-bold flex-1 ml-3">
                     {{ item.name }}
                   </div>
-                  <span>${{ item.price }} <strong>x</strong> </span>
+                  <span>{{ item.price }} <strong>x</strong> </span>
                   <button @click="fromCart(item.id, index)"
                     class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 hover:ring-2 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200">
                     {{ item.quantity }}
@@ -49,8 +49,9 @@
               <div class="flex flex-col space-y-4">
                 <div
                   class="px-4 font-bold rounded shadow-lg bg-white text-center flex gap-x-2 justify-between items-center p-3 text-base text-gray-900 rounded-lg dark:text-white">
-                  <div class="rounded shadow-lg p-4">Subtotal: <span class="ml-2 text-green-700">${{ cart.getSubTotal
-                  }}</span></div>
+                  <div class="rounded shadow-lg p-4">Subtotal: <span class="ml-2 text-green-700">
+                      {{ formatPrice(cart.getSubTotal) }}
+                    </span></div>
                 </div>
                 <!-- <div class="font-bold rounded shadow-lg bg-white text-center flex items-center p-3 text-base text-gray-900 rounded-lg dark:text-white">
                 Total: <span class="ml-2 text-green-700">${{ cart.getSubTotal }}</span>
@@ -79,7 +80,7 @@
         </div>
         <div
           class="mt-4 font-bold rounded shadow-lg bg-white text-center flex items-center p-3 text-base text-gray-900 rounded-lg dark:text-white">
-          Total: <span class="ml-2 text-green-700">${{ cart.getSubTotal }}</span>
+          Total: <span class="ml-2 text-green-700">{{ formatPrice(cart.getSubTotal) }}</span>
         </div>
       </aside>
     </transition>
@@ -96,7 +97,7 @@
                 <div class="-mt-1 flex items-end pl-4 pb-2 pt-6 pr-2 justify-between bg-gray-300 rounded-lg shadow-md">
                   <div>
                     <h1 class="font-bold">{{ product.name }}</h1>
-                    <h1>${{ product.price }}</h1>
+                    <h1>{{ product.price }}</h1>
                   </div>
                   <div>
                     <button @click="toCart(product.id, index)"
@@ -118,7 +119,7 @@
 import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
 import { onMounted, ref } from 'vue';
 import { useCart } from '@/Stores/cart.js';
-import { Inertia } from '@inertiajs/inertia';
+import { unformat } from 'accounting-js';
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import CartModal from '@/Components/CartModal.vue';
 import useProducts from '@/Composables/products';
@@ -139,7 +140,6 @@ export default {
   setup(props) {
 
     const { filter, prod, active } = useProducts(props);
-
     const cart = useCart();
 
     const form = useForm({
@@ -156,6 +156,21 @@ export default {
 
     //Mobile Cart Modal
     const isOpen = ref(false);
+
+    //Currency Formatter
+    let locale = usePage().props.value.app.locale;
+    let currency = usePage().props.value.auth.restorant.config.currency;
+    var formatter = new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency: currency,
+    });
+
+    const formatPrice = (amount) => {
+      if (amount == '') {
+        return '';
+      }
+      return formatter.format(amount);
+    }
 
     onMounted(() => {
       cart.getProps(props)
@@ -185,9 +200,11 @@ export default {
       toCart,
       fromCart,
       form,
+      formatter,
       checkout,
       cart,
       isOpen,
+      formatPrice,
       prod
 
     }
