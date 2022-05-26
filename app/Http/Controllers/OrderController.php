@@ -44,9 +44,11 @@ class OrderController extends Controller
     {
         ConfChanger::switchCurrency($restorant);
         $cart = $request->cart;
-        $items_ids = Arr::pluck($cart['items'], 'id');
-        $items_quantity = Arr::pluck($cart['items'], 'quantity');
-        $items = Product::find($items_ids);
+        $items_ids = array_column($cart['items'], 'quantity', 'id');        
+        $arr = array();
+        foreach ($items_ids as $key => $items_id) {
+            $arr[$key] = ['quantity' => $items_id];
+        }
         $order = Order::factory()->create([
             'customer_name' => $request->customer_name,
             'customer_phone' => $request->customer_phone,
@@ -56,6 +58,7 @@ class OrderController extends Controller
             'total' => money($cart['total'], config('global.currency'))->getAmount()
         ]);
         $order->restorant()->associate($restorant);
+        $order->products()->sync($arr);
         $order->save();
         $message = $order->getSocialMessageAttribute(true);
         $url = 'https://api.whatsapp.com/send?phone=' . $order->restorant->phone . '&text=' . $message;
@@ -125,4 +128,5 @@ class OrderController extends Controller
         $url = 'https://api.whatsapp.com/send?phone=' . $order->restorant->phone . '&text=' . $message;
         return Inertia::location($url);
     }
+
 }
