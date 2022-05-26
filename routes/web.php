@@ -8,7 +8,6 @@ use Inertia\Inertia;
 //Controllers
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RestorantController;
-use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\CategoryController;
@@ -46,8 +45,8 @@ require __DIR__.'/auth.php';
 //Public Routes
 Route::get('/products/filter/{id}', [ProductController::class, 'filter'])->name('products.filter');
 Route::get('/restorants/{restorant:slug}', [RestorantController::class, 'show'])->name('restorants.show'); //restorantS.show for public
-Route::post('/order', [OrderController::class, 'checkin'])->name('orders.checkin');
-Route::post('/checkout', [OrderController::class, 'store'])->name('orders.store');
+Route::get('/order/{restorant}', [OrderController::class, 'checkin'])->name('orders.checkin');
+Route::post('/checkout/{restorant:uuid}', [OrderController::class, 'store'])->name('orders.store');
 
 // Guest routes
 Route::group(['middleware' => ['auth', 'role:Guest'], 'prefix' => 'guest'], function () {

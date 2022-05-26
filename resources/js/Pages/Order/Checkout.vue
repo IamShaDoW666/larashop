@@ -11,7 +11,7 @@
 
 <script setup>
 import { Head, useForm } from '@inertiajs/inertia-vue3';
-import { onMounted } from 'vue';
+import { onMounted, provide } from 'vue';
 import { useCart } from '@/Stores/cart';
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import CartList from '@/Components/CartList.vue';
@@ -22,8 +22,11 @@ const props = defineProps({
   subtotal: String,
   order_type: String,
   areas: Object,
-
 });
+
+provide('restorant', {
+  restorant: props.restorant
+})
 
 const cart = useCart();
 

@@ -8,14 +8,14 @@
       </h2>
     </template>
     <div v-if="restaurant.categories" class="justify-center flex items-center flex-wrap md:gap-x-3 gap-x-2 gap-y-2">
-      <div @click="resetCategory" class="p-4 cursor-pointer rounded lg:rounded-t-0 hover:bg-gray-200 bg-gray-300"
-        :class="[active[0] ? 'bg-gray-400 hover:bg-gray-400' : 'bg-gray-300']">
+      <div @click="resetCategory" class="p-4 cursor-pointer rounded lg:rounded-t-0 hover:bg-green-200 bg-green-300"
+        :class="[active[0] ? 'bg-green-400 hover:bg-green-400' : 'bg-green-300']">
         All Category
       </div>
       <div @click="categoryFilter(category.id)"
-        :class="[active[category.id] ? 'bg-gray-400 hover:bg-gray-400 disabled' : 'bg-gray-300']"
+        :class="[active[category.id] ? 'bg-green-400 hover:bg-green-400 disabled' : 'bg-green-300']"
         v-for="category in restaurant.categories" :key="category.id"
-        class="p-4 cursor-pointer rounded lg:rounded-t-0 hover:bg-gray-200 bg-gray-300">
+        class="p-4 cursor-pointer rounded lg:rounded-t-0 hover:bg-green-200 bg-green-300">
         {{ category.name }}
       </div>
     </div>
@@ -23,23 +23,23 @@
     <!-- Sidebar Cart -->
     <transition appear v-if="cart.items.length > 0" name="slide-fade">
       <aside class="hidden sm:block w-1/3 float-right ml-5 sticky top-20 right-0 static py-10" aria-label="Sidebar">
-        <div class="py-4 px-3 rounded dark:bg-gray-800">
-          <ul class="space-y-2 bg-gray-50 rounded">
+        <div class="py-4 px-3 rounded dark:bg-green-800">
+          <ul class="space-y-2 bg-green-50 rounded">
             <li>
               <div
-                class="text-md md:text-xl divide-solid divide-y bg-gray-300 text-center p-2 rounded-lg text-base font-bold">
+                class="text-md md:text-xl divide-solid divide-y bg-green-300 text-center p-2 rounded-lg text-base font-bold">
                 <i class="pr-2 fa-solid fa-cart-shopping"></i>Cart ({{ cart.getTotalItems }})
               </div>
             </li>
             <transition v-for="(item, index) in cart.items" :key="item.id" appear leave name="slide-fade">
-              <li class="odd:bg-gray-100 rounded-lg">
+              <li class="odd:bg-green-100 rounded-lg">
                 <div class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white">
                   <div class="font-bold flex-1 ml-3">
                     {{ item.name }}
                   </div>
                   <span>{{ item.price }} <strong>x</strong> </span>
                   <button @click="fromCart(item.id, index)"
-                    class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 hover:ring-2 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200">
+                    class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 hover:ring-2 text-sm font-medium text-blue-600 bg-green-200 rounded-full dark:bg-green-900 dark:text-blue-200">
                     {{ item.quantity }}
                   </button>
                 </div>
@@ -75,7 +75,7 @@
     <!-- Empty Cart -->
     <transition name="slide-fade" v-else>
       <aside class="hidden sm:block w-1/3 float-right ml-5 px-4 sticky top-20 right-0 static py-10">
-        <div class="text-center font-bold shadow-md overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800">
+        <div class="text-center font-bold shadow-md overflow-y-auto py-4 px-3 bg-green-50 rounded dark:bg-green-800">
           <i class="pr-2 fa-solid fa-cart-shopping"></i>Cart Empty...
         </div>
         <div
@@ -101,7 +101,7 @@
                   </div>
                   <div>
                     <button @click="toCart(product.id, index)"
-                      class="px-2 py-2 active:bg-blue-200 hover:ring-blue-900 text-white font-bold rounded bg-blue-500 hover:bg-blue-400">Add
+                      class="px-2 py-2 active:bg-green-200 hover:ring-blue-900 text-white font-bold rounded bg-green-500 hover:bg-green-400">Add
                       To Cart</button>
                   </div>
                 </div>
@@ -142,12 +142,10 @@ export default {
     const { filter, prod, active } = useProducts(props);
     const cart = useCart();
 
-    const form = useForm({
-      restorant_id: props.restaurant.id,
-    });
+    const form = useForm({});
 
     const checkout = () => {
-      form.post(route('orders.checkin'))
+      form.get(route('orders.checkin', {restorant: props.restaurant.id}))
     };
 
     const categoryFilter = async (id) => {

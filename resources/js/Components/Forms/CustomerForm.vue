@@ -1,6 +1,7 @@
 <template>
-  <div class="flex space-x-1 justify-around mt-8 sm:mt-0 bg-white rounded shadow-lg p-8 pr-0">
+  <div class="md:flex space-x-1 justify-around mt-8 sm:mt-0 bg-white rounded shadow-lg p-8 pr-0">
     <form method="POST" @submit.prevent="submit" class="flex flex-col">
+      <BreezeValidationErrors class="mb-4" />
       <label class="font-semibold text-xs" for="name">Name</label>
       <input v-model="form.customer_name"
         class="flex items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2" type="text">
@@ -43,9 +44,10 @@
       <select v-if="areas.length" v-model="cart.delivery"
         class="w-full text-sm mt-2 rounded group ring-0 shadow active:text-black hover:text-black font-bold text-white bg-gray-600 hover:bg-gray-100"
         aria-labelledby="dropdownDefaselectt">
-        <option :value="area.delivery_fee" v-for="area in areas" :key="area.id">
+        <option placeholder="Delivery Area" aria-placeholder="Delivery Area" :value="area.delivery_fee"
+          v-for="area in areas" :key="area.id">
           <span class="block text-sm py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ area.name
-          }} {{ area.delivery_fee }}</span>
+          }} {{ formatPrice(area.delivery_fee) }}</span>
         </option>
       </select>
 
@@ -67,7 +69,10 @@
 
 <script setup>
 import { useForm, usePage } from '@inertiajs/inertia-vue3';
-import { onMounted } from 'vue';
+import { inject, onMounted } from 'vue';
+import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
+import Swal from 'sweetalert2';
+import { Inertia } from '@inertiajs/inertia';
 const props = defineProps({
   areas: Object,
   cart: Object
@@ -83,8 +88,27 @@ const form = useForm({
 
 })
 
+const { restorant } = inject('restorant');
+
 const submit = () => {
-  form.post(route('orders.store'))
+  form.post(route('orders.store', {restorant: restorant.uuid}), {
+    onSuccess: () => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Order Successful!',
+        timer: 1000,
+        timerProgressBar: true,
+        didClose: () => {
+          Inertia.post(
+            route('orders.send'),
+            {
+              
+            }
+          )
+        }
+      })
+    }
+  })
 }
 
 //Currency Formatter

@@ -16,6 +16,6 @@
 import CardSettings from "@/Components/Cards/CardSettings.vue";
 import CardProfile from "@/Components/Cards/CardProfile.vue";
 import Admin from "@/Layouts/Admin.vue";
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head } from '@inertiajs/inertia-vue3';
 
 </script>

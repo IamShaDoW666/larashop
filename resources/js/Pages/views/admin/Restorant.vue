@@ -11,7 +11,7 @@
 import Restorant from "@/Components/Restorant/Index.vue";
 import CardProfile from "@/Components/Cards/CardProfile.vue";
 import Admin from "@/Layouts/Admin.vue";
-import { Head, Link} from '@inertiajs/inertia-vue3';
+import { Head, Link } from '@inertiajs/inertia-vue3';
 export default {
   components: {
     Restorant,

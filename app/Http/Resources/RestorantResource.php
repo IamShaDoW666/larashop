@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Crypt;
 
 class RestorantResource extends JsonResource
 {
@@ -13,9 +14,9 @@ class RestorantResource extends JsonResource
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
-    {
+    {   
         return [
-            'id' => $this->id,
+            'id' => Crypt::encrypt($this->id),
             'name' => $this->name,
             'slug' => $this->slug,
             'products' => ProductResource::collection($this->whenLoaded('products')),

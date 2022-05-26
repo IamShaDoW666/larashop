@@ -10,9 +10,7 @@
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <div class="p-6 bg-white border-b border-gray-200">
-              <input v-model="form.number" type="number">
-              <input v-model="form.num" type="number">
+          <div class="p-6 bg-white border-b border-gray-200">            
             <button @click="submit" class="bg-blue-400 hover:bg-blue-500 px-4 py-2 rounded">Toggle</button>
           </div>
         </div>
@@ -34,6 +32,7 @@ import {
   TransitionChild,
   DialogDescription,
 } from '@headlessui/vue';
+import { Inertia } from '@inertiajs/inertia';
 
 const isOpen = ref(true);
 const props = defineProps({
@@ -48,7 +47,7 @@ const form = useForm({
 })
 
 const submit = () => {
-  form.post(route('debug.test'))
+  Inertia.post(route('debug.test'))
 }
 
 //GSAP animations

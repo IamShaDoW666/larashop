@@ -10,9 +10,12 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\Restorant;
-
+use App\Services\ConfChanger;
 use Cknow\Money\Currency;
 use Cknow\Money\Money;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class OrderController extends Controller
 {
@@ -37,11 +40,10 @@ class OrderController extends Controller
     }
 
 
-    public function store(StoreOrderRequest $request)
+    public function store(StoreOrderRequest $request, Restorant $restorant)
     {
-        // dd($request->validated());
+        ConfChanger::switchCurrency($restorant);
         $cart = $request->cart;
-        dd(config());
         $items_ids = Arr::pluck($cart['items'], 'id');
         $items_quantity = Arr::pluck($cart['items'], 'quantity');
         $items = Product::find($items_ids);
@@ -50,14 +52,20 @@ class OrderController extends Controller
             'customer_phone' => $request->customer_phone,
             'address' => $request->address,
             'order_type' => $request->order_type,
-            'total' => $cart->total
+            'delivery_fee' => money($cart['delivery'], config('global.currency'))->getAmount(),
+            'total' => money($cart['total'], config('global.currency'))->getAmount()
         ]);
-        return $order;
+        $order->restorant()->associate($restorant);
+        $order->save();
+        $message = $order->getSocialMessageAttribute(true);
+        $url = 'https://api.whatsapp.com/send?phone=' . $order->restorant->phone . '&text=' . $message;
+        return Inertia::location($url);
     }
 
-    public function checkin(Request $request)
+    public function checkin($id)
     {
-        $restorant = Restorant::with('config')->find($request->restorant_id);
+        $restorant_id = Crypt::decrypt($id);
+        $restorant = Restorant::with('config')->find($restorant_id);
         $areas = AreaResource::collection($restorant->areas);
 
         return inertia('Order/Checkout', compact(
@@ -109,5 +117,12 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function sendWhatsappOrder($order)
+    {
+        $message = $order->getSocialMessageAttribute(true);
+        $url = 'https://api.whatsapp.com/send?phone=' . $order->restorant->phone . '&text=' . $message;
+        return Inertia::location($url);
     }
 }

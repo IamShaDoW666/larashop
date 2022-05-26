@@ -10,12 +10,15 @@ use Cknow\Money\Currency;
 use Cknow\Money\Money;
 
 use Illuminate\Support\Facades\Config as FacadesConfig;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class DebugController extends Controller
 {
   public function test(Request $request)
   {
-    
+    $url = 'https://api.whatsapp.com/send?phone=' . '7902708908' . '&text=' . 'HelloWorld';
+    return Inertia::location($url);
   } 
 
   public function newtest()
