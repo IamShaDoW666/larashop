@@ -15,6 +15,7 @@ use App\Http\Resources\CategoryResource;
 
 use App\Http\Requests\StoreRestorantRequest;
 use App\Http\Requests\UpdateRestorantRequest;
+use App\Models\Config;
 use App\Services\ConfChanger;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -59,7 +60,8 @@ class RestorantController extends Controller
   {
     $restorant = auth()->user()->restorant;
     if (!$restorant) {
-      Restorant::factory()->create($request->validated());
+      $restorant = Restorant::factory()->create($request->validated());
+      Config::create(['restorant_id' => $restorant->id]);
       auth()->user()->removeRole('Guest');
       auth()->user()->assignRole('Owner');
       return redirect(route('admin.dashboard'));;
@@ -84,8 +86,6 @@ class RestorantController extends Controller
       ->firstOrFail();
     ConfChanger::switchCurrency($restorant);
     $restaurant = RestorantResource::make($restorant);
-
-
     $products = ProductResource::collection($restaurant->products);
     return inertia('Restorant/Show', compact('restaurant', 'products'));
   }

@@ -4,20 +4,8 @@
     <div class="px-4 md:px-10 mx-auto w-full">
       <div>
         <!-- Card stats -->
-        <div class="flex flex-wrap">
-          <!-- <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-            <card-stats
-              statSubtitle="TRAFFIC"
-              statTitle="350,897"
-              statArrow="up"
-              statPercent="3.48"
-              statPercentColor="text-emerald-500"
-              statDescripiron="Since last month"
-              statIconName="far fa-chart-bar"
-              statIconColor="bg-red-500"
-            />
-          </div> -->
-          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+        <transition-group appear @enter="enter" tag="div" class="flex flex-wrap">
+          <div class="w-full lg:w-6/12 xl:w-3/12 px-4" data-index="1" key="1">
             <card-stats
               statSubtitle="CATEGORIES"
               :statTitle="$page.props.auth.user.id"
@@ -25,7 +13,7 @@
               statIconColor="bg-orange-500"
             />
           </div>
-          <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+          <div class="w-full lg:w-6/12 xl:w-3/12 px-4" data-index="2" key="2">
             <card-stats
               statSubtitle="PRODUCTS"
               :statTitle="$page.props.auth.user.id"
@@ -33,19 +21,7 @@
               statIconColor="bg-pink-500"
             />
           </div>
-          <!-- <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-            <card-stats
-              statSubtitle="PERFORMANCE"
-              statTitle="49,65%"
-              statArrow="up"
-              statPercent="12"
-              statPercentColor="text-emerald-500"
-              statDescripiron="Since last month"
-              statIconName="fas fa-percent"
-              statIconColor="bg-emerald-500"
-            />
-          </div> -->
-        </div>
+        </transition-group>
       </div>
     </div>
   </div>
@@ -53,6 +29,17 @@
 
 <script setup>
 import CardStats from "@/Components/Cards/CardStats.vue";
+import gsap from "gsap";
 
+const enter = (el) => {
+  gsap.from(el, {
+    opacity: 0,
+    duration: 0.4,
+    scale: 0.8,
+    y: '10px',
+    delay: el.dataset.index * 0.2
+
+  })
+}
 
 </script>

@@ -26,5 +26,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/products', function() {
     return Product::all();
 });
-Route::get('/debug', [DebugController::class, 'test']);
+Route::get('/debug', [DebugController::class, 'test'])->name('api.debug');
 Route::get('/restorants/{restorant:slug}', [DebugController::class, 'show']);

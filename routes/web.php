@@ -62,10 +62,7 @@ Route::group(['middleware' => ['auth', 'role:Guest'], 'prefix' => 'guest'], func
 
 
 // DEBUGS
-Route::get('/debug', function() {
-  $categories = Category::all();
-  return Inertia::render('Debug', compact('categories'));
-})->name('debug');
+Route::get('/debug', [DebugController::class, 'debug'])->name('debug');
 
 Route::post('/debug/test', [DebugController::class, 'test'])->name('debug.test');
 Route::get('/debug/newtest', [DebugController::class, 'newtest'])->name('debug.newtest');
@@ -93,6 +90,7 @@ Route::group(['middleware' => ['auth', 'role:Owner'], 'prefix' => 'admin'], func
   Route::resource('/categories', CategoryController::class);
   Route::resource('/areas', AreaController::class);
 
+  Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders');
   Route::get('/restorant', [RestorantController::class, 'index'])->name('owner.restorant.index');
   Route::patch('/restorant/{restorant}', [RestorantController::class, 'update'])->name('owner.restorant.update');
   Route::patch('/user/{user}', [RegisteredUserController::class, 'update'])->name('owner.user.update');

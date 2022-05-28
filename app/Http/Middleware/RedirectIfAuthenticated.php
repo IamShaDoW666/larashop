@@ -28,7 +28,7 @@ class RedirectIfAuthenticated
                   return redirect('/admin/dashboard');
 
                 } else {
-                  auth()->user()->hasRole('guest') ?: auth()->user()->assignRole('guest');
+                  auth()->user()->hasRole('Guest') ?: auth()->user()->assignRole('Guest');
                   return redirect('/guest/restorant');
                 }
             }

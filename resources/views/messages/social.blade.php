@@ -45,4 +45,5 @@ foreach ($order->products()->get() as $key => $item) {
 {{"*". __('Phone')."*.: ". set($order->customer_phone) }}
 {{ "*". __('Address')."*".": ". set($order->address)}}
 
+{{ "*Order No*: " . $order->id}}
 {{ config('app.url') . '/restorants/'. $order->restorant->slug }}

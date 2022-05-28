@@ -10,8 +10,10 @@
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <div class="p-6 bg-white border-b border-gray-200">            
-            <button @click="submit" class="bg-blue-400 hover:bg-blue-500 px-4 py-2 rounded">Toggle</button>
+          <div class="p-6 bg-white border-b border-gray-200">
+            <transition @enter="enter" appear>
+              <div class="p-5 odd:bg-red-400 even:bg-green-400 rounded-lg shadow">Hello World</div>
+            </transition>
           </div>
         </div>
       </div>
@@ -37,32 +39,15 @@ import { Inertia } from '@inertiajs/inertia';
 const isOpen = ref(true);
 const props = defineProps({
   categories: Object,
-  restorant: Object,
-  money: Object
 })
-
-const form = useForm({
-  number: 0,
-  num: 0
-})
-
-const submit = () => {
-  Inertia.post(route('debug.test'))
-}
 
 //GSAP animations
-const leave = (el) => {
-  gsap.to(el, {
-    opacity: 0,
-    duration: 1,
-    y: 50,
-  })
-}
 
 const enter = (el) => {
   gsap.from(el, {
     opacity: 0,
-    duration: 0.7,
+    duration: 0.6,
+    ease: 'easeOut',
     y: 50,
   })
 }

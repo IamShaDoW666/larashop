@@ -26,7 +26,8 @@ class ProductResource extends JsonResource
       'category_id' => $this->category_id,
       'image' => $this->image,
       'imglarge' => $this->imglarge,
-      'quantity' => null
+      'quantity' => null, //quantity for show.vue 
+      'pivot_quantity' => $this->whenPivotLoaded('order_product', $this->pivot ? $this->pivot->quantity : null) //quantity from order
     ];
   }
 }

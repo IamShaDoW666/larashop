@@ -20,7 +20,8 @@ class RestorantResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'products' => ProductResource::collection($this->whenLoaded('products')),
-            'categories' => CategoryResource::collection($this->whenLoaded('categories'))
+            'categories' => CategoryResource::collection($this->whenLoaded('categories')),
+            'orders' => OrderResource::collection($this->whenLoaded('orders'))
         ];
     }
 }

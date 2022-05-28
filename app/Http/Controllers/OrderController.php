@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 
 use App\Http\Resources\AreaResource;
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Resources\RestorantResource;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\Restorant;
@@ -26,7 +27,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $restorant = Restorant::with('orders.products')
+            ->find(auth()->user()->id);
+        ConfChanger::switchCurrency($restorant);
+        $restaurant = RestorantResource::make($restorant);
+        return inertia('Order/Index', compact('restaurant'));
     }
 
     /**
@@ -44,7 +49,7 @@ class OrderController extends Controller
     {
         ConfChanger::switchCurrency($restorant);
         $cart = $request->cart;
-        $items_ids = array_column($cart['items'], 'quantity', 'id');        
+        $items_ids = array_column($cart['items'], 'quantity', 'id');
         $arr = array();
         foreach ($items_ids as $key => $items_id) {
             $arr[$key] = ['quantity' => $items_id];
@@ -54,8 +59,8 @@ class OrderController extends Controller
             'customer_phone' => $request->customer_phone,
             'address' => $request->address,
             'order_type' => $request->order_type,
-            'delivery_fee' => money($cart['delivery'], config('global.currency'))->getAmount(),
-            'total' => money($cart['total'], config('global.currency'))->getAmount()
+            'delivery_fee' => money($cart['delivery'], config('global.currency'), true)->getAmount(),
+            'total' => money($cart['total'], config('global.currency'), true)->getAmount()
         ]);
         $order->restorant()->associate($restorant);
         $order->products()->sync($arr);
@@ -128,5 +133,4 @@ class OrderController extends Controller
         $url = 'https://api.whatsapp.com/send?phone=' . $order->restorant->phone . '&text=' . $message;
         return Inertia::location($url);
     }
-
 }

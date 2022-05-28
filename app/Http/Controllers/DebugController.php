@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\RestorantResource;
+use App\Models\Category;
 use App\Models\Config;
+use App\Models\Product;
 use App\Models\Restorant;
 use Illuminate\Http\Request;
 use Cknow\Money\Currency;
@@ -15,15 +18,23 @@ use Inertia\Inertia;
 
 class DebugController extends Controller
 {
+
+  public function debug()
+  {
+    $categories = CategoryResource::collection(Category::all());
+    return inertia('Debug', compact('categories'));
+  }
+
   public function test(Request $request)
   {
-    $url = 'https://api.whatsapp.com/send?phone=' . '7902708908' . '&text=' . 'HelloWorld';
-    return Inertia::location($url);
+    $product = Product::all();
+    return $product;
   } 
 
   public function newtest()
   {
-    $restorant = auth()->user()->restorant->loadMissing(['categories.products']);
+    $categories = Category::only(['id', 'name']);
+    dd($categories);
     return inertia('Debug', compact('restorant'));
   }
 
