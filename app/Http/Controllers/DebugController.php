@@ -8,13 +8,9 @@ use App\Models\Category;
 use App\Models\Config;
 use App\Models\Product;
 use App\Models\Restorant;
-use Illuminate\Http\Request;
 use Cknow\Money\Currency;
 use Cknow\Money\Money;
 
-use Illuminate\Support\Facades\Config as FacadesConfig;
-use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
 
 class DebugController extends Controller
 {
@@ -25,18 +21,12 @@ class DebugController extends Controller
     return inertia('Debug', compact('categories'));
   }
 
-  public function test(Request $request)
-  {
+  public function test()
+  { 
     $product = Product::all();
     return $product;
   } 
 
-  public function newtest()
-  {
-    $categories = Category::only(['id', 'name']);
-    dd($categories);
-    return inertia('Debug', compact('restorant'));
-  }
 
   public function show($slug)
   {

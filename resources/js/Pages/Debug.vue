@@ -11,9 +11,9 @@
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
-            <transition @enter="enter" appear>
-              <div class="p-5 odd:bg-red-400 even:bg-green-400 rounded-lg shadow">Hello World</div>
-            </transition>
+            <form>
+              <button class="px-4 py-2 bg-blue-500 rounded hover:bg-blue-600" @click="submit" >Click Me</button>
+            </form>
           </div>
         </div>
       </div>
@@ -40,6 +40,10 @@ const isOpen = ref(true);
 const props = defineProps({
   categories: Object,
 })
+
+const submit = () => {
+  Inertia.post('/new');
+}
 
 //GSAP animations
 

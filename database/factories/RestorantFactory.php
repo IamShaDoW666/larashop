@@ -26,7 +26,7 @@ class RestorantFactory extends Factory
             'city' => $this->faker->city(),
             'uuid' => $this->faker->unique()->uuid(),
             'postal_code' => $this->faker->postcode(),
-            'user_id' => auth()->user()->id ? auth()->user()->id : $this->faker->unique()->numberBetween(1,50),
+            'user_id' => $this->faker->unique()->numberBetween(1,50),
         ];
     }
 }

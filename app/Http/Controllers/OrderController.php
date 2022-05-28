@@ -133,4 +133,40 @@ class OrderController extends Controller
         $url = 'https://api.whatsapp.com/send?phone=' . $order->restorant->phone . '&text=' . $message;
         return Inertia::location($url);
     }
+
+    public function updateStatus(Request $request, Order $order)
+    {
+        $status = $request->current_status;
+        $action = $request->action;
+
+        // Check Reject 
+        if (!$action && $status == 'pending') {
+            $order->status = 'rejected';
+            $order->save();
+            return back();
+        }
+
+        // If positive action
+        if ($action) {
+            switch($status) {
+                case 'pending':
+                    $order->status = 'accepted';
+                    $order->save();
+                    return back();
+                case 'accepted':
+                    $order->status = 'prepared';
+                    $order->save();
+                    return back();
+                case 'prepared':
+                    $order->status = 'delivered';
+                    $order->save();
+                    return back();
+                case 'delivered':
+                    $order->status = 'closed';
+                    $order->save();
+                    return back();
+            }
+        }
+
+    }
 }

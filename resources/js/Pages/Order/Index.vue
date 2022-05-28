@@ -20,10 +20,13 @@
                                 No</th>
                             <th
                                 class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                                Customer</th>
+                                Status</th>
                             <th
                                 class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
                                 Total</th>
+                            <th
+                                class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
+                                Ordered</th>
                             <th
                                 class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
                                 Actions</th>
@@ -34,11 +37,12 @@
                             class="bg-gray-300 border border-grey-500 md:border-none block md:table-row">
                             <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span
                                     class="inline-block w-1/3 md:hidden font-bold">No:</span>{{ order.id }}</td>
-                            <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell"><span
-                                    class="inline-block w-1/3 md:hidden font-bold">Customer:</span>
-                                    {{
-                                            order.customer_name
-                                    }}</td>
+                            <td class="p-2 md:border md:border-grey-500 text-center block md:table-cell">
+                                <span class="inline-block w-1/3 md:hidden font-bold">
+                                    Status:
+                                </span>
+                                <OrderStatusBadge :status="order.status" />
+                            </td>
                             <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                 <span class="inline-block w-1/3 md:hidden font-bold">
                                     Total:
@@ -46,23 +50,45 @@
                                 {{ order.total }}
                             </td>
                             <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
+                                <span class="inline-block w-1/3 md:hidden font-bold">
+                                    Ordered:
+                                </span>
+                                {{ order.ordered_at }}
+                            </td>
+                            <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                 <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                                <!-- <button @click="openorderEdit(order)" class="ml-2 mr-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border border-blue-500 rounded">Edit</button>
-                <button @click="deleteorder(order.id)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">Delete</button> -->
+                                <OrderButton class="mr-3" @click="updateStatus(order.status, order.id)"
+                                    :status="order.status" />
+                                <OrderButton :reject="true" v-if="order.status == 'pending'"
+                                    @click="updateStatus(order.status, order.id, false)" />
                             </td>
                         </tr>
                     </tbody>
                 </table>
-            </div>  
+            </div>
         </div>
     </Admin>
 </template>
 
 <script setup>
 import Admin from "@/Layouts/Admin.vue";
+import OrderButton from "@/Components/Buttons/OrderButton.vue";
+import OrderStatusBadge from "@/Components/Badges/OrderStatusBadge.vue";
+import { Inertia } from "@inertiajs/inertia";
+import { Head } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
     restaurant: Object
 })
+
+
+const updateStatus = (status, id, accept = true) => {
+    if (status != 'rejected' && status != 'closed') {
+        Inertia.post(route('admin.orders.update-status', { order: id }), {
+            current_status: status,
+            action: accept
+        })
+    }
+}
 
 </script>

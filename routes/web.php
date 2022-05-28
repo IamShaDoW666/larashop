@@ -65,13 +65,6 @@ Route::group(['middleware' => ['auth', 'role:Guest'], 'prefix' => 'guest'], func
 Route::get('/debug', [DebugController::class, 'debug'])->name('debug');
 
 Route::post('/debug/test', [DebugController::class, 'test'])->name('debug.test');
-Route::get('/debug/newtest', [DebugController::class, 'newtest'])->name('debug.newtest');
-Route::post('/debug/upload', function(Request $request) {
-  $path = $request->file('product_image')->store('imgs/product', 'public');
-  return $path;
-  // $url = Storage::url('public/imgs/product/default.png');
-  return back();
-});
 
 Route::post('/debug', function() {
   $user = User::find(1);
@@ -85,14 +78,17 @@ Route::post('/debug', function() {
 Route::group(['middleware' => ['auth', 'role:Owner'], 'prefix' => 'admin'], function() {
   Route::inertia('/dashboard', 'views/admin/Dashboard')->name('admin.dashboard');
   Route::inertia('/settings', 'views/admin/Settings')->name('admin.settings');
-
+  
   Route::resource('/products', ProductController::class);
   Route::resource('/categories', CategoryController::class);
   Route::resource('/areas', AreaController::class);
 
   Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders');
+  Route::post('/orders/update-status/{order}', [OrderController::class, 'updateStatus'])->name('admin.orders.update-status');
+
   Route::get('/restorant', [RestorantController::class, 'index'])->name('owner.restorant.index');
   Route::patch('/restorant/{restorant}', [RestorantController::class, 'update'])->name('owner.restorant.update');
+
   Route::patch('/user/{user}', [RegisteredUserController::class, 'update'])->name('owner.user.update');
 
 });

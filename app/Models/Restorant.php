@@ -39,7 +39,7 @@ class Restorant extends Model
 
     public function orders()
     {
-      return $this->hasMany(Order::class);
+      return $this->hasMany(Order::class)->orderBy('created_at', 'desc');
     }
 
     public function areas()
