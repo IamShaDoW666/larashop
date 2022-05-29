@@ -75,19 +75,41 @@ import Admin from "@/Layouts/Admin.vue";
 import OrderButton from "@/Components/Buttons/OrderButton.vue";
 import OrderStatusBadge from "@/Components/Badges/OrderStatusBadge.vue";
 import { Inertia } from "@inertiajs/inertia";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head, usePage } from "@inertiajs/inertia-vue3";
+import Swal from "sweetalert2";
 
 const props = defineProps({
     restaurant: Object
 })
 
 
-const updateStatus = (status, id, accept = true) => {
+const updateStatus = async (status, id, accept = true) => {
     if (status != 'rejected' && status != 'closed') {
-        Inertia.post(route('admin.orders.update-status', { order: id }), {
+        await Inertia.post(route('admin.orders.update-status', { order: id }), {
             current_status: status,
             action: accept
-        })
+        },
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1500 ,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: usePage().props.value.flash.message
+                    })
+                }
+            })
     }
 }
 

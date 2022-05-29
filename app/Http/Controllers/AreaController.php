@@ -6,6 +6,7 @@ use App\Models\Area;
 use Illuminate\Http\Request;
 use App\Http\Resources\AreaResource;
 use App\Models\Category;
+use App\Services\ConfChanger;
 
 class AreaController extends Controller
 {
@@ -16,7 +17,9 @@ class AreaController extends Controller
      */
     public function index()
     {
-      $areas = AreaResource::collection(auth()->user()->restorant->areas);
+      $restorant = auth()->user()->restorant;
+      ConfChanger::switchCurrency($restorant);
+      $areas = AreaResource::collection($restorant->areas);
       return inertia('Area/Index', compact('areas'));
 
     }

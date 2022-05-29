@@ -31,9 +31,11 @@ class ProductController extends Controller
   */
   public function index()
   {
+    $restorant = auth()->user()->restorant;
+    ConfChanger::switchCurrency($restorant);
     $restaurant = RestorantResource::make(Restorant::with('categories.products')
       ->get()
-      ->find(auth()->user()->restorant->id));
+      ->find($restorant->id));
     return inertia('Product/Index', compact('restaurant'));
   }
 

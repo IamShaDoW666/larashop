@@ -143,7 +143,7 @@ class OrderController extends Controller
         if (!$action && $status == 'pending') {
             $order->status = 'rejected';
             $order->save();
-            return back();
+            return back()->with(['message' => 'Order Rejected!']);
         }
 
         // If positive action
@@ -152,21 +152,23 @@ class OrderController extends Controller
                 case 'pending':
                     $order->status = 'accepted';
                     $order->save();
-                    return back();
+                    break;
                 case 'accepted':
                     $order->status = 'prepared';
                     $order->save();
-                    return back();
+                    break;
                 case 'prepared':
                     $order->status = 'delivered';
                     $order->save();
-                    return back();
+                    break;
                 case 'delivered':
                     $order->status = 'closed';
                     $order->save();
-                    return back();
+                    break;
             }
+
+            return back()->with(['message' => 'Order status updated!']);
         }
 
     }
-}
+}  

@@ -14,10 +14,12 @@ class AreaResource extends JsonResource
      */
     public function toArray($request)
     {
+        $delivery_fee = money($this->delivery_fee, config('global.currency'));
         return [
           'id' => $this->id,
           'name' => $this->name,
-          'delivery_fee' => number_format($this->delivery_fee / 100, 2)
+          'delivery_fee' => $delivery_fee->format(),
+          'delivery_fee_int' => $delivery_fee->formatByDecimal()
         ];
     }
 }

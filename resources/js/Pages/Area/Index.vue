@@ -29,7 +29,7 @@
                  <span class="inline-block w-1/3 md:hidden font-bold">
                    Delivery Charge:
                  </span>
-                 ${{ area.delivery_fee }}
+                 {{ area.delivery_fee }}
                </td>
                <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                  <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
@@ -88,7 +88,11 @@ const deleteArea = (id) => {
         }
       })
     } else if (result.isDenied) {
-      Swal.fire('Changes are not saved', '', 'info')
+      Swal.fire({
+        icon: 'info',
+        title: 'Changes are not saved',
+        timer: 1000
+      })
     }
   })
 }

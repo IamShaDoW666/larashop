@@ -46,7 +46,7 @@ const classes = computed(() => {
 </script>
 
 <template>
-    <button v-if="text" :class="classes" class="px-4 py-2 text-white font-bold border rounded-lg shadow">
+    <button v-if="text" :class="classes" class="px-3 py-1.5 text-white font-bold border text-sm rounded-lg shadow">
         {{ text }}
     </button>
     <span v-else>No actions for this order...</span>

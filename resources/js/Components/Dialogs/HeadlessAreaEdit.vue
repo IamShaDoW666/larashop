@@ -94,7 +94,6 @@
 <script setup>
 import { ref, inject } from 'vue';
 import { useForm, Link } from '@inertiajs/inertia-vue3';
-import BreezeInput from '@/Components/Input.vue';
 import BreezeLabel from '@/Components/Label.vue';
 import {
   TransitionRoot,
@@ -105,11 +104,11 @@ import {
 } from '@headlessui/vue';
 import Swal from 'sweetalert2';
 
-const { areaOpenEdit, dArea, areas } = inject('data')
+const { areaOpenEdit, dArea } = inject('data')
 
 const form = useForm({
   name: dArea.value.name,
-  delivery_fee: dArea.value.delivery_fee
+  delivery_fee: dArea.value.delivery_fee_int
 })
 
 function closeModal() {
