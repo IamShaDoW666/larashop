@@ -3,19 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 
 use App\Http\Resources\AreaResource;
 use App\Http\Requests\StoreOrderRequest;
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\RestorantResource;
-use App\Models\Product;
 use App\Models\Order;
 use App\Models\Restorant;
 use App\Services\ConfChanger;
-use Cknow\Money\Currency;
-use Cknow\Money\Money;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class OrderController extends Controller
@@ -25,13 +21,17 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $restorant = Restorant::with('orders.products')
-            ->find(auth()->user()->restorant->id);
+        $restorant = auth()->user()->restorant;
         ConfChanger::switchCurrency($restorant);
         $restaurant = RestorantResource::make($restorant);
-        return inertia('Order/Index', compact('restaurant'));
+        $orders = OrderResource::collection(Order::where('restorant_id', $restorant->id)
+            ->with('products')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(15));
+        // return $orders;
+        return inertia('Order/Index', compact('orders'));
     }
 
     /**

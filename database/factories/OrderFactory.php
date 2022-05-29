@@ -21,7 +21,8 @@ class OrderFactory extends Factory
             'customer_phone' => $this->faker->numberBetween(1000000000,9999999999),
             'delivery_fee' => $this->faker->numberBetween(100,250),
             // 'checkout_id' => $this->faker->numberBetween(1,10),
-            'restorant_id' => $this->faker->numberBetween(0,4)
+            'restorant_id' => $this->faker->numberBetween(0,4),
+            'total' => $this->faker->numberBetween(1000,999999),
         ];
     }
 }
