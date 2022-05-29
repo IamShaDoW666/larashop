@@ -110,6 +110,16 @@
             </div>
           </li>
 
+          <li :class="{ 'text-black font-bold': route().current('restorant.share') }"
+            class="items-center hover:text-gray-500">
+            <div>
+              <Link :href="route('owner.restorant.share')" preserve-scroll>
+              <i class="material-icons mr-2 text-sm">mobile_screen_share</i>
+              Share
+              </Link>
+            </div>
+          </li> 
+
           <!-- <li class="items-center hover:text-gray-500">
     <div>
       <a>

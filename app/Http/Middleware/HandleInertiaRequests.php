@@ -42,7 +42,8 @@ class HandleInertiaRequests extends Middleware
 
       'app' => [
         'locale' => config('app.locale'),
-        'faker_locale' => config('app.faker_locale')
+        'faker_locale' => config('app.faker_locale'),
+        'url' => config('app.url')
       ],
 
       'auth' => [

@@ -1514,6 +1514,9 @@ input[type="range"]::-ms-fill-lower {
 .flex-nowrap {
   flex-wrap: nowrap;
 }
+.place-content-center {
+  place-content: center;
+}
 .content-center {
   align-content: center;
 }
@@ -1962,6 +1965,10 @@ input[type="range"]::-ms-fill-lower {
 .bg-green-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(188 240 218 / var(--tw-bg-opacity));
+}
+.bg-gray-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 .bg-opacity-25 {
   --tw-bg-opacity: 0.25;

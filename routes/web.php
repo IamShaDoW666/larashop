@@ -87,6 +87,7 @@ Route::group(['middleware' => ['auth', 'role:Owner'], 'prefix' => 'admin'], func
   Route::post('/orders/update-status/{order}', [OrderController::class, 'updateStatus'])->name('admin.orders.update-status');
 
   Route::get('/restorant', [RestorantController::class, 'index'])->name('owner.restorant.index');
+  Route::get('/restorant/share', [RestorantController::class, 'share'])->name('owner.restorant.share');
   Route::patch('/restorant/{restorant}', [RestorantController::class, 'update'])->name('owner.restorant.update');
 
   Route::patch('/user/{user}', [RegisteredUserController::class, 'update'])->name('owner.user.update');

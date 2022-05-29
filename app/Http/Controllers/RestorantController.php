@@ -154,4 +154,10 @@ class RestorantController extends Controller
   {
     //
   }
+
+  public function share()
+  {
+    return inertia('Restorant/Share');
+  }
+
 }
