@@ -69,7 +69,7 @@ const update = () => {
 
 
   if (props.user.restorant) {
-    form.patch(route('user.update', {user: props.user.id}), {
+    form.patch(route('owner.user.update', {user: props.user.id}), {
       onSuccess: () => {
         Swal.fire({
           icon: 'success',
