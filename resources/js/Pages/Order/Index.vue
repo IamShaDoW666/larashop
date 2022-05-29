@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div v-if="restaurant.orders.length" class="flex-auto px-4 lg:px-10 py-10">
-                <table class="min-w-full border-collapse block md:table md:table-auto rounded-lg">
+                <table class="min-w-full border-collapse block md:table md:table-fixed rounded-lg">
                     <thead class="block md:table-header-group">
                         <tr
                             class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">

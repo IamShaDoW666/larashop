@@ -3303,6 +3303,10 @@ input[type=number] {
     table-layout: auto;
   }
 
+  .md\:table-fixed {
+    table-layout: fixed;
+  }
+
   .md\:transform {
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
