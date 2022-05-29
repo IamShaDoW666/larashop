@@ -22,7 +22,7 @@ class OrderResource extends JsonResource
             'address' => $this->address,
             'total' => money($this->total, config('global.currency'))->format(),
             'total_int' => $this->total,
-            'order_type' => $this->order_type,
+            'order_type' => (int)$this->order_type,
             'delivery_fee' => money($this->delivery_fee, config('global.currency'))->format(),
             'created_at' => $this->created_at,
             'ordered_at' => $this->created_at->diffForhumans(),

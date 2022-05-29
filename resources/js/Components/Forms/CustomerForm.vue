@@ -10,15 +10,15 @@
         class="flex items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2" type="text">
       <label class="font-semibold text-xs mt-3" for="address">Order type</label>
       <div class="flex gap-x-2">
-        <div>
+        <div v-if="Boolean(Number($page.props.auth.restorant.config.can_deliver))">
           <input v-model="form.order_type" value="1" type="radio" name="order_type" id="delivery"><span
             class="ml-2">Delivery</span>
         </div>
-        <div>
+        <div v-if="Boolean(Number($page.props.auth.restorant.config.can_dinein))">
           <input v-model="form.order_type" value="3" type="radio" name="order_type" id="dinein"><span
             class="ml-2">Dine-in</span>
         </div>
-        <div>
+        <div v-if="Boolean(Number($page.props.auth.restorant.config.can_pickup))">
           <input v-model="form.order_type" value="2" type="radio" name="order_type" id="pickup"><span
             class="ml-2">Pickup</span>
         </div>
@@ -47,7 +47,7 @@
         <option placeholder="Delivery Area" aria-placeholder="Delivery Area" :value="area.delivery_fee"
           v-for="area in areas" :key="area.id">
           <span class="block text-sm py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ area.name
-          }} {{ formatPrice(area.delivery_fee) }}</span>
+          }} {{ area.delivery_fee }}</span>
         </option>
       </select>
 
@@ -56,7 +56,7 @@
           <h1>Subtotal: </h1><span>{{ formatPrice(cart.getSubTotal) }}</span>
         </div>
         <div v-if="cart.delivery" class="flex justify-between">
-          <h1>Delivery Fee: </h1><span>{{ formatPrice(cart.delivery) }}</span>
+          <h1>Delivery Fee: </h1><span>{{ cart.delivery }}</span>
         </div>
         <div class="flex justify-between">
           <h1>Payable: </h1><span>{{ formatPrice(cart.getTotal.toFixed(2)) }}</span>
@@ -73,6 +73,7 @@ import { inject, onMounted } from 'vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import Swal from 'sweetalert2';
 import { Inertia } from '@inertiajs/inertia';
+import { unformat } from 'accounting-js';
 const props = defineProps({
   areas: Object,
   cart: Object

@@ -119,7 +119,6 @@
 import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
 import { onMounted, ref } from 'vue';
 import { useCart } from '@/Stores/cart.js';
-import { unformat } from 'accounting-js';
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import CartModal from '@/Components/CartModal.vue';
 import useProducts from '@/Composables/products';

@@ -1450,6 +1450,9 @@ input[type="range"]::-ms-fill-lower {
 .border-collapse {
   border-collapse: collapse;
 }
+.border-separate {
+  border-collapse: separate;
+}
 .origin-top-left {
   transform-origin: top left;
 }
@@ -1986,6 +1989,10 @@ input[type="range"]::-ms-fill-lower {
   --tw-gradient-from: #FBD5D5;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(251 213 213 / 0));
 }
+.from-slate-200 {
+  --tw-gradient-from: #e2e8f0;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(226 232 240 / 0));
+}
 .to-yellow-300 {
   --tw-gradient-to: #FACA15;
 }
@@ -2000,6 +2007,9 @@ input[type="range"]::-ms-fill-lower {
 }
 .to-red-300 {
   --tw-gradient-to: #F8B4B4;
+}
+.to-slate-300 {
+  --tw-gradient-to: #cbd5e1;
 }
 .bg-cover {
   background-size: cover;
@@ -2031,6 +2041,9 @@ input[type="range"]::-ms-fill-lower {
 }
 .p-8 {
   padding: 2rem;
+}
+.p-12 {
+  padding: 3rem;
 }
 .px-4 {
   padding-left: 1rem;
@@ -2463,6 +2476,10 @@ input[type="range"]::-ms-fill-lower {
   --tw-text-opacity: 1;
   color: rgb(4 108 78 / var(--tw-text-opacity));
 }
+.text-slate-800 {
+  --tw-text-opacity: 1;
+  color: rgb(30 41 59 / var(--tw-text-opacity));
+}
 .underline {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
@@ -2621,6 +2638,9 @@ input[type=number] {
 .even\:bg-gray-200:nth-child(even) {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+.hover\:border-separate:hover {
+  border-collapse: separate;
 }
 .hover\:border-gray-300:hover {
   --tw-border-opacity: 1;
@@ -3074,6 +3094,10 @@ input[type=number] {
     margin-top: 1rem;
   }
 
+  .sm\:mb-0 {
+    margin-bottom: 0px;
+  }
+
   .sm\:block {
     display: block;
   }
@@ -3211,6 +3235,10 @@ input[type=number] {
     margin-top: 0px;
   }
 
+  .md\:mb-0 {
+    margin-bottom: 0px;
+  }
+
   .md\:block {
     display: block;
   }
@@ -3269,6 +3297,10 @@ input[type=number] {
 
   .md\:min-w-full {
     min-width: 100%;
+  }
+
+  .md\:table-auto {
+    table-layout: auto;
   }
 
   .md\:transform {

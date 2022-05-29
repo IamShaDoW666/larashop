@@ -8,7 +8,7 @@
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4" data-index="1" key="1">
             <card-stats
               statSubtitle="CATEGORIES"
-              :statTitle="$page.props.auth.user.id"
+              :statTitle="$page.props.auth.restorant.counts.categories"
               statIconName="view_list"
               statIconColor="bg-orange-500"
             />
@@ -16,8 +16,17 @@
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4" data-index="2" key="2">
             <card-stats
               statSubtitle="PRODUCTS"
-              :statTitle="$page.props.auth.user.id"
+              :statTitle="$page.props.auth.restorant.counts.products"
               statIconName="lunch_dining"
+              statIconColor="bg-pink-500"
+            />
+          </div>
+          <div class="w-full lg:w-6/12 xl:w-3/12 px-4" data-index="3" key="3">
+            <card-stats
+              statSubtitle="SALES"
+              :statTitle="$page.props.auth.restorant.salesCount"
+              :statDescripiron="$page.props.auth.restorant.counts.salesValue"
+              statIconName="shopping_cart"
               statIconColor="bg-pink-500"
             />
           </div>

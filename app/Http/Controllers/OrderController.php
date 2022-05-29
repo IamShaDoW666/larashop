@@ -28,7 +28,7 @@ class OrderController extends Controller
     public function index()
     {
         $restorant = Restorant::with('orders.products')
-            ->find(auth()->user()->id);
+            ->find(auth()->user()->restorant->id);
         ConfChanger::switchCurrency($restorant);
         $restaurant = RestorantResource::make($restorant);
         return inertia('Order/Index', compact('restaurant'));
@@ -74,6 +74,7 @@ class OrderController extends Controller
     {
         $restorant_id = Crypt::decrypt($id);
         $restorant = Restorant::with('config')->find($restorant_id);
+        ConfChanger::switchCurrency($restorant);
         $areas = AreaResource::collection($restorant->areas);
 
         return inertia('Order/Checkout', compact(

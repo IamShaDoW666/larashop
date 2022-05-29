@@ -10,8 +10,8 @@
                     <!-- <button @click="areaOpen = true" class="px-4 py-2 text-sm rounded shadow bg-blue-500 text-white hover:bg-blue-700">Create</button> -->
                 </div>
             </div>
-            <div class="flex-auto px-4 lg:px-10 py-10">
-                <table class="min-w-full border-collapse block md:table rounded-lg">
+            <div v-if="restaurant.orders.length" class="flex-auto px-4 lg:px-10 py-10">
+                <table class="min-w-full border-collapse block md:table md:table-auto rounded-lg">
                     <thead class="block md:table-header-group">
                         <tr
                             class="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
@@ -21,6 +21,9 @@
                             <th
                                 class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
                                 Status</th>
+                            <th
+                                class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
+                                Order Type</th>
                             <th
                                 class="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
                                 Total</th>
@@ -43,6 +46,12 @@
                                 </span>
                                 <OrderStatusBadge :status="order.status" />
                             </td>
+                            <td class="p-2 md:border md:border-grey-500 text-center block md:table-cell">
+                                <span class="inline-block w-1/3 md:hidden font-bold">
+                                    Order Type:
+                                </span>
+                                <OrderTypeBadge :type="order.order_type" />
+                            </td>
                             <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                 <span class="inline-block w-1/3 md:hidden font-bold">
                                     Total:
@@ -57,7 +66,7 @@
                             </td>
                             <td class="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                                 <span class="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                                <OrderButton class="mr-3" @click="updateStatus(order.status, order.id)"
+                                <OrderButton class="mr-3 mb-2 lg:mb-0" @click="updateStatus(order.status, order.id)"
                                     :status="order.status" />
                                 <OrderButton :reject="true" v-if="order.status == 'pending'"
                                     @click="updateStatus(order.status, order.id, false)" />
@@ -65,6 +74,9 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="p-12 text-center md:text-3xl text-xl flex justify-center items-center" v-else>
+                No orders yet <i class="material-icons align-center text-3xl ml-2">more_horiz</i>
             </div>
         </div>
     </Admin>
@@ -74,6 +86,7 @@
 import Admin from "@/Layouts/Admin.vue";
 import OrderButton from "@/Components/Buttons/OrderButton.vue";
 import OrderStatusBadge from "@/Components/Badges/OrderStatusBadge.vue";
+import OrderTypeBadge from "@/Components/Badges/OrderTypeBadge.vue";
 import { Inertia } from "@inertiajs/inertia";
 import { Head, usePage } from "@inertiajs/inertia-vue3";
 import Swal from "sweetalert2";

@@ -20,7 +20,7 @@ class ProductResource extends JsonResource
     return [
       'id' => $this->id,
       'name' => $this->name,
-      'description' =>  ($this->description), 0, 20 . '...',
+      'description' =>  ($this->description) . '...',
       'price' => $price->format(),
       'price_int' => $price->formatByDecimal(),
       'category_id' => $this->category_id,

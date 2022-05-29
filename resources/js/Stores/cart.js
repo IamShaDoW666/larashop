@@ -37,27 +37,13 @@ export const useCart = defineStore('cart', {
   },
 
   actions: {
-    // addToCart(id) {
-    //   if (this.props.products[id].quantity === null) {
-    //     this.props.products[id].quantity = 1
-    //     this.items.push(this.props.products[id])
-    //     this.total++
-    //     console.log(this.props.products)
-    //   } else {
-    //     this.props.products[id].quantity++
-    //     this.total++
-    //     console.log(this.props.products)
-    //   }
-    // },
 
     addCart(id, index) {
       let item = this.items.find(product => product.id == id);
-      console.log('item is: ' + item)
       if (item) {
         item.quantity++
       } else {
         let p = this.products.find((product) => product.id == id)
-        console.log(p)
         p.quantity = 1
         this.items.push(p);
       }
@@ -65,10 +51,6 @@ export const useCart = defineStore('cart', {
 
     getProps(props) {          //Function to assign props state
       this.products = props.products
-    },
-    
-    getFormatter(formatter) {       //Function to assign formatter
-      this.formatter = formatter;
     },
 
     removeFromCart(id, index) {

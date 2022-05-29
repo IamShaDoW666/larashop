@@ -11,11 +11,13 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\Config;
 use App\Models\Category;
+use Carbon\Carbon;
 
 class Restorant extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $appends = ['salesCount', 'counts'];
 
     public function user()
     {
@@ -50,5 +52,27 @@ class Restorant extends Model
     public function config()
     {
       return $this->hasOne(Config::class);
+    }
+    
+    public function getSalesCountAttribute()
+    {
+      return $this->orders()
+        ->where('status', 'closed')
+        ->count();
+    }
+
+    public function getCountsAttribute()
+    {
+      return [
+        'products' => $this->products()->count(),
+        'categories' => $this->categories()->count(),
+        'salesValue' => money(
+            $this->orders()
+              ->where('status', 'closed')
+              ->sum('total'),
+            $this->config->currency
+          )
+          ->format()
+      ];
     }
 }
