@@ -61,7 +61,8 @@ class RestorantController extends Controller
     $restorant = auth()->user()->restorant;
     if (!$restorant) {
       $restorant = Restorant::factory()->create($request->validated());
-      $restorant->user()->associate(auth()->user()); $restorant->save();
+      $restorant->user()->associate(auth()->user());
+      $restorant->save();
       Config::create(['restorant_id' => $restorant->id]);
       auth()->user()->removeRole('Guest');
       auth()->user()->assignRole('Owner');
@@ -82,7 +83,7 @@ class RestorantController extends Controller
     $restorant = Restorant::where('slug', $slug)
       ->with(['categories' => function ($q) {
         $q->whereHas('products');
-      }])
+      }], 'config')
       ->with('products')
       ->firstOrFail();
     ConfChanger::switchCurrency($restorant);
@@ -159,5 +160,4 @@ class RestorantController extends Controller
   {
     return inertia('Restorant/Share');
   }
-
 }

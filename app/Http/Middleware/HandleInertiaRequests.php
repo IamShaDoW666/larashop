@@ -35,6 +35,7 @@ class HandleInertiaRequests extends Middleware
    */
   public function share(Request $request)
   {
+    $user = $request->user() ?? '';
     return array_merge(parent::share($request), [
       'flash' => [
         'message' => session('message')
@@ -47,9 +48,9 @@ class HandleInertiaRequests extends Middleware
       ],
 
       'auth' => [
-        'user' => fn() => $request->user() ?? null,
-        'restorant' => auth()->check() ? $request->user()->restorant ? $request->user()->restorant->load('config') : null : null,
-        'role' => $request->user() ? $request->user()->roles()->first()->name : null,
+        'user' => $user,
+        'restorant' => auth()->check() ? $user->restorant ? $user->restorant->load('config') : null : null,
+        'role' => $user ? $user->roles()->first()->name : null,
       ],
 
       'ziggy' => function () {

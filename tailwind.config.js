@@ -95,6 +95,7 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms'),
     require('flowbite/plugin'),
+    require('daisyui'),
     plugin(function ({ addComponents, theme }) {
       const screens = theme("screens", {});
       addComponents([

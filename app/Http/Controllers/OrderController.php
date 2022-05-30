@@ -31,7 +31,7 @@ class OrderController extends Controller
             ->orderBy('created_at', 'DESC')
             ->paginate(15));
         // return $orders;
-        return inertia('Order/Index', compact('orders'));
+        return inertia('Order/Index1', compact('orders'));
     }
 
     /**

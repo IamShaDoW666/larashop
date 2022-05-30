@@ -26,7 +26,6 @@ createInertiaApp({
 
 InertiaProgress.init({
   color: '#4B5563' ,
-  showSpinner: true
 });
 
 //9605639438

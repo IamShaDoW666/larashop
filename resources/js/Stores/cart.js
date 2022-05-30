@@ -53,6 +53,10 @@ export const useCart = defineStore('cart', {
       this.products = props.products
     },
 
+    resetDelivery() {
+      this.delivery = 0
+    },
+
     removeFromCart(id, index) {
       let item = this.items.find(product => product.id == id);
       if (item) {

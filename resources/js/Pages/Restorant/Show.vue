@@ -139,7 +139,7 @@ export default {
   setup(props) {
 
     const { filter, prod, active } = useProducts(props);
-    const cart = useCart();
+    const cart = useCart(); 
 
     const form = useForm({});
 
@@ -156,7 +156,7 @@ export default {
 
     //Currency Formatter
     let locale = usePage().props.value.app.locale;
-    let currency = usePage().props.value.auth.restorant.config.currency;
+    let currency = props.restaurant.config.currency;
     var formatter = new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: currency,

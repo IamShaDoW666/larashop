@@ -40,7 +40,7 @@
                             class="bg-gray-300 border border-slate-400 lg:border-none block lg:table-row">
                             <td class="p-2 lg:border lg:border-slate-400 text-left lg:text-center block lg:table-cell">
                                 <span class="inline-block w-1/3 lg:hidden font-bold">No:</span>
-                                <span :class="classes"
+                                <span
                                     class="text-sm font-medium mr-2 px-3 py-0.5 rounded-full bg-green-200 text-green-800">
                                     #{{ order.id }}
                                 </span>
