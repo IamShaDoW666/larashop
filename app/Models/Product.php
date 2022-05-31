@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use App\Models\Category;
+use App\Models\Restorant;
 
 class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'price', 'category_id', 'image'];
-    protected $appends = ['imglarge'];
+    protected $fillable = ['name', 'description', 'price', 'category_id', 'image', 'image_path'];
+    // protected $appends = ['imglarge'];
     protected $imagePath = '/imgs/restorants/';
 
     protected function getImge($imageValue, $default, $version = '_large.jpg')
@@ -37,19 +37,18 @@ class Product extends Model
       }
     }
 
-    public function getImgLargeAttribute()
-    {
-      if ($this->image != 'default') {
-        return $this->getImge($this->image, 'default');
-      }
-      else {
-        return $this->imagePath.'default_large.jpg';
-      }
-    }
+    // public function getImgLargeAttribute()
+    // {
+    //   if ($this->image != 'default') {
+    //     return $this->getImge($this->image, 'default');
+    //   }
+    //   else {
+    //     return $this->imagePath.'default_large.jpg';
+    //   }
+    // }
 
     public function category()
     {
       return $this->belongsTo(Category::class);
     }
-
 }

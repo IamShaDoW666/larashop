@@ -13,7 +13,7 @@
         </div>
         <div class="w-full sm:mt-4 bg-gray-100 rounded-lg px-4 py-12">
           <BreezeValidationErrors class="mb-4" />
-          <div v-for="category in restaurant.categories" :key="category.id">
+          <div v-for="category in c" :key="category.id">
             <div class="py-5 flex justify-between text-white my-2 px-4 font-bold bg-gray-800 shadow mb-4 rounded-md">
               <h1>{{ category.name }}</h1>
               <div class="flex items-center gap-x-2">
@@ -35,7 +35,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-8">
               <div class="px-4 py-2" v-for="(product, index) in category.products" :key="product.id">
                 <div @click="openProductEdit(product, category)" class="shadow md:transform md:transition md:duration-300 md:hover:scale-110 rounded">
-                  <img :src="product.imglarge" class="shadow rounded w-full h-full h-48 max-h-48">
+                  <img :src="product.image_path" class="shadow rounded w-full h-full h-48 max-h-48">
                 </div>
                 <div class="-mt-1 flex items-end pl-4 pb-2 pt-6 pr-2 justify-between bg-gray-300 rounded-lg shadow-md">
                   <div>
@@ -70,7 +70,7 @@ import CardStats from "@/Components/Cards/CardStats.vue";
 import Swal from 'sweetalert2';
 
 const props = defineProps({
-  restaurant: Object
+  c: Object
 })
 const form = useForm({
   category: null
@@ -126,7 +126,7 @@ const deleteCategory = (id) => {
 
 
 provide('data', {
-  categories: props.restaurant.categories,
+  categories: props.c,
   categoryOpen,
   categoryOpenEdit, 
   productOpenEdit,

@@ -89,19 +89,19 @@
       <div class="max-w-7xl  sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg shadow-lg">
           <div class="p-6 bg-white border-b border-gray-200">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 sm:gap-y-8">
               <div class="px-4 py-2" v-for="(product, index) in prod" :key="product.id">
                 <div class="shadow md:transform md:transition md:duration-300 md:hover:scale-110 rounded">
-                  <img :src="product.imglarge" class="shadow rounded w-full h-48 max-h-48 h-full">
+                  <img :src="product.image_path ?? '/imgs/restorants/default_large.jpg'" class="shadow mx-auto rounded object-fit h-48 max-h-48 h-full">
                 </div>
-                <div class="-mt-1 flex items-end pl-4 pb-2 pt-6 pr-2 justify-between bg-gray-300 rounded-lg shadow-md">
+                <div class="md:-mt-1 flex items-end pl-4 pb-2 pt-6 pr-2 justify-between bg-gray-300 rounded-lg shadow-md">
                   <div>
                     <h1 class="font-bold">{{ product.name }}</h1>
                     <h1>{{ product.price }}</h1>
                   </div>
                   <div>
                     <button @click="toCart(product.id, index)"
-                      class="px-2 py-2 active:bg-green-200 hover:ring-blue-900 text-white font-bold rounded bg-green-500 hover:bg-green-400">Add
+                      class="sm:px-2 sm:py-2 px-1.5 py-1 text-lg sm:text-xs lg:text-xs active:bg-green-200 hover:ring-blue-900 text-white font-bold rounded bg-green-500 hover:bg-green-400">Add
                       To Cart</button>
                   </div>
                 </div>

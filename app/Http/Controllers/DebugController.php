@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Restorant;
 use Cknow\Money\Currency;
 use Cknow\Money\Money;
+use Spatie\OpeningHours\OpeningHours;
 
 
 class DebugController extends Controller
@@ -17,8 +18,11 @@ class DebugController extends Controller
 
   public function debug()
   {
-    $categories = CategoryResource::collection(Category::all());
-    return inertia('Debug', compact('categories'));
+    $openingHours = OpeningHours::create([
+      'monday' => ['09:00-12:00', '13:00-18:00'],
+      // ...
+    ]);
+    dd($openingHours);
   }
 
   public function test()

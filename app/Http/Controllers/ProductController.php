@@ -23,7 +23,7 @@ use Cknow\Money\Money;
 class ProductController extends Controller
 {
 
-  private $imagePath = 'imgs/restorants/';
+  private $imagePath = '/imgs/restorants/';
   /**
   * Display a listing of the resource.
   *
@@ -33,10 +33,16 @@ class ProductController extends Controller
   {
     $restorant = auth()->user()->restorant;
     ConfChanger::switchCurrency($restorant);
-    $restaurant = RestorantResource::make(Restorant::with('categories.products')
-      ->get()
-      ->find($restorant->id));
-    return inertia('Product/Index', compact('restaurant'));
+    // $restaurant = RestorantResource::make(Restorant::with('categories.products')
+    //   ->where('id', $restorant->id)
+    //   ->first());
+
+    $categories = Category::query()
+      ->with('products')
+      ->where('restorant_id', $restorant->id)
+      ->get();
+    $c = CategoryResource::collection($categories);
+    return inertia('Product/Index', compact('c'));
   }
 
   /** 
@@ -71,9 +77,10 @@ public function store(StoreProductRequest $request)
       'name' => $request->name,
       'description' => $request->description,
       'price' => money($request->price, config('global.currency'), true)->getAmount(),
-      'image' => $imgpath,
+      'image_path' => $this->imagePath . auth()->user()->restorant->slug . '/' . $imgpath . '_large.jpg',
+      'image' => $imgpath
     ]);
-
+    
     //Assign Category
     $category = Category::where('id', $request->category['id'])->first();
     $product->category()->associate($category)->save();
@@ -124,7 +131,8 @@ public function store(StoreProductRequest $request)
       'name' => $request->name,
       'description' => $request->description,
       'price' => money($request->price, env('APP_CURRENCY'), true)->getAmount(),
-      'image' => $imgpath
+      'image' => $imgpath,
+      'image_path' => $this->imagePath . auth()->user()->restorant->slug . '/' . $imgpath . '_large.jpg',
     ];
     $product->update($data);
 
@@ -151,20 +159,6 @@ public function store(StoreProductRequest $request)
     $restaurant = Category::findOrFail($id)->restorant;
     ConfChanger::switchCurrency($restaurant);
     return ProductResource::collection(Product::where('category_id', $id)->get());
-  }
-
-  private function formatprice($price)
-  {
-    $formatArray = explode(".", $price);
-    if (sizeof($formatArray) > 1) {
-      $formatArray[0] = (int)$formatArray[0].'00';
-      $formattedPrice = (int)$formatArray[0] + (int)$formatArray[1];
-      return $formattedPrice;
-
-    } else {
-      $formattedPrice = $formatArray[0].'00';
-      return (int)$formattedPrice;
-    }
   }
 
   private function uploadimage($image)

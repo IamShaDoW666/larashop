@@ -84,11 +84,10 @@
 
 <script setup>
 import { useForm, usePage } from '@inertiajs/inertia-vue3';
-import { computed, inject, onMounted, watch } from 'vue';
+import { onMounted, watch } from 'vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import Swal from 'sweetalert2';
 import { Inertia } from '@inertiajs/inertia';
-import { unformat } from 'accounting-js';
 const props = defineProps({
   areas: Object,
   cart: Object,

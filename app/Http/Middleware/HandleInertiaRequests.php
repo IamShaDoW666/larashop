@@ -35,8 +35,24 @@ class HandleInertiaRequests extends Middleware
    */
   public function share(Request $request)
   {
-    $user = $request->user() ?? '';
-    return array_merge(parent::share($request), [
+    $authArray = !$request->user() ? [] : [
+      'auth' => [
+        'user' => $request->user(),
+        'role' => $request->user()->roles()->first()->name,
+      ],
+    ];
+
+    if (str_contains($request->fullUrl(), config('app.url') . '/admin')) {
+      $authArray = !$request->user() ? [] : [
+        'auth' => [
+          'user' => $request->user(),
+          'restorant' => $request->user()->restorant ? $request->user()->restorant->load('config') : null,
+          'role' => $request->user()->roles()->first()->name,
+        ],
+      ];
+    }
+
+    return array_merge(parent::share($request), $authArray, [
       'flash' => [
         'message' => session('message')
       ],
@@ -45,12 +61,6 @@ class HandleInertiaRequests extends Middleware
         'locale' => config('app.locale'),
         'faker_locale' => config('app.faker_locale'),
         'url' => config('app.url')
-      ],
-
-      'auth' => [
-        'user' => $user,
-        'restorant' => auth()->check() ? $user->restorant ? $user->restorant->load('config') : null : null,
-        'role' => $user ? $user->roles()->first()->name : null,
       ],
 
       'ziggy' => function () {
