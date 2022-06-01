@@ -30,7 +30,7 @@
                     <i class="fa-solid fa-ban"></i>
                   </button>
                 </form>
-              </div>
+              </div>  
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-8">
               <div class="px-4 py-2" v-for="(product, index) in category.products" :key="product.id">

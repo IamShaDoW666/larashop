@@ -11,13 +11,7 @@
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 bg-white border-b border-gray-200">
-            <div class="mb-4 mx-auto px-4 py-2 rounded-full text-center bg-red-500">
-              <div class="radial-progress" :style="val">{{ pbar }}%</div>
-            </div>
-            <button @click="start = !start" type="button" class="btn btn-circle">
-              <span class="material-icons">done_all</span>
-            </button>
-            <button class="butn bg-blue-300">Button</button>
+            <GooglePay />
           </div>
         </div>
       </div>
@@ -25,60 +19,62 @@
   </BreezeAuthenticatedLayout>
 </template>
 
-<script setup>
+<script>
 import { Head, useForm, Link } from '@inertiajs/inertia-vue3';
-import { onMounted, ref, reactive, watch, computed } from 'vue';
-import { gsap } from 'gsap';
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { Inertia } from '@inertiajs/inertia';
-import Swal from 'sweetalert2';
+import { GooglePlayButton } from 'vue-google-pay';
+import GooglePay from '@/Components/GooglePay.vue';
+export default {
+  components: {
+    Head,
+    Link,
+    BreezeAuthenticatedLayout,
+    GooglePlayButton ,
+    GooglePay
+  },
 
-const pbar = ref(0);
-const start = ref(false);
-const props = defineProps({
-  categories: Object,
-})
-
-const val = computed(() => {
-  return '--value:' + pbar.value
-})
-
-setInterval(function () {
-  if (!start.value) {
-    return ''
+  data() {
+    return {
+      environment: 'TEST',
+      buttonColor: 'white',
+      allowedCardNetworks: [
+        'AMEX',
+        'DISCOVER',
+        'INTERAC',
+        'JCB',
+        'MASTERCARD',
+        'VISA'
+      ],
+      allowedCardAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+      merchantInfo: {
+        merchantName: 'Example Merchant',
+        merchantId: '0123456789'
+      },
+      transactionInfo: {
+        totalPriceStatus: 'FINAL',
+        totalPrice: '1.00',
+        currencyCode: 'USD',
+        countryCode: 'US'
+      },
+      tokenizationSpecification: {
+        type: 'PAYMENT_GATEWAY',
+        parameters: {
+          gateway: 'example',
+          gatewayMerchantId: 'exampleGatewayMerchantId'
+        }
+      }
+    }
+  },
+  methods: {
+    payed(paymentData) {
+      // process payment
+    },
+    cancelled() {
+      // handle cancel event
+    }
   }
-  pbar.value++;
-  if (pbar.value == 100) {
-    start.value = !start.value
-    pbar.value = 0
-    Swal.fire({
-      icon: 'success',
-      title: 'Success!'
-    })
-  }
-}, 25)
 
-
-
-//GSAP animations
-
-const enter = (el) => {
-  gsap.from(el, {
-    opacity: 0,
-    duration: 0.6,
-    ease: 'easeOut',
-    y: -50,
-  })
 }
 
-const leave = (el) => {
-  gsap.fromTo(el, {
-    opacity: 100,
-    y: 0
-  }, {
-    opacity: 0,
-    duration: 0.5,
-    y: -50
-  })
-}
+
 </script>

@@ -50,7 +50,7 @@
             <h1>Delivery Fee: </h1><span>{{ cart.delivery }}</span>
           </div>
           <div class="flex justify-between">
-            <h1>Payable: </h1><span>{{ formatPrice(cart.getTotal.toFixed(2)) }}</span>
+            <h1>Payable: </h1><span>{{ formatPrice(cart.getSubTotal) }}</span>
           </div>
         </li>
       </ul>

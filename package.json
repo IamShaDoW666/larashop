@@ -27,6 +27,7 @@
         "vue-loader": "^17.0.0"
     },
     "dependencies": {
+        "@google-pay/button-element": "^3.0.0",
         "@headlessui/vue": "^1.6.1",
         "@heroicons/vue": "^1.0.6",
         "@popperjs/core": "^2.11.5",
@@ -40,6 +41,7 @@
         "material-icons": "^1.10.9",
         "pinia": "^2.0.13",
         "pinia-plugin-persist": "^1.0.0",
-        "sweetalert2": "^11.4.10"
+        "sweetalert2": "^11.4.10",
+        "vue-google-pay": "0.0.2"
     }
 }

@@ -165,7 +165,7 @@ public function store(StoreProductRequest $request)
   {
     //Check if folder exists and make if not
     if (!File::exists($this->imagePath.auth()->user()->restorant->slug)) {
-      File::makeDirectory($this->imagePath.auth()->user()->restorant->slug, $mode = 0777, true, true);
+      File::makeDirectory($this->imagePath.auth()->user()->restorant->slug, $mode = 777, true, true);
     }
     //Save Image
     return $this->saveImageVersions(

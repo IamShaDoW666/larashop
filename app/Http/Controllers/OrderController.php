@@ -55,10 +55,10 @@ class OrderController extends Controller
             $arr[$key] = ['quantity' => $items_id];
         }
         $order = Order::factory()->create([
-            'customer_name' => $request->customer_name,
-            'customer_phone' => $request->customer_phone,
-            'address' => $request->address,
-            'order_type' => $request->order_type,
+            'customer_name' => $request->form['customer_name'],
+            'customer_phone' => $request->form['customer_phone'],
+            'address' => $request->form['address'],
+            'order_type' => $request->form['order_type'],
             'delivery_fee' => money($cart['delivery'], config('global.currency'), true)->getAmount(),
             'total' => money($cart['total'], config('global.currency'), true)->getAmount()
         ]);

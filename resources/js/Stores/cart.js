@@ -53,6 +53,16 @@ export const useCart = defineStore('cart', {
       this.products = props.products
     },
 
+    getCart() {
+      return {
+        items: this.items,
+        subTotal: this.subTotal,
+        totalItems: this.totalItems,
+        delivery: unformat(this.delivery),
+        total: this.total
+      }
+    },
+
     resetDelivery() {
       this.delivery = 0
     },

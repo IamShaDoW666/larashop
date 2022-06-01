@@ -18,11 +18,7 @@ class DebugController extends Controller
 
   public function debug()
   {
-    $openingHours = OpeningHours::create([
-      'monday' => ['09:00-12:00', '13:00-18:00'],
-      // ...
-    ]);
-    dd($openingHours);
+    return inertia('Debug');
   }
 
   public function test()

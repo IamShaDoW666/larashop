@@ -1,6 +1,5 @@
 <template>
     <Admin :headerStats="false">
-
         <Head title="Orders" />
         <div
             class="relative flex mt-2 sm:mt-4 flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">

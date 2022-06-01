@@ -33,21 +33,6 @@
               class="radio checked:bg-slate-500" />
           </label>
         </div>
-        <!-- <div v-if="Boolean(Number(restorant.config.can_deliver))">
-          <input class="radio radio-primary" v-model="form.order_type" value="1" type="radio" name="order_type"
-            id="delivery">
-          <span class="ml-2">Delivery</span>
-        </div>
-        <div v-if="Boolean(Number(restorant.config.can_dinein))">
-          <input class="radio radio-primary" v-model="form.order_type" value="3" type="radio" name="order_type"
-            id="dinein">
-          <span class="ml-2">Dine-in</span>
-        </div>
-        <div v-if="Boolean(Number(restorant.config.can_pickup))">
-          <input class="radio radio-primary" v-model="form.order_type" value="2" type="radio" name="order_type"
-            id="pickup">
-          <span class="ml-2">Pickup</span>
-        </div> -->
       </div>
       <label class="font-semibold text-xs mt-3" for="address">Address</label>
       <textarea v-model="form.address" rows="4"
@@ -83,11 +68,11 @@
 </template>
 
 <script setup>
-import { useForm, usePage } from '@inertiajs/inertia-vue3';
-import { onMounted, watch } from 'vue';
+import { usePage } from '@inertiajs/inertia-vue3';
+import { onMounted, reactive, watch } from 'vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
-import Swal from 'sweetalert2';
 import { Inertia } from '@inertiajs/inertia';
+
 const props = defineProps({
   areas: Object,
   cart: Object,
@@ -107,13 +92,12 @@ const props = defineProps({
 //   }
 // })
 
-const form = useForm({
+const form = reactive({
   customer_name: '',
   customer_phone: '',
   address: '',
   checked: false,
   order_type: 1,
-  cart: props.cart
 })
 
 watch(form, (value) => {
@@ -123,24 +107,14 @@ watch(form, (value) => {
 })
 
 const submit = () => {
-  form.post(route('orders.store', { restorant: props.restorant.uuid }), {
+  Inertia.post(route('orders.store', { restorant: props.restorant.uuid }), {
+    form,
+    cart: props.cart.getCart()
+  }), {
     onSuccess: () => {
-      Swal.fire({
-        icon: 'success',
-        title: 'Order Successful!',
-        timer: 1000,
-        timerProgressBar: true,
-        didClose: () => {
-          Inertia.post(
-            route('orders.send'),
-            {
-
-            }
-          )
-        }
-      })
+      alert('Order Successful')
     }
-  })
+  }
 }
 
 //Currency Formatter
