@@ -94,7 +94,7 @@
                 <div class="shadow md:transform md:transition md:duration-300 md:hover:scale-110 rounded">
                   <img :src="product.image_path ?? '/imgs/restorants/default_large.jpg'" class="shadow mx-auto rounded object-fit h-48 max-h-48 h-full">
                 </div>
-                <div class="md:-mt-1 flex items-end pl-4 pb-2 pt-6 pr-2 justify-between bg-gray-300 rounded-lg shadow-md">
+                <div class="flex items-end pl-4 pb-2 pt-6 pr-2 justify-between bg-gray-300 rounded-lg shadow-md">
                   <div>
                     <h1 class="font-bold">{{ product.name }}</h1>
                     <h1>{{ product.price }}</h1>

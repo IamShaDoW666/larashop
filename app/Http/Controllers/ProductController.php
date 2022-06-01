@@ -23,7 +23,7 @@ use Cknow\Money\Money;
 class ProductController extends Controller
 {
 
-  private $imagePath = '/imgs/restorants/';
+  private $imagePath = '/imgs/';
   /**
   * Display a listing of the resource.
   *
@@ -77,7 +77,7 @@ public function store(StoreProductRequest $request)
       'name' => $request->name,
       'description' => $request->description,
       'price' => money($request->price, config('global.currency'), true)->getAmount(),
-      'image_path' => $this->imagePath . auth()->user()->restorant->slug . '/' . $imgpath . '_large.jpg',
+      'image_path' => $this->imagePath.$imgpath . '_large.webp',
       'image' => $imgpath
     ]);
     
@@ -132,7 +132,7 @@ public function store(StoreProductRequest $request)
       'description' => $request->description,
       'price' => money($request->price, env('APP_CURRENCY'), true)->getAmount(),
       'image' => $imgpath,
-      'image_path' => $this->imagePath . auth()->user()->restorant->slug . '/' . $imgpath . '_large.jpg',
+      'image_path' => $this->imagePath.$imgpath . '_large.webp',
     ];
     $product->update($data);
 
@@ -163,19 +163,15 @@ public function store(StoreProductRequest $request)
 
   private function uploadimage($image)
   {
-    //Check if folder exists and make if not
-    if (!File::exists($this->imagePath.auth()->user()->restorant->slug)) {
-      File::makeDirectory($this->imagePath.auth()->user()->restorant->slug, $mode = 777, true, true);
-    }
     //Save Image
     return $this->saveImageVersions(
-      $this->imagePath.auth()->user()->restorant->slug.'/',
+      $this->imagePath,
       $image,
       [
-        ['name'=>'large', 'w'=>590, 'h'=>400],
-        //['name'=>'thumbnail','w'=>300,'h'=>300],
-        ['name'=>'medium', 'w'=>295, 'h'=>200],
-        ['name'=>'thumbnail', 'w'=>200, 'h'=>200],
+        ['name'=>'large', 'w'=>590, 'h'=>400, 'type'=>'webp'],
+        //['name'=>'thumbnail','w'=>300,'h'=>300, 'type'=>'webp'],
+        ['name'=>'medium', 'w'=>295, 'h'=>200, 'type'=>'webp'],
+        ['name'=>'thumbnail', 'w'=>200, 'h'=>200, 'type'=>'webp'],
       ]
     );
   }

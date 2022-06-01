@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Buglinjo\LaravelWebp\WebpServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -232,6 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         //Custom Providers
         'Image' => Intervention\Image\ImageManagerStatic::class,
+        'Webp' => Buglinjo\LaravelWebp\Facades\Webp::class,
 
     ],
 
