@@ -30,11 +30,10 @@
                <div class="w-full lg:w-6/12 px-4">
                   <div class="relative w-full mb-3">
                      <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                        Whatsapp Phone
+                        Phone
                      </label>
-                     <MazPhoneNumberInput no-use-browser-locale no-example v-model="form.phone"
-                        show-code-on-list color="info" :preferred-countries="['FR', 'IN', 'BE', 'DE', 'US', 'GB']"
-                        :ignored-countries="['AC']" @update="results = $event" :success="results?.isValid" />
+                     <input type="string" v-model="form.phone"
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                   </div>
                </div>
                <div class="w-full lg:w-6/12 px-4">
@@ -161,9 +160,9 @@ const form = useForm({
    can_pickup: conf ? Boolean(Number(conf.can_pickup)) : false,
    city: restorant ? restorant.city : '',
    postal_code: restorant ? restorant.postal_code : '',
-   currency: conf ? conf.currency : '' 
+   currency: conf ? conf.currency : ''
 });
-const results = ref()
+
 const update = () => {
    form.patch(route('owner.restorant.update', { restorant: usePage().props.value.auth.restorant.id }), {
       onSuccess: () => {

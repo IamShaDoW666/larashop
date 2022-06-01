@@ -92,6 +92,20 @@ module.exports = {
     "disabled",
   ],
 
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          primary: "#3760E0",
+          secondary: "#85DE12",
+          accent: "#DE4D28",
+          neutral: "#3d4451",
+          "base-100": "#ffffff",
+        },
+      },
+    ],
+  },
+
   plugins: [
     require('@tailwindcss/forms'),
     require('flowbite/plugin'),
