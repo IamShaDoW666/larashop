@@ -168,7 +168,8 @@ public function store(StoreProductRequest $request)
       $this->imagePath,
       $image,
       [
-        ['name'=>'large', 'w'=>590, 'h'=>400, 'type'=>'webp'],
+        ['name'=>'large', 'w'=>239, 'h'=>192, 'type'=>'webp'],
+        ['name' => 'xl', 'w' => 500, 'h' => 480, 'type' => 'webp'],
         //['name'=>'thumbnail','w'=>300,'h'=>300, 'type'=>'webp'],
         ['name'=>'medium', 'w'=>295, 'h'=>200, 'type'=>'webp'],
         ['name'=>'thumbnail', 'w'=>200, 'h'=>200, 'type'=>'webp'],

@@ -9,7 +9,6 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Str;
 
 use Webp;
-use Image;
 
 class Controller extends BaseController
 {
@@ -24,6 +23,8 @@ class Controller extends BaseController
       //Regular upload
       //Make UUID
       $uuid = Str::uuid()->toString();
+      $webp = Webp::make($laravel_image_resource);
+      dd($webp);
 
       //Make the versions
       foreach ($versions as $key => $version) {
@@ -31,14 +32,11 @@ class Controller extends BaseController
         if (isset($version['type'])) {
           $ext = $version['type'];
         }
-        if (isset($version['w']) && isset($version['h'])) {
-          $img = Image::make($laravel_image_resource->getRealPath())->fit($version['w'], $version['h'])->encode('webp', 70);;
-          $img->save(public_path($folder) . $uuid . '_' . $version['name'] . '.' . 'webp', 100, $ext);
-        } else {
-          //Original image
-          $img = Image::make($laravel_image_resource->getRealPath())->encode('webp', 70);;
-          $img->save(public_path($folder) . $uuid . '_' . $version['name'] . '.' . 'webp', 100, $ext);
-        }
+        //Original image
+        $img = Webp::make($laravel_image_resource);
+        $img->save(public_path($folder) . $uuid . '_' . $version['name'] . '.' . 'webp');
+        //$laravel_image_resource->move(public_path($folder), $uuid.'_'.$version['name'].'.'.'jpg');
+
       }
 
       return $uuid;
