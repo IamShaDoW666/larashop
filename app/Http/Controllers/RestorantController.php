@@ -16,6 +16,7 @@ use App\Http\Resources\CategoryResource;
 use App\Http\Requests\StoreRestorantRequest;
 use App\Http\Requests\UpdateRestorantRequest;
 use App\Models\Config;
+use App\Models\Hour;
 use App\Services\ConfChanger;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -64,6 +65,7 @@ class RestorantController extends Controller
       $restorant->user()->associate(auth()->user());
       $restorant->save();
       Config::create(['restorant_id' => $restorant->id]);
+      Hour::create(['restorant_id' => $restorant->id]);
       auth()->user()->removeRole('Guest');
       auth()->user()->assignRole('Owner');
       return redirect(route('admin.dashboard'));;
@@ -160,4 +162,17 @@ class RestorantController extends Controller
   {
     return inertia('Restorant/Share');
   }
+
+  public function workingHours()
+  {
+    $hours = Hour::where('restorant_id', auth()->user()->restorant->id)->first();
+    return inertia('Restorant/WorkingHours', compact('hours'));
+  }
+
+  public function updateWorkingHours(Request $request, Restorant $restorant)
+  {
+    $restorant->hours->update($request->all());
+    return back()->with(['message' => 'Updated Successfully!']);
+  }
+
 }

@@ -32,11 +32,9 @@
         "@heroicons/vue": "^1.0.6",
         "@popperjs/core": "^2.11.5",
         "@vue-hero-icons/outline": "^1.7.2",
-        "@vueuse/core": "^8.3.1",
         "accounting-js": "^1.1.1",
         "chart.js": "^3.7.1",
         "daisyui": "^2.15.1",
-        "flowbite": "^1.4.4",
         "gsap": "^3.10.4",
         "libphonenumber-js": "^1.10.6",
         "material-icons": "^1.10.9",
@@ -44,6 +42,7 @@
         "pinia": "^2.0.13",
         "pinia-plugin-persist": "^1.0.0",
         "sweetalert2": "^11.4.10",
-        "vue-google-pay": "0.0.2"
+        "vue-google-pay": "0.0.2",
+        "vue3-timepicker": "^1.0.0-beta.2"
     }
 }

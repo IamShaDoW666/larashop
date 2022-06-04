@@ -6,7 +6,6 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\CategoryResource;

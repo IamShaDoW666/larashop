@@ -1,5 +1,6 @@
 <template>
     <Admin :headerStats="false">
+
         <Head title="Orders" />
         <div
             class="relative flex mt-2 sm:mt-4 flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
@@ -14,7 +15,7 @@
                 <table class="table table-compact w-full">
                     <thead>
                         <tr>
-                            <th class="text-center">ID</th>
+                            <th class="text-center" style="z-index: 0!important">ID</th>
                             <th>Status</th>
                             <th>Order Type</th>
                             <th>Total</th>
@@ -24,7 +25,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="order in orders.data" :key="order.id">
-                            <th class="text-center">
+                            <th class="text-center" style="z-index: 0!important">
                                 <span
                                     class="text-sm font-medium mr-2 px-3 py-0.5 rounded-full bg-green-200 text-green-800">
                                     #{{ order.id }}

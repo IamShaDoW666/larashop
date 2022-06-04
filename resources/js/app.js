@@ -6,7 +6,7 @@ import { createInertiaApp } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
 import piniaPersist from 'pinia-plugin-persist'
 import 'maz-ui/css/main.css';
-import 'flowbite';
+// import 'flowbite';
 
 
 const pinia = createPinia()

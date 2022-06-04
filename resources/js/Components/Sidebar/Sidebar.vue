@@ -94,7 +94,7 @@
             class="items-center hover:text-gray-500">
             <div>
               <Link :href="route('admin.orders')" preserve-scroll>
-              <i class="material-icons mr-2 text-sm">list</i> 
+              <i class="material-icons mr-2 text-sm">list</i>
               Orders
               </Link>
             </div>
@@ -110,7 +110,7 @@
             </div>
           </li>
 
-          <li :class="{ 'text-black font-bold': route().current('restorant.share') }"
+          <li :class="{ 'text-black font-bold': route().current('owner.restorant.share') }"
             class="items-center hover:text-gray-500">
             <div>
               <Link :href="route('owner.restorant.share')" preserve-scroll>
@@ -118,7 +118,17 @@
               Share
               </Link>
             </div>
-          </li> 
+          </li>
+
+          <li :class="{ 'text-black font-bold': route().current('owner.restorant.working-hours') }"
+            class="items-center hover:text-gray-500">
+            <div>
+              <Link :href="route('owner.restorant.working-hours')" preserve-scroll>
+              <i class="material-icons mr-2 text-sm">schedule</i>
+              Working Hours
+              </Link>
+            </div>
+          </li>
 
           <!-- <li class="items-center hover:text-gray-500">
     <div>
@@ -142,6 +152,7 @@
 <script>
 import UserDropdown from "@/Components/Dropdowns/UserDropdown.vue";
 import { Link } from "@inertiajs/inertia-vue3";
+
 export default {
   data() {
     return {

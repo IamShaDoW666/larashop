@@ -10,6 +10,7 @@ use App\Models\Area;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\Config;
+use App\Models\Hour;
 use App\Models\Category;
 use Carbon\Carbon;
 
@@ -52,6 +53,11 @@ class Restorant extends Model
     public function config()
     {
       return $this->hasOne(Config::class);
+    }
+
+    public function hours()
+    {
+      return $this->hasOne(Hour::class);
     }
     
     public function getSalesCountAttribute()

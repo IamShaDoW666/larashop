@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RestorantController;
 use App\Models\Product;
+use App\Models\Restorant;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,3 +29,7 @@ Route::get('/products', function() {
 });
 Route::get('/debug', [DebugController::class, 'test'])->name('api.debug');
 Route::get('/restorants/{restorant:slug}', [DebugController::class, 'show']);
+
+Route::get('/hours', function() {
+    return Restorant::find(1)->hours;
+});

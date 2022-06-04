@@ -64,7 +64,7 @@ Route::group(['middleware' => ['auth', 'role:Guest'], 'prefix' => 'guest'], func
 // DEBUGS
 Route::get('/debug', [DebugController::class, 'debug'])->name('debug');
 
-Route::post('/debug/test', [DebugController::class, 'test'])->name('debug.test');
+Route::post('/debug/post/{restorant}', [DebugController::class, 'post'])->name('debug.post');
 
 Route::post('/debug', function() {
   $user = User::find(1);
@@ -88,6 +88,8 @@ Route::group(['middleware' => ['auth', 'role:Owner'], 'prefix' => 'admin'], func
 
   Route::get('/restorant', [RestorantController::class, 'index'])->name('owner.restorant.index');
   Route::get('/restorant/share', [RestorantController::class, 'share'])->name('owner.restorant.share');
+  Route::get('/restorant/working-hours', [RestorantController::class, 'workingHours'])->name('owner.restorant.working-hours');
+  Route::post('/restorant/update-working-hours/{restorant}', [RestorantController::class, 'updateWorkingHours'])->name('owner.restorant.update-working-hours');
   Route::patch('/restorant/{restorant}', [RestorantController::class, 'update'])->name('owner.restorant.update');
 
   Route::patch('/user/{user}', [RegisteredUserController::class, 'update'])->name('owner.user.update');

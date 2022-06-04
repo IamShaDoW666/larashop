@@ -6,10 +6,12 @@ use App\Http\Resources\CategoryResource;
 use App\Http\Resources\RestorantResource;
 use App\Models\Category;
 use App\Models\Config;
+use App\Models\Hour;
 use App\Models\Product;
 use App\Models\Restorant;
 use Cknow\Money\Currency;
 use Cknow\Money\Money;
+use Illuminate\Http\Request;
 use Spatie\OpeningHours\OpeningHours;
 
 
@@ -21,11 +23,11 @@ class DebugController extends Controller
     return inertia('Debug');
   }
 
-  public function test()
+  public function post(Request $request, Restorant $restorant)
   { 
-    $product = Product::all();
-    return $product;
-  } 
+    $restorant->hours->update($request->all());
+    return back();
+  }
 
 
   public function show($slug)
