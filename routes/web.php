@@ -64,7 +64,7 @@ Route::group(['middleware' => ['auth', 'role:Guest'], 'prefix' => 'guest'], func
 // DEBUGS
 Route::get('/debug', [DebugController::class, 'debug'])->name('debug');
 
-Route::post('/debug/post/{restorant}', [DebugController::class, 'post'])->name('debug.post');
+Route::post('/debug/post', [DebugController::class, 'post'])->name('debug.post');
 
 Route::post('/debug', function() {
   $user = User::find(1);

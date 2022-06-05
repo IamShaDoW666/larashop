@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewOrder;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\RestorantResource;
 use App\Models\Category;
@@ -23,9 +24,9 @@ class DebugController extends Controller
     return inertia('Debug');
   }
 
-  public function post(Request $request, Restorant $restorant)
+  public function post(Request $request)
   { 
-    $restorant->hours->update($request->all());
+    NewOrder::dispatch(auth()->user());
     return back();
   }
 

@@ -41,7 +41,8 @@ class HandleInertiaRequests extends Middleware
         'role' => $request->user()->roles()->first()->name,
       ],
     ];
-
+    
+    $pusherArray = [];
     if (str_contains($request->fullUrl(), config('app.url') . '/admin')) {
       $authArray = !$request->user() ? [] : [
         'auth' => [
@@ -50,9 +51,14 @@ class HandleInertiaRequests extends Middleware
           'role' => $request->user()->roles()->first()->name,
         ],
       ];
+
+      $pusherArray = !$request->user() ? [] : [
+        'pusher' => config('pusher')
+      ];
     }
 
-    return array_merge(parent::share($request), $authArray, [
+
+    return array_merge(parent::share($request), $authArray, $pusherArray, [
       'flash' => [
         'message' => session('message')
       ],

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewOrder as PusherNewOrder;
 use Illuminate\Http\Request;
 
 use App\Http\Resources\AreaResource;
@@ -66,8 +67,10 @@ class OrderController extends Controller
         $order->products()->sync($arr);
         $order->save();
         $message = $order->getSocialMessageAttribute(true);
+        broadcast(new PusherNewOrder(new OrderResource($order)));
         $url = 'https://api.whatsapp.com/send?phone=' . $order->restorant->phone . '&text=' . $message;
-        return Inertia::location($url);
+
+        // return Inertia::location($url);
     }
 
     public function checkin($id)
