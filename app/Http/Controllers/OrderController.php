@@ -70,7 +70,7 @@ class OrderController extends Controller
         broadcast(new PusherNewOrder(new OrderResource($order)));
         $url = 'https://api.whatsapp.com/send?phone=' . $order->restorant->phone . '&text=' . $message;
 
-        // return Inertia::location($url);
+        return Inertia::location($url);
     }
 
     public function checkin($id)
