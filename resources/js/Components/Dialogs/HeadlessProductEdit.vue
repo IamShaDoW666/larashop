@@ -126,7 +126,7 @@ const emit = defineEmits(['input'])
 
 const { productOpenEdit, dProduct, dCategory } = inject('data')
 
-const previewImage = ref(dProduct.value.imglarge)
+const previewImage = ref(dProduct.value.image_path)
 const fileInput = ref();
 
 const form = useForm({
@@ -134,7 +134,7 @@ const form = useForm({
   description: dProduct.value.description,
   price: dProduct.value.price_int,
   category: dCategory.value,
-  product_image: dProduct.value.imglarge
+  product_image: dProduct.value.image_path
 
 })
 
