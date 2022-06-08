@@ -67,7 +67,11 @@ class OrderController extends Controller
         $order->products()->sync($arr);
         $order->save();
         $message = $order->getSocialMessageAttribute(true);
-        broadcast(new PusherNewOrder(new OrderResource($order)));
+        //Broadcast Pusher if exists        
+        if (config('pusher') && config('pusher.exists')) {
+            broadcast(new PusherNewOrder(new OrderResource($order)));
+        }
+
         $url = 'https://api.whatsapp.com/send?phone=' . $order->restorant->phone . '&text=' . $message;
 
         return Inertia::location($url);
