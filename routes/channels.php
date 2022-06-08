@@ -20,6 +20,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 
 
 
-Broadcast::channel('test', function () {
+Broadcast::channel('test.{id}', function () {
     return true;
 });
