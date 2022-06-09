@@ -88,7 +88,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<!-- <style scoped>
 .colored-toast.swal2-icon-success {
   background-color: #a5dc86 !important;
 }
@@ -104,4 +104,4 @@ export default {
 .colored-toast .swal2-html-container {
   color: white;
 }
-</style>
+</style> -->
