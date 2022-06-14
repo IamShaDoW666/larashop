@@ -130,6 +130,16 @@
             </div>
           </li>
 
+          <li :class="{ 'text-black font-bold': route().current('owner.restorant.location') }"
+            class="items-center hover:text-gray-500">
+            <div>
+              <Link :href="route('owner.restorant.location')" preserve-scroll>
+              <i class="material-icons mr-2 text-sm">place</i>
+              Location
+              </Link>
+            </div>
+          </li>
+
           <!-- <li class="items-center hover:text-gray-500">
     <div>
       <a>

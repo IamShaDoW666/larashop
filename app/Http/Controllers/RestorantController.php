@@ -175,4 +175,18 @@ class RestorantController extends Controller
     return back()->with(['message' => 'Updated Successfully!']);
   }
 
+  public function location()
+  {
+    $googleMapsApiKey = config('global.google_maps_api_key');
+    return inertia('Restorant/Location', compact('googleMapsApiKey'));
+  }
+
+  public function setLocation(Request $request, Restorant $restorant)
+  {
+    $restorant->lat = $request->lat;
+    $restorant->lng = $request->lng;
+    $restorant->save();
+    return back()->with(['message' => 'Done!']);
+  }
+
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DebugController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\SiteController;
 //Models
 use App\Models\User;
 use App\Models\Category;
@@ -42,7 +43,7 @@ require __DIR__.'/auth.php';
 //     return Inertia::render('Dashboard', compact('restorants'));
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-//Public Routes
+// Public Routes
 Route::get('/products/filter/{id}', [ProductController::class, 'filter'])->name('products.filter');
 Route::get('/restorants/{restorant:slug}', [RestorantController::class, 'show'])->name('restorants.show'); //restorantS.show for public
 Route::get('/order/{restorant}', [OrderController::class, 'checkin'])->name('orders.checkin');
@@ -74,7 +75,7 @@ Route::post('/debug', function() {
 
 //
 
-//Owner Routes
+// Owner Routes
 Route::group(['middleware' => ['auth', 'role:Owner'], 'prefix' => 'admin'], function() {
   Route::inertia('/dashboard', 'views/admin/Dashboard')->name('admin.dashboard');
   Route::inertia('/settings', 'views/admin/Settings')->name('admin.settings');
@@ -88,10 +89,18 @@ Route::group(['middleware' => ['auth', 'role:Owner'], 'prefix' => 'admin'], func
 
   Route::get('/restorant', [RestorantController::class, 'index'])->name('owner.restorant.index');
   Route::get('/restorant/share', [RestorantController::class, 'share'])->name('owner.restorant.share');
+  Route::get('/restorant/location', [RestorantController::class, 'location'])->name('owner.restorant.location');
   Route::get('/restorant/working-hours', [RestorantController::class, 'workingHours'])->name('owner.restorant.working-hours');
   Route::post('/restorant/update-working-hours/{restorant}', [RestorantController::class, 'updateWorkingHours'])->name('owner.restorant.update-working-hours');
+  Route::post('/restorant/update-location/{restorant}', [RestorantController::class, 'setLocation'])->name('owner.restorant.update-location');
   Route::patch('/restorant/{restorant}', [RestorantController::class, 'update'])->name('owner.restorant.update');
 
   Route::patch('/user/{user}', [RegisteredUserController::class, 'update'])->name('owner.user.update');
 
+  // Site Routes
+  Route::post('/site/google-maps', [SiteController::class, 'setGoogleMapsApi'])->name('site.set-google-maps-api');
+
 });
+
+// SuperAdmin Routes      coming soon...
+

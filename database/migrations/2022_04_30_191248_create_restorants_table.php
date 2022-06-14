@@ -25,6 +25,8 @@ class CreateRestorantsTable extends Migration
             $table->string('city')->nullable();
             $table->string('country')->nullable();
             $table->string('postal_code')->nullable();
+            $table->double('lat')->default(11.874328767638222);
+            $table->double('lng')->default(75.37777413902285);
             $table->timestamps();
         });
     }
