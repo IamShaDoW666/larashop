@@ -31,10 +31,8 @@ class RestorantController extends Controller
    */
   public function index()
   {
-    $restorant = auth()->user()->restorant;
-    $config = $restorant->config;
     if (auth()->user()->hasRole('Owner')) {
-      return inertia('views/admin/Restorant', compact('restorant'));
+      return inertia('views/admin/Restorant');
     }
 
     if (auth()->user()->hasRole('Guest')) {
@@ -87,13 +85,13 @@ class RestorantController extends Controller
       ->with(['categories' => function ($q) {
         $q->whereHas('products');
       }], 'config')
-      ->with('products')
       ->with('hours')
       ->firstOrFail();
     $restorant->openStatus = RestorantService::getOpeningTime($restorant->hours);
     ConfChanger::switchCurrency($restorant);
     $restaurant = RestorantResource::make($restorant);
-    $products = ProductResource::collection($restaurant->products);
+    // $products = ProductResource::collection($restorant->products);
+    $products = ProductResource::collection($restorant->categories->pluck('products')->flatten());
     return inertia('Restorant/Show', compact('restaurant', 'products'));
   }
 

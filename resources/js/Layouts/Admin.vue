@@ -3,7 +3,7 @@
     <sidebar />
     <div class="relative md:ml-64 bg-blueGray-100">
       <admin-navbar />
-      <header-stats v-if="showStats" />
+      <header-stats v-if="showStats && $page.props.auth.restorant.counts" />
       <div class="px-4 md:px-10 mx-auto w-full" :class="{ '-m-24': showStats }">
         <slot />
       </div>
