@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Crypt;
 
@@ -26,6 +27,8 @@ class RestorantResource extends JsonResource
             'config' => $this->whenLoaded('config'),
             'lat' => $this->lat,
             'lng' => $this->lng,
+            'open_msg' => $this->openStatus ?? null,
+            'open_status' => '' 
         ];
     }
 }

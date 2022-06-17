@@ -18,6 +18,7 @@ use App\Http\Requests\UpdateRestorantRequest;
 use App\Models\Config;
 use App\Models\Hour;
 use App\Services\ConfChanger;
+use App\Services\RestorantService;
 use Spatie\Permission\Traits\HasRoles;
 
 class RestorantController extends Controller
@@ -87,7 +88,9 @@ class RestorantController extends Controller
         $q->whereHas('products');
       }], 'config')
       ->with('products')
+      ->with('hours')
       ->firstOrFail();
+    $restorant->openStatus = RestorantService::getOpeningTime($restorant->hours);
     ConfChanger::switchCurrency($restorant);
     $restaurant = RestorantResource::make($restorant);
     $products = ProductResource::collection($restaurant->products);

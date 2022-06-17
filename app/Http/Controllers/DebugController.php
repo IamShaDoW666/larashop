@@ -14,6 +14,7 @@ use Cknow\Money\Currency;
 use Cknow\Money\Money;
 use Illuminate\Http\Request;
 use Spatie\OpeningHours\OpeningHours;
+use Illuminate\Support\Carbon;
 
 
 class DebugController extends Controller
@@ -24,8 +25,13 @@ class DebugController extends Controller
     return inertia('Debug');
   }
 
+  public function test()
+  {
+    //
+  }
+
   public function post(Request $request)
-  { 
+  {
     NewOrder::dispatch(auth()->user());
     return back();
   }

@@ -68,7 +68,7 @@ import { Head, usePage } from "@inertiajs/inertia-vue3";
 import Swal from "sweetalert2";
 
 const props = defineProps({
-    orders: Object
+    orders: Object,
 })
 
 
