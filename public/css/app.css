@@ -2039,6 +2039,9 @@ body[dir="rtl"] .checkbox:checked,
 .-mt-1 {
   margin-top: -0.25rem;
 }
+.ml-14 {
+  margin-left: 3.5rem;
+}
 .ml-5 {
   margin-left: 1.25rem;
 }
@@ -2129,6 +2132,9 @@ body[dir="rtl"] .checkbox:checked,
 .max-h-full {
   max-height: 100%;
 }
+.max-h-96 {
+  max-height: 24rem;
+}
 .max-h-60 {
   max-height: 15rem;
 }
@@ -2191,6 +2197,9 @@ body[dir="rtl"] .checkbox:checked,
 }
 .w-3 {
   width: 0.75rem;
+}
+.w-3\/5 {
+  width: 60%;
 }
 .min-w-0 {
   min-width: 0px;
@@ -2773,10 +2782,7 @@ body[dir="rtl"] .checkbox:checked,
   --tw-bg-opacity: 1;
   background-color: rgb(240 253 244 / var(--tw-bg-opacity));
 }
-.bg-red-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(220 38 38 / var(--tw-bg-opacity));
-}
+
 .bg-opacity-25 {
   --tw-bg-opacity: 0.25;
 }
@@ -3464,6 +3470,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
 .butn {
   border-radius: 0.25rem;
   padding-left: 1rem;
@@ -3522,14 +3533,7 @@ input[type=time]::-webkit-inner-spin-button {
 }
 /* Hide Scrollbar with overflow */
 /* Hide scrollbar for Chrome, Safari and Opera */
-/* .no-scrollbar::-webkit-scrollbar {
-  display: none;
-} */
-/* Hide scrollbar for IE, Edge and Firefox */
-/* .no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-} */
+
 .odd\:bg-gray-300:nth-child(odd) {
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));

@@ -5,6 +5,7 @@
     <p>{{ restaurant.openStatus }}</p>
 
     <div ref="category_slider" class="z-20 bg-white shadow-lg rounded-b py-3 sticky top-[72px] px-4 md:ml-8 w-full md:w-3/5 overflow-y-auto no-scrollbar">
+
       <div v-if="restaurant.categories" class="justify-start mx-auto flex items-center md:gap-x-3 gap-x-2 gap-y-2">
         <div @click="resetCategory" class="p-2 shrink-0 cursor-pointer rounded lg:rounded-t-0 hover:bg-green-200 bg-green-300"
           :class="[active[0] ? 'bg-green-400 hover:bg-green-400' : 'bg-green-300']">
