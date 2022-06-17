@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\RestorantResource;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use phpDocumentor\Reflection\Types\Parent_;
@@ -41,16 +42,25 @@ class HandleInertiaRequests extends Middleware
         'role' => $request->user()->roles()->first()->name,
       ],
     ];
-    
     $pusherArray = [];
     if (str_contains($request->fullUrl(), config('app.url') . '/admin')) {
-      $authArray = !$request->user() ? [] : [
-        'auth' => [
-          'user' => $request->user(),
-          'restorant' => $request->user()->restorant ? $request->user()->restorant->load('config') : null,
-          'role' => $request->user()->roles()->first()->name,
-        ],
-      ];
+      if (str_contains($request->fullUrl(), '/settings') || str_contains($request->fullUrl(), '/dashboard') || ($request->fullUrl() == config('app.url') . '/admin/restorant')) {
+        $authArray = !$request->user() ? [] : [
+          'auth' => [
+            'user' => $request->user(),
+            'restorant' => $request->user()->restorant ? RestorantResource::make($request->user()->restorant->load('config')->append(['counts', 'salesCount'])) : null,
+            'role' => $request->user()->roles()->first()->name,
+          ],
+        ];
+      } else {
+        $authArray = !$request->user() ? [] : [
+          'auth' => [
+            'user' => $request->user(),
+            'restorant' => $request->user()->restorant ? $request->user()->restorant->load('config') : null,
+            'role' => $request->user()->roles()->first()->name,
+          ],
+        ];
+      }
 
       $pusherArray = !$request->user() ? [] : [
         'pusher' => config('pusher')

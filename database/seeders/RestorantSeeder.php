@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Area;
 use App\Models\Restorant;
 use App\Models\Config;
+use App\Models\Hour;
 use Illuminate\Database\Seeder;
 
 class RestorantSeeder extends Seeder
@@ -23,6 +24,7 @@ class RestorantSeeder extends Seeder
                 'can_dinein' => true,
                 'restorant_id' => $restorant->id
             ]);
+            Hour::create(['restorant_id' => $restorant->id]);
             $restorant->areas(rand(1, 9))->saveMany($areas);
         });
 
@@ -33,6 +35,7 @@ class RestorantSeeder extends Seeder
                 'can_dinein' => true,
                 'restorant_id' => $restorant->id
             ]);
+            Hour::create(['restorant_id' => $restorant->id]);
             $restorant->areas(rand(1, 9))->saveMany($areas);
             if ($index == 1) {
                 $restorant->user_id = 2;
