@@ -32,6 +32,7 @@
         "@heroicons/vue": "^1.0.6",
         "@popperjs/core": "^2.11.5",
         "@vue-hero-icons/outline": "^1.7.2",
+        "@vueuse/core": "^8.6.0",
         "accounting-js": "^1.1.1",
         "chart.js": "^3.7.1",
         "daisyui": "^2.15.1",

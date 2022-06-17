@@ -17,6 +17,7 @@ import HeaderStats from "@/Components/Headers/HeaderStats.vue";
 import { onMounted, reactive, ref } from 'vue';
 import Swal from 'sweetalert2';
 import { usePage } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
 
 export default {
   name: "admin-layout",
@@ -32,7 +33,6 @@ export default {
   },
 
   setup(props) {
-
     const showStats = ref(true);
     const response = reactive({});
     let audio = new Audio('https://soundbible.com/mp3/Phone%20Ringing-SoundBible.com-1579776269.mp3');
@@ -42,6 +42,9 @@ export default {
       Echo.private('test.' + usePage().props.value.auth.restorant.user_id)
         .listen('NewOrder', (e) => {
           audio.play();
+          if (usePage().component.value == 'Order/Index1') {
+            Inertia.reload();
+          }
           const Toast = Swal.mixin({            
             toast: true,
             position: 'top-end',

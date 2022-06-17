@@ -1949,6 +1949,9 @@ body[dir="rtl"] .checkbox:checked,
 .-mr-2 {
   margin-right: -0.5rem;
 }
+.-mt-20 {
+  margin-top: -5rem;
+}
 .mt-6 {
   margin-top: 1.5rem;
 }
@@ -1985,9 +1988,6 @@ body[dir="rtl"] .checkbox:checked,
 .mb-5 {
   margin-bottom: 1.25rem;
 }
-.-mt-20 {
-  margin-top: -5rem;
-}
 .ml-auto {
   margin-left: auto;
 }
@@ -2005,6 +2005,9 @@ body[dir="rtl"] .checkbox:checked,
 }
 .-mt-1 {
   margin-top: -0.25rem;
+}
+.ml-14 {
+  margin-left: 3.5rem;
 }
 .ml-5 {
   margin-left: 1.25rem;
@@ -2093,6 +2096,9 @@ body[dir="rtl"] .checkbox:checked,
 .max-h-full {
   max-height: 100%;
 }
+.max-h-96 {
+  max-height: 24rem;
+}
 .max-h-60 {
   max-height: 15rem;
 }
@@ -2155,6 +2161,9 @@ body[dir="rtl"] .checkbox:checked,
 }
 .w-3 {
   width: 0.75rem;
+}
+.w-3\/5 {
+  width: 60%;
 }
 .min-w-0 {
   min-width: 0px;
@@ -2285,6 +2294,9 @@ body[dir="rtl"] .checkbox:checked,
 }
 .items-stretch {
   align-items: stretch;
+}
+.justify-start {
+  justify-content: flex-start;
 }
 .justify-end {
   justify-content: flex-end;
@@ -2729,14 +2741,6 @@ body[dir="rtl"] .checkbox:checked,
 .bg-green-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(240 253 244 / var(--tw-bg-opacity));
-}
-.bg-slate-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(100 116 139 / var(--tw-bg-opacity));
-}
-.bg-gray-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 .bg-opacity-25 {
   --tw-bg-opacity: 0.25;
@@ -3305,6 +3309,9 @@ body[dir="rtl"] .checkbox:checked,
 .opacity-100 {
   opacity: 1;
 }
+.opacity-90 {
+  opacity: 0.9;
+}
 .opacity-50 {
   opacity: 0.5;
 }
@@ -3414,10 +3421,9 @@ body[dir="rtl"] .checkbox:checked,
 input[type=number] {
   -moz-appearance: textfield;
 }
-/* html {
-  overflow-x: hidden;
-  margin-right: calc(-1 * (100vw - 100%));
-} */
+html {
+  scroll-behavior: smooth;
+}
 .butn {
   border-radius: 0.25rem;
   padding-left: 1rem;
@@ -3470,6 +3476,18 @@ input[type=time]::-webkit-clear-button {
 /* Up/Down arrows for incrementing/decrementing the value */
 input[type=time]::-webkit-inner-spin-button {
   display: none;
+}
+/* Hide Scrollbar with overflow */
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 .odd\:bg-gray-300:nth-child(odd) {
   --tw-bg-opacity: 1;
@@ -4084,14 +4102,14 @@ input[type=time]::-webkit-inner-spin-button {
     line-height: 1.25rem;
   }
 
-  .sm\:text-xs {
-    font-size: 0.75rem;
-    line-height: 1rem;
-  }
-
   .sm\:text-2xl {
     font-size: 1.5rem;
     line-height: 2rem;
+  }
+
+  .sm\:text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
   }
 }
 @media (min-width: 768px) {
@@ -4629,14 +4647,14 @@ input[type=time]::-webkit-inner-spin-button {
     text-align: center;
   }
 
-  .lg\:text-xs {
-    font-size: 0.75rem;
-    line-height: 1rem;
-  }
-
   .lg\:text-3xl {
     font-size: 1.875rem;
     line-height: 2.25rem;
+  }
+
+  .lg\:text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
   }
 
   .lg\:text-white {

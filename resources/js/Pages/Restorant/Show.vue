@@ -1,22 +1,21 @@
 <template>
 
   <Head title="Products" />
-  <BreezeAuthenticatedLayout>
-    <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Products
-      </h2>
-    </template>
-    <div v-if="restaurant.categories" class="justify-center flex items-center flex-wrap md:gap-x-3 gap-x-2 gap-y-2">
-      <div @click="resetCategory" class="p-4 cursor-pointer rounded lg:rounded-t-0 hover:bg-green-200 bg-green-300"
-        :class="[active[0] ? 'bg-green-400 hover:bg-green-400' : 'bg-green-300']">
-        All Category
-      </div>
-      <div @click="categoryFilter(category.id)"
-        :class="[active[category.id] ? 'bg-green-400 hover:bg-green-400 disabled' : 'bg-green-300']"
-        v-for="category in restaurant.categories" :key="category.id"
-        class="p-4 cursor-pointer rounded lg:rounded-t-0 hover:bg-green-200 bg-green-300">
-        {{ category.name }}
+  <FrontEnd>
+    <p>{{ restaurant.openStatus }}</p>
+
+    <div ref="category_slider" class="z-20 sticky top-20 ml-14 w-3/5 overflow-y-auto no-scrollbar">
+      <div v-if="restaurant.categories" class="justify-start mx-auto flex items-center md:gap-x-3 gap-x-2 gap-y-2">
+        <div @click="resetCategory" class="p-2 shrink-0 cursor-pointer rounded lg:rounded-t-0 hover:bg-green-200 bg-green-300"
+          :class="[active[0] ? 'bg-green-400 hover:bg-green-400' : 'bg-green-300']">
+          All Category
+        </div>
+        <div @click="categoryFilter(category.id)"
+          :class="[active[category.id] ? 'bg-green-400 hover:bg-green-400 disabled' : 'bg-green-300']"
+          v-for="category in restaurant.categories" :key="category.id"
+          class="p-2 shrink-0 cursor-pointer rounded lg:rounded-t-0 hover:bg-green-200 bg-green-300">
+          {{ category.name }}
+        </div>
       </div>
     </div>
 
@@ -114,21 +113,21 @@
       </div>
     </div>
     <!-- <CartModal :cart="cart" :fromCart="fromCart" /> -->
-  </BreezeAuthenticatedLayout>
+  </FrontEnd>
 </template>
 
 <script>
 import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useCart } from '@/Stores/cart.js';
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+import FrontEnd from '@/Layouts/FrontEnd.vue';
 import CartModal from '@/Components/CartModal.vue';
 import useProducts from '@/Composables/products';
 
 
 export default {
   components: {
-    BreezeAuthenticatedLayout,
+    FrontEnd,
     CartModal,
     Head
   },
@@ -142,9 +141,11 @@ export default {
 
     const { filter, prod, active } = useProducts(props);
     const cart = useCart();
-
+    const category_slider = ref();
     const form = useForm({});
-
+    watch(category_slider, (newvalue) => {
+      console.log(newvalue)
+    })
     const checkout = () => {
       form.get(route('orders.checkin', { restorant: props.restaurant.id }))
     };
