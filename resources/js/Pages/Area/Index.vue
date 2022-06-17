@@ -61,7 +61,6 @@
 </template>
 
 <script setup>
-import axios from "axios";
 import { Head, useForm } from '@inertiajs/inertia-vue3';
 import { onMounted, computed, ref, reactive, provide } from 'vue';
 import { Inertia } from '@inertiajs/inertia';

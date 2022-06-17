@@ -1,7 +1,7 @@
 <template>
 
   <Head title="Products" />
-  <FrontEnd>
+  <FrontEnd :restaurant="restaurant">
     <p>{{ restaurant.openStatus }}</p>
 
     <div ref="category_slider" class="z-20 bg-white shadow-lg rounded-b py-3 sticky top-[72px] px-4 md:ml-8 w-full md:w-3/5 overflow-y-auto no-scrollbar">
