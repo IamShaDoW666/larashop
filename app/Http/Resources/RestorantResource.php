@@ -25,6 +25,8 @@ class RestorantResource extends JsonResource
             'categories' => CategoryResource::collection($this->whenLoaded('categories')),
             'orders' => OrderResource::collection($this->whenLoaded('orders')),
             'config' => $this->whenLoaded('config'),
+            'counts' => $this->whenAppended('counts'),
+            'salesCount' => $this->whenAppended('salesCount'),
             'lat' => $this->lat,
             'lng' => $this->lng,
             'open_msg' => $this->openStatus ?? null,

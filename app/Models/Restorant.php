@@ -18,7 +18,7 @@ class Restorant extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $appends = ['salesCount', 'counts'];
+    // protected $appends = ['salesCount', 'counts'];
 
     public function user()
     {
@@ -77,8 +77,7 @@ class Restorant extends Model
               ->where('status', 'closed')
               ->sum('total'),
             $this->config->currency
-          )
-          ->format()
+          )->format()
       ];
     }
 }
