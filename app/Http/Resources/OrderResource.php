@@ -18,6 +18,7 @@ class OrderResource extends JsonResource
         return [
             'id' => $this->id,
             'customer_name' => $this->customer_name,
+            'customer_phone' => $this->customer_phone,
             'status' => $this->status,
             'address' => $this->address,
             'total' => money($this->total, config('global.currency'))->format(),
