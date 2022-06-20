@@ -20,4 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/get-orders', [OrderController::class, 'index']);
+Route::post('/update-order-status/{order}', [OrderController::class, 'updateStatus']);
 
