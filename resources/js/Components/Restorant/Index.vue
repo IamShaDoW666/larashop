@@ -32,9 +32,9 @@
                      <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                         Whatsapp Phone
                      </label>
-                     <MazPhoneNumberInput no-use-browser-locale no-example v-model="form.phone"
-                        show-code-on-list color="info" :preferred-countries="['FR', 'IN', 'BE', 'DE', 'US', 'GB']"
-                        :ignored-countries="['AC']" @update="results = $event" :success="results?.isValid" />
+                     <MazPhoneNumberInput no-use-browser-locale no-example v-model="form.phone" show-code-on-list
+                        color="info" :preferred-countries="['IN', 'FR', 'BE', 'DE', 'US', 'GB']"
+                        @update="results = $event" :success="results?.isValid" />
                   </div>
                </div>
                <div class="w-full lg:w-6/12 px-4">
@@ -65,7 +65,9 @@
                   </div>
                </div>
             </div>
+
             <hr class="mt-6 border-b-1 border-blueGray-300" />
+
             <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                Ordering Information
             </h6>
@@ -126,7 +128,39 @@
                   </div>
                </div>
             </div>
+
             <hr class="mt-6 border-b-1 border-blueGray-300" />
+
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+               Page Settings
+            </h6>
+            <div class="flex flex-wrap">
+               <div class="w-full lg:w-4/12 px-4">
+                  <div class="relative w-full mb-3">
+                     <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                        Restaurant Logo
+                     </label>
+                     <div v-if="logoPreviewImage" class="logoPreviewWrapper mb-3"
+                        :style="{ 'background-image': `url(${logoPreviewImage})` }">
+                     </div>
+                     <input @input="pickLogo" ref="logoFileInput" type="file"
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                  </div>
+                  <div class="relative w-full mb-3">
+                     <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                        Restaurant Banner
+                     </label>
+                     <div v-if="previewImage" class="bannerPreviewWrapper mb-3"
+                        :style="{ 'background-image': `url(${previewImage})` }">
+                     </div>
+                     <input @input="pickFile" ref="fileInput" type="file"
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                  </div>
+               </div>
+            </div>
+
+            <hr class="mt-6 border-b-1 border-blueGray-300" />
+
             <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                Confirmation
             </h6>
@@ -146,9 +180,41 @@ import { onMounted, ref } from 'vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import MazPhoneNumberInput from 'maz-ui/components/MazPhoneNumberInput'
 import Swal from 'sweetalert2';
+import { Inertia } from '@inertiajs/inertia';
+
+const emit = defineEmits(['input']);
 
 let restorant = usePage().props.value.auth.restorant;
 let conf = usePage().props.value.auth.restorant.config;
+
+const previewImage = ref(restorant.banner);
+const logoPreviewImage = ref(restorant.logo);
+const fileInput = ref();
+const logoFileInput = ref();
+
+const pickFile = () => {
+   form.banner = fileInput.value.files[0];
+   if (fileInput.value.files[0]) {
+      const reader = new FileReader
+      reader.onload = e => {
+         previewImage.value = e.target.result
+      }
+      reader.readAsDataURL(fileInput.value.files[0])
+      emit('input', fileInput.value.files[0])
+   }
+}
+
+const pickLogo = () => {
+   form.logo = logoFileInput.value.files[0];
+   if (logoFileInput.value.files[0]) {
+      const reader = new FileReader
+      reader.onload = e => {
+         logoPreviewImage.value = e.target.result
+      }
+      reader.readAsDataURL(logoFileInput.value.files[0])
+      emit('input', logoFileInput.value.files[0])
+   }
+}
 
 const form = useForm({
    name: restorant ? restorant.name : '',
@@ -161,19 +227,59 @@ const form = useForm({
    can_pickup: conf ? Boolean(Number(conf.can_pickup)) : false,
    city: restorant ? restorant.city : '',
    postal_code: restorant ? restorant.postal_code : '',
-   currency: conf ? conf.currency : '' 
+   currency: conf ? conf.currency : '',
+   banner: restorant ? restorant.banner : '',
+   logo: restorant ? restorant.logo : '',
+   _method: 'patch'
 });
 const results = ref()
 const update = () => {
-   form.patch(route('owner.restorant.update', { restorant: usePage().props.value.auth.restorant.id }), {
-      onSuccess: () => {
-         Swal.fire({
-            icon: 'success',
-            title: "Updated Successfully!",
-            timer: 1000
-         })
-      }
-   })
+   console.log(form)
+   Inertia.post(route('owner.restorant.update', { restorant: restorant.id }),
+      form,
+      {
+         onSuccess: () => {
+            Swal.fire({
+               icon: 'success',
+               title: "Updated Successfully!",
+               timer: 1000
+            })
+         },
+
+      })
 }
 
 </script>
+
+<style scoped>
+@media (min-width: 1024px) {
+   .bannerPreviewWrapper {
+      display: block;
+      width: 700px;
+      height: 300px;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center center;
+   }
+}
+
+@media (max-width: 1024px) {
+   .bannerPreviewWrapper {
+      display: block;
+      width: 360px;
+      height: 200px;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center center;
+   }
+}
+
+.logoPreviewWrapper {
+   display: block;
+   width: 100px;
+   height: 100px;
+   cursor: pointer;
+   background-size: cover;
+   background-position: center center;
+}
+</style>

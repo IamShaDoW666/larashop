@@ -23,7 +23,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class RestorantController extends Controller
 {
-  private $imagePath = 'imgs/restorants/';
+  private $imagePath = '/imgs/';
   /**
    * Display a listing of the resource.
    *
@@ -90,7 +90,6 @@ class RestorantController extends Controller
     $restorant->openStatus = RestorantService::getOpeningTime($restorant->hours);
     ConfChanger::switchCurrency($restorant);
     $restaurant = RestorantResource::make($restorant);
-    // $products = ProductResource::collection($restorant->products);
     $products = ProductResource::collection($restorant->categories->pluck('products')->flatten());
     return inertia('Restorant/Show', compact('restaurant', 'products'));
   }
@@ -116,6 +115,19 @@ class RestorantController extends Controller
   public function update(UpdateRestorantRequest $request, $id)
   {
     $restorant = auth()->user()->restorant;
+    //check for images
+    if ($request->hasFile('banner')) {
+      $bannerImgPath = $this->uploadimage($request->banner);
+    } else {
+      $bannerImgPath = $restorant->banner;
+    }
+
+    if ($request->hasFile('logo')) {
+      $logoImgPath = $this->uploadimage($request->logo);
+    } else {
+      $logoImgPath = $restorant->logo;
+    }
+
     //Need to validate if the owner is of the restorant
     $oldSlug = $restorant->slug; //Define the previous slug
     //Update Restaurant
@@ -126,7 +138,9 @@ class RestorantController extends Controller
       'address' => $request->address,
       'city' => $request->city,
       'postal_code' => $request->postal_code,
-      'slug' => $request->slug
+      'slug' => $request->slug,
+      'banner' => ($bannerImgPath != $restorant->banner) ? $this->imagePath . $bannerImgPath . '_large.webp' : $bannerImgPath,
+      'logo' => ($logoImgPath != $restorant->logo) ? $this->imagePath . $logoImgPath . '_logo.webp' : $logoImgPath
     ]);
     //Update Restorant Config
     $config = $restorant->config()->update([
@@ -137,13 +151,13 @@ class RestorantController extends Controller
       'currency' => $request->currency
     ]);
     //Rename Images Folder
-    if (File::exists($this->imagePath . $oldSlug)) {
-      $copyDirectory = File::copyDirectory(
-        $this->imagePath . $oldSlug,
-        $this->imagePath . $restorant->slug
-      );
-      $deleteDirectory = File::deleteDirectory($this->imagePath . $oldSlug);
-    }
+    // if (File::exists($this->imagePath . $oldSlug)) {
+    //   $copyDirectory = File::copyDirectory(
+    //     $this->imagePath . $oldSlug,
+    //     $this->imagePath . $restorant->slug
+    //   );
+    //   $deleteDirectory = File::deleteDirectory($this->imagePath . $oldSlug);
+    // }
 
     return back();
   }
@@ -188,6 +202,22 @@ class RestorantController extends Controller
     $restorant->lng = $request->lng;
     $restorant->save();
     return back()->with(['message' => 'Done!']);
+  }
+
+  private function uploadimage($image)
+  {
+    //Save Image
+    return $this->saveImageVersions(
+      $this->imagePath,
+      $image,
+      [
+        ['name' => 'large', 'w' => 1246, 'h' => 495, 'type' => 'webp'],
+        ['name' => 'xl', 'w' => 500, 'h' => 480, 'type' => 'webp'],
+        //['name'=>'thumbnail','w'=>300,'h'=>300, 'type'=>'webp'],
+        ['name' => 'logo', 'w' => 200, 'h' => 200, 'type' => 'webp'],
+        ['name' => 'thumbnail', 'w' => 200, 'h' => 200, 'type' => 'webp'],
+      ]
+    );
   }
 
 }

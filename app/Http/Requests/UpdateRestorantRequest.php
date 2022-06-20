@@ -19,8 +19,8 @@ class UpdateRestorantRequest extends FormRequest
 
     //Prepare slug from name
     protected function prepareForValidation()
-    {
-      $this->merge([
+    {                                                                                                       
+      $this->merge([                                            
         'slug' => Str::slug($this->name), //Add slug
       ]);
     }
@@ -45,7 +45,9 @@ class UpdateRestorantRequest extends FormRequest
           'city'=> ['string', 'min:4', 'max:30'],
           'postal_code' => ['numeric', 'max:100000000'],
           'slug' => ['string'],
-          'currency' => ['required']
+          'currency' => ['required'],
+          'banner' => [],
+          'logo' => []
         ];
     }
 }

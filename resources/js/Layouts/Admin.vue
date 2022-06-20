@@ -18,6 +18,17 @@ import { onMounted, reactive, ref } from 'vue';
 import Swal from 'sweetalert2';
 import { usePage } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
+import Echo from 'laravel-echo';
+
+const Pusher = require('pusher-js');
+// window.Pusher.logToConsole = true;
+
+let echo = new Echo({
+    broadcaster: 'pusher',
+    key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    forceTLS: true
+});
 
 export default {
   name: "admin-layout",
@@ -39,7 +50,7 @@ export default {
     onMounted(() => {
       showStats.value = props.headerStats;
       console.log(process)
-      Echo.private('test.' + usePage().props.value.auth.restorant.user_id)
+      echo.private('test.' + usePage().props.value.auth.restorant.user_id)
         .listen('NewOrder', (e) => {
           audio.play();
           if (usePage().component.value == 'Order/Index1') {

@@ -18,7 +18,7 @@ class Restorant extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    // protected $appends = ['salesCount', 'counts'];
+    // protected $appends = ['salesCount', 'counts', 'logo', 'banner'];
 
     public function user()
     {
