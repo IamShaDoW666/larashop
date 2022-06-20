@@ -124,6 +124,7 @@ import { useCart } from '@/Stores/cart.js';
 import FrontEnd from '@/Layouts/FrontEnd.vue';
 import CartModal from '@/Components/CartModal.vue';
 import useProducts from '@/Composables/products';
+import { useThrottleFn } from '@vueuse/core';
 
 
 export default {
@@ -151,9 +152,9 @@ export default {
       form.get(route('orders.checkin', { restorant: props.restaurant.id }))
     };
 
-    const categoryFilter = async (id) => {
-      await filter(id)
-    }
+    const categoryFilter = useThrottleFn( async (id) => {
+        await filter(id)
+    }, 250)
 
     //Mobile Cart Modal
     const isOpen = ref(false);

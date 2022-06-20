@@ -35,7 +35,9 @@ class RestorantResource extends JsonResource
             'lat' => $this->lat,
             'lng' => $this->lng,
             'open_msg' => $this->openStatus ?? null,
-            'open_status' => '' 
+            'open_status' => '' ,
+            'banner' => $this->banner,
+            'logo' => $this->logo
         ];
     }
 }
