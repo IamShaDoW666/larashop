@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Http\Resources\Api;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class ProductApiResource extends JsonResource
+{
+  /**
+   * Transform the resource into an array.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+   */
+  public function toArray($request)
+  {
+    $price = money($this->price, config('global.currency'));
+    return [
+      'id' => $this->id,
+      'name' => $this->name,
+      'description' =>  ($this->description) . '...',
+      'price' => $price->format(),
+      'price_int' => $price->formatByDecimal(),
+      'category_id' => $this->category_id,
+      'image' => $this->image,
+      'image_path' => config('app.url') . $this->image_path,
+      'imglarge' => $this->imglarge,
+      'quantity' => null, //quantity for show.vue 
+      'pivot_quantity' => +$this->whenPivotLoaded('order_product', $this->pivot ? $this->pivot->quantity : null) //quantity from order
+    ];
+  }
+}
