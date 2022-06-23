@@ -5,10 +5,14 @@
       <HeadlessProduct />
       <HeadlessProductEdit v-if="productOpenEdit" />
       <HeadlessCategoryEdit :dCategory="dCategory" v-if="categoryOpenEdit" />
+      <HeadlessImportCsv v-if="importOpen" />
       <div class="-mt-2 md:mt-0 bg-gray-100">
         <div class="mb-3 float-right px-4">
           <button class="px-4 py-2 text-sm rounded shadow bg-blue-500 text-white hover:bg-blue-700"   @click="categoryOpen = true">
             Add Category
+          </button>
+          <button class="px-4 ml-4 py-2 text-sm rounded shadow bg-yellow-500 text-white hover:bg-yellow-400"   @click="importOpen = true">
+            Import from CSV
           </button>
         </div>
         <div class="w-full sm:mt-4 bg-gray-100 rounded-lg px-4 py-12">
@@ -65,6 +69,7 @@ import HeadlessCategory from '@/Components/Dialogs/HeadlessCategory.vue';
 import HeadlessCategoryEdit from '@/Components/Dialogs/HeadlessCategoryEdit.vue';
 import HeadlessProductEdit from '@/Components/Dialogs/HeadlessProductEdit.vue';
 import HeadlessProduct from '@/Components/Dialogs/HeadlessProduct.vue';
+import HeadlessImportCsv from "@/Components/Dialogs/HeadlessImportCsv.vue";
 // import HeadlessProductEdit from '@/Components/Dialogs/HeadlessProductEdit.vue';
 import CardStats from "@/Components/Cards/CardStats.vue";
 import Swal from 'sweetalert2';
@@ -76,6 +81,7 @@ const form = useForm({
   category: null
 })
 
+const importOpen = ref(false);
 const categoryOpen = ref(false);
 const categoryOpenEdit = ref(false);
 const productOpenEdit = ref(false);
@@ -127,6 +133,7 @@ const deleteCategory = (id) => {
 
 provide('data', {
   categories: props.c,
+  importOpen,
   categoryOpen,
   categoryOpenEdit, 
   productOpenEdit,

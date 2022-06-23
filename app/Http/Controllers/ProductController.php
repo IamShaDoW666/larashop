@@ -14,6 +14,9 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\RestorantResource;
 use App\Models\Restorant;
 use App\Services\ConfChanger;
+
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ProductsImport;
 use Image;
 
 use Cknow\Money\Currency;
@@ -167,13 +170,22 @@ public function store(StoreProductRequest $request)
       $this->imagePath,
       $image,
       [
-        ['name'=>'large', 'w'=>239, 'h'=>192, 'type'=>'webp'],
+        ['name'=>'large', 'w'=>590, 'h'=>350, 'type'=>'webp'], //239 x 192
         ['name' => 'xl', 'w' => 500, 'h' => 480, 'type' => 'webp'],
         //['name'=>'thumbnail','w'=>300,'h'=>300, 'type'=>'webp'],
         ['name'=>'medium', 'w'=>295, 'h'=>200, 'type'=>'webp'],
         ['name'=>'thumbnail', 'w'=>200, 'h'=>200, 'type'=>'webp'],
       ]
     );
+  }
+
+  public function import(Request $request)  
+  {
+    $restorant = Restorant::findOrFail($request->restorant_id);
+
+    Excel::import(new ProductsImport($restorant), request()->file('csv'));
+
+    return back()->with(['message' => 'Imported Successfully!']);
   }
 
 }

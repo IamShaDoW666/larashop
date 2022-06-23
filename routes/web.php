@@ -23,7 +23,7 @@ use Cknow\Money\Money;
 
 
 
-Route::get('/', function() {
+Route::get('/', function () {
   if (auth()->user()) {
     if (auth()->user()->hasRole('Owner')) {
       return redirect(route('admin.dashboard'));
@@ -36,7 +36,7 @@ Route::get('/', function() {
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 // Route::get('/dashboard', function () {
 //     $restorants = Restorant::all();
@@ -53,11 +53,10 @@ Route::post('/checkout/{restorant:uuid}', [OrderController::class, 'store'])->na
 Route::group(['middleware' => ['auth', 'role:Guest'], 'prefix' => 'guest'], function () {
   Route::inertia('/dashboard', 'views/guest/Dashboard')->name('guest.dashboard');
   Route::inertia('/settings', 'views/guest/Settings')->name('guest.settings');
-  
+
   Route::get('/restorant', [RestorantController::class, 'create'])->name('guest.restorant.create');
   Route::post('/restorant', [RestorantController::class, 'store'])->name('guest.restorant.store');
   Route::patch('/user/{user}', [RegisteredUserController::class, 'update'])->name('guest.user.update');
-
 });
 
 
@@ -67,7 +66,7 @@ Route::get('/debug', [DebugController::class, 'debug'])->name('debug');
 Route::get('/debug/test', [DebugController::class, 'test'])->name('test');
 Route::post('/debug/post', [DebugController::class, 'post'])->name('debug.post');
 
-Route::post('/debug', function() {
+Route::post('/debug', function () {
   $user = User::find(1);
   Auth::login($user);
   return redirect('/admin/dashboard');
@@ -76,17 +75,17 @@ Route::post('/debug', function() {
 //
 
 // Owner Routes
-Route::group(['middleware' => ['auth', 'role:Owner'], 'prefix' => 'admin'], function() {
+Route::group(['middleware' => ['auth', 'role:Owner'], 'prefix' => 'admin'], function () {
   Route::inertia('/dashboard', 'views/admin/Dashboard')->name('admin.dashboard');
   Route::inertia('/settings', 'views/admin/Settings')->name('admin.settings');
-  
+
   Route::resource('/products', ProductController::class);
   Route::resource('/categories', CategoryController::class);
   Route::resource('/areas', AreaController::class);
 
   Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders');
   Route::post('/orders/update-status/{order}', [OrderController::class, 'updateStatus'])->name('admin.orders.update-status');
-
+  Route::post('/products/import', [ProductController::class, 'import'])->name('owner.products.import');
   Route::get('/restorant', [RestorantController::class, 'index'])->name('owner.restorant.index');
   Route::get('/restorant/share', [RestorantController::class, 'share'])->name('owner.restorant.share');
   Route::get('/restorant/location', [RestorantController::class, 'location'])->name('owner.restorant.location');
@@ -99,8 +98,6 @@ Route::group(['middleware' => ['auth', 'role:Owner'], 'prefix' => 'admin'], func
 
   // Site Routes
   Route::post('/site/google-maps', [SiteController::class, 'setGoogleMapsApi'])->name('site.set-google-maps-api');
-
 });
 
 // SuperAdmin Routes      coming soon...
-
