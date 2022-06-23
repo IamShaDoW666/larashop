@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\ProductResource;
-use App\Http\Resources\RestorantResource;
 
-class OrderResource extends JsonResource
+class OrderApiResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,20 +14,24 @@ class OrderResource extends JsonResource
      */
     public function toArray($request)
     {
+        $total = +$this->total - +$this->delivery_fee;
         return [
             'id' => $this->id,
             'customer_name' => $this->customer_name,
             'customer_phone' => $this->customer_phone,
             'status' => $this->status,
             'address' => $this->address,
+            'subtotal' => money($total, config('global.currency'))->format(),
+            'subtotal_int' => $total,
             'total' => money($this->total, config('global.currency'))->format(),
-            'total_int' => $this->total,
-            'order_type' => (int)$this->order_type,
+            'total_int' => +$this->total,
             'delivery_fee' => money($this->delivery_fee, config('global.currency'))->format(),
+            'delivery_fee_int' => +$this->delivery_fee,
+            'order_type' => (int)$this->order_type,
             'created_at' => $this->created_at,
             'ordered_at' => $this->created_at->diffForhumans(),
-            'items' => ProductResource::collection($this->whenLoaded('products')),
-            'restorant' => RestorantResource::make($this->whenLoaded('restorant'))
+            'items' => ProductApiResource::collection($this->whenLoaded('products')),
+            'restorant' => RestorantApiResource::make($this->whenLoaded('restorant'))
         ];
     }
 }
