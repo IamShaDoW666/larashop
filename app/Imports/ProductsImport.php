@@ -43,14 +43,14 @@ class ProductsImport implements ToModel, WithHeadingRow
                 return new Product([
                     'name' => $row['name'],
                     'description' => $row['description'] ?? '',
-                    'price' => $row['price'],
+                    'price' => money($row['price'], config('global.currency'), true)->getAmount(),
                     'category_id' => $CATID,
-                    'image_path' => $row['image'] ?? '',
+                    'image_path' => $row['image'] ?? '/imgs/32dfb5fb-bcf0-4b3c-8388-238ac128a5bf_xl.webp',
                 ]);
             } else {
                 //Update
-                $item->price = $row['price'];
-                $item->image = $row['image'] ?? 'default';
+                $item->price = money($row['price'], config('global.currency'), true)->getAmount();
+                $item->image = $row['image'] ?? '/imgs/32dfb5fb-bcf0-4b3c-8388-238ac128a5bf_xl.webp';
                 $item->category_id = $CATID;
                 $item->description = $row['description'] ?? '';
             }
@@ -71,9 +71,9 @@ class ProductsImport implements ToModel, WithHeadingRow
             return new Product([
                 'name' => $row['name'],
                 'description' => $row['description'],
-                'price' => $row['price'],
+                'price' => money($row['price'], config('global.currency'), true)->getAmount(),
                 'category_id' => $categoryID,
-                'image' => $row['image'] ?? '',
+                'image_path' => $row['image'] ?? '/imgs/32dfb5fb-bcf0-4b3c-8388-238ac128a5bf_xl.webp',
             ]);
         }
     }
