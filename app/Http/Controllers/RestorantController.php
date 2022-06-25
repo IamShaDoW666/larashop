@@ -88,9 +88,11 @@ class RestorantController extends Controller
       ->with('hours')
       ->firstOrFail();
     $restorant->openStatus = RestorantService::getOpeningTime($restorant->hours);
+    // return $restorant;
     ConfChanger::switchCurrency($restorant);
     $restaurant = RestorantResource::make($restorant);
     $products = ProductResource::collection($restorant->categories->pluck('products')->flatten());
+    // return $restaurant;
     return inertia('Restorant/Show', compact('restaurant', 'products'));
   }
 
@@ -139,6 +141,9 @@ class RestorantController extends Controller
       'city' => $request->city,
       'postal_code' => $request->postal_code,
       'slug' => $request->slug,
+      'instagram' => $request->instagram,
+      'facebook' => $request->facebook,
+      'twitter' => $request->twitter,
       'banner' => ($bannerImgPath != $restorant->banner) ? $this->imagePath . $bannerImgPath . '_large.webp' : $bannerImgPath,
       'logo' => ($logoImgPath != $restorant->logo) ? $this->imagePath . $logoImgPath . '_logo.webp' : $logoImgPath
     ]);

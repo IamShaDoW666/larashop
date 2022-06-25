@@ -29,6 +29,9 @@ class CreateRestorantsTable extends Migration
             $table->double('lng')->default(75.37777413902285);
             $table->string('banner')->default('/imgs/3c993253-f980-4e4c-b8a9-f58bedeef541_large.webp');
             $table->string('logo')->default('/imgs/3c993253-f980-4e4c-b8a9-f58bedeef541_thumbnail.webp');
+            $table->string('facebook')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('twitter')->nullable();
             $table->timestamps();
         });
     }

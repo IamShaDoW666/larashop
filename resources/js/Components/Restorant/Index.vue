@@ -69,69 +69,6 @@
             <hr class="mt-6 border-b-1 border-blueGray-300" />
 
             <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-               Ordering Information
-            </h6>
-            <div class="flex flex-wrap">
-               <div class="w-full lg:w-4/12 px-4">
-                  <div class="relative w-full mb-3">
-                     <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                        Minimum Order
-                     </label>
-                     <input type="number" v-model="form.minimum_order"
-                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        placeholed="100" />
-                  </div>
-               </div>
-               <div class="w-full lg:w-4/12 px-4">
-                  <div class="relative w-full mb-3">
-                     <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                        Order Types
-                     </label>
-                     <div class="grid grid-cols-2 gap-x-2 gap-y-4 items-center">
-                        <div class="flex items-center">
-                           <label class="mr-2 block uppercase text-blueGray-600 text-xs" for="Delivery">Delivery</label>
-                           <input type="checkbox" v-model="form.can_deliver"
-                              class="border-0 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
-                              value="Delivery" />
-                        </div>
-                        <div class="flex items-center">
-                           <label class="mr-2 block uppercase text-blueGray-600 text-xs" for="Delivery">Pickup</label>
-                           <input type="checkbox" v-model="form.can_pickup"
-                              class="border-0 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
-                              value="Pickup" />
-                        </div>
-                        <div class="flex items-center">
-                           <label class="mr-2 block uppercase text-blueGray-600 text-xs" for="Delivery">Dine-in</label>
-                           <input type="checkbox" v-model="form.can_dinein"
-                              class="border-0 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
-                              value="Dine-in" />
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="w-full lg:w-4/12 px-4">
-                  <div class="relative w-full mb-3">
-                     <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                        Postal Code
-                     </label>
-                     <input type="number" v-model="form.postal_code"
-                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
-                  </div>
-               </div>
-               <div class="w-full lg:w-4/12 px-4">
-                  <div class="relative w-full mb-3">
-                     <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                        Currency
-                     </label>
-                     <input type="text" v-model="form.currency"
-                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
-                  </div>
-               </div>
-            </div>
-
-            <hr class="mt-6 border-b-1 border-blueGray-300" />
-
-            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                Page Settings
             </h6>
             <div class="flex flex-wrap">
@@ -162,6 +99,59 @@
             <hr class="mt-6 border-b-1 border-blueGray-300" />
 
             <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+               Social Links
+            </h6>
+            <div class="flex flex-wrap">
+               <div class="w-full lg:w-6/12 px-4">
+                  <div class="relative w-full mb-3">
+                     <div class="flex items-center">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                           Facebook
+                        </label>
+                        <FacebookIcon class="ml-2 mb-4" width="6" height="6" />
+                     </div>
+                     <input v-model="form.facebook" placeholder="https://facebook.com/example" type="text"
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                  </div>
+               </div>
+               <div class="w-full lg:w-6/12 px-4">
+                  <div class="relative w-full mb-3">
+                     <div class="flex items-center">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                           Instagram
+                        </label>
+                        <InstagramIcon class="ml-2 mb-4" width="6" height="6" />
+                     </div>
+                     <input v-model="form.instagram" type="text" placeholder="https://instagram.com/example"
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                  </div>
+               </div>
+               <div class="w-full lg:w-6/12 px-4">
+                  <div class="relative w-full mb-3">
+                     <div class="flex items-center">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                           Twitter
+                        </label>
+                        <TwitterIcon class="ml-2 mb-4" width="6" height="6" />
+                     </div>
+                     <input v-model="form.twitter" type="text" placeholder="https://twitter.com/example"
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                  </div>
+               </div>
+               <!-- <div class="w-full lg:w-12/12 px-4">
+                  <div class="relative w-full mb-3">
+                     <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                        Address
+                     </label>
+                     <input type="text" v-model="form.address"
+                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                  </div>
+               </div> -->
+            </div>
+
+            <hr class="mt-6 border-b-1 border-blueGray-300" />
+
+            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                Confirmation
             </h6>
             <button :class="{ 'opacity-25': form.processing || !form.isDirty }"
@@ -181,6 +171,9 @@ import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import MazPhoneNumberInput from 'maz-ui/components/MazPhoneNumberInput'
 import Swal from 'sweetalert2';
 import { Inertia } from '@inertiajs/inertia';
+import FacebookIcon from '../Social/Icons/FacebookIcon.vue';
+import TwitterIcon from '../Social/Icons/TwitterIcon.vue';
+import InstagramIcon from '../Social/Icons/InstagramIcon.vue';
 
 const emit = defineEmits(['input']);
 
@@ -230,6 +223,9 @@ const form = useForm({
    currency: conf ? conf.currency : '',
    banner: restorant ? restorant.banner : '',
    logo: restorant ? restorant.logo : '',
+   instagram: restorant ? restorant.instagram : '',
+   facebook: restorant ? restorant.facebook : '',
+   twitter: restorant ? restorant.twitter : '',
    _method: 'patch'
 });
 const results = ref()
