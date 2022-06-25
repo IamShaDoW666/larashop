@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\OrderController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +19,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function() {
+        return auth()->user();
+    });
+    Route::get('/get-order/{order}', [OrderController::class, 'show']);
+    Route::post('/auth-check', [LoginController::class, 'check']);
+    Route::post('/logout', [LoginController::class, 'logout']);
 });
 
 Route::get('/get-orders', [OrderController::class, 'index']);
-Route::get('/get-order/{order}', [OrderController::class, 'show']);
 Route::post('/update-order-status/{order}', [OrderController::class, 'updateStatus']);
-
+Route::post('/sanctum/token', [LoginController::class, 'createToken']);

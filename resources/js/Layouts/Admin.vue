@@ -50,7 +50,7 @@ export default {
     onMounted(() => {
       showStats.value = props.headerStats;
       console.log(process)
-      echo.private('test.' + usePage().props.value.auth.restorant.user_id)
+      echo.channel('test.' + usePage().props.value.auth.restorant.user_id)
         .listen('NewOrder', (e) => {
           audio.play();
           if (usePage().component.value == 'Order/Index1') {
