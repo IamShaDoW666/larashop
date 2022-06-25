@@ -34,10 +34,13 @@ class RestorantResource extends JsonResource
             'salesCount' => $this->whenAppended('salesCount'),
             'lat' => $this->lat,
             'lng' => $this->lng,
-            'open_msg' => $this->openStatus ?? null,
-            'open_status' => '' ,
+            'open_msg' => $this->openStatus['openMsg'] ?? null,
+            'open_status' => $this->openStatus['openStatus'] ?? null ,
             'banner' => $this->banner,
-            'logo' => $this->logo
+            'logo' => $this->logo,
+            'instagram' => $this->instagram,
+            'facebook' => $this->facebook,
+            'twitter' => $this->twitter,
         ];
     }
 }

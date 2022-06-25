@@ -43,11 +43,14 @@ class UpdateRestorantRequest extends FormRequest
           'can_dinein'=> [],
           'can_pickup'=> [],
           'city'=> ['string', 'min:4', 'max:30'],
-          'postal_code' => ['numeric', 'max:100000000'],
+          // 'postal_code' => ['numeric', 'max:100000000'],
           'slug' => ['string'],
           'currency' => ['required'],
           'banner' => [],
-          'logo' => []
+          'logo' => [],
+          'facebook' => [''],
+          'instagram' => [''],
+          'twitter' => ['']
         ];
     }
 }
