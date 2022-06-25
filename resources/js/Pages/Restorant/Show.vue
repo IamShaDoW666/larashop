@@ -2,12 +2,27 @@
 
   <Head title="Products" />
   <FrontEnd :restaurant="restaurant">
-    <p>{{ restaurant.openStatus }}</p>
-
-    <div ref="category_slider" class="z-20 bg-white shadow-lg rounded-b py-3 sticky top-[72px] px-4 md:ml-8 w-full md:w-3/5 overflow-y-auto no-scrollbar">
+    <div class="flex px-4 items-center md:mr-4 md:ml-8  my-2 justify-between">
+      <div>
+        <span class="rounded px-2 my-2 text-white font-bold"
+          :class="restaurant.open_status ? 'bg-green-400' : 'bg-red-500'">
+          {{ restaurant.open_status ? 'Open' : 'Closed' }}
+        </span>
+        <p class="text-xs sm:text-sm font-semibold">{{ restaurant.open_msg }}</p>
+      </div>
+      <div class="flex gap-y-4 sm:gap-y-0 gap-x-4">
+        <Facebook v-if="restaurant.facebook" :link="restaurant.facebook" />
+        <Whatsapp v-if="restaurant.phone" :phone='restaurant.phone' />
+        <Twitter v-if="restaurant.twitter" :link='restaurant.twitter' />
+        <Instagram v-if="restaurant.instagram" :link='restaurant.instagram' />
+      </div>
+    </div>
+    <div ref="category_slider"
+      class="z-20 bg-white shadow-lg rounded-b py-3 sticky top-[72px] px-4 md:ml-8 w-full md:w-3/5 overflow-y-auto no-scrollbar">
 
       <div v-if="restaurant.categories" class="justify-start mx-auto flex items-center md:gap-x-3 gap-x-2 gap-y-2">
-        <div @click="resetCategory" class="p-2 shrink-0 cursor-pointer rounded lg:rounded-t-0 hover:bg-green-200 bg-green-300"
+        <div @click="resetCategory"
+          class="p-2 shrink-0 cursor-pointer rounded lg:rounded-t-0 hover:bg-green-200 bg-green-300"
           :class="[active[0] ? 'bg-green-400 hover:bg-green-400' : 'bg-green-300']">
           All Category
         </div>
@@ -101,7 +116,7 @@
                       <h1>{{ product.price }}</h1>
                     </div>
                     <div>
-                      <button @click="toCart(product.id, index)"
+                      <button v-if="restaurant.open_status" @click="toCart(product.id, index)"
                         class="sm:px-2 sm:py-2 px-1.5 py-1 text-lg sm:text-xs lg:text-xs active:bg-green-200 hover:ring-blue-900 text-white font-bold rounded bg-green-500 hover:bg-green-400">Add
                         To Cart</button>
                     </div>
@@ -124,6 +139,10 @@ import { useCart } from '@/Stores/cart.js';
 import FrontEnd from '@/Layouts/FrontEnd.vue';
 import CartModal from '@/Components/CartModal.vue';
 import useProducts from '@/Composables/products';
+import Facebook from '@/Components/Social/Facebook.vue';
+import Whatsapp from '@/Components/Social/Whatsapp.vue';
+import Twitter from '@/Components/Social/Twitter.vue';
+import Instagram from '@/Components/Social/Instagram.vue';
 import { useThrottleFn } from '@vueuse/core';
 
 
@@ -131,8 +150,12 @@ export default {
   components: {
     FrontEnd,
     CartModal,
-    Head
-  },
+    Head,
+    Whatsapp,
+    Facebook,
+    Twitter,
+    Instagram
+},
 
   props: {
     restaurant: Object,
@@ -152,8 +175,8 @@ export default {
       form.get(route('orders.checkin', { restorant: props.restaurant.id }))
     };
 
-    const categoryFilter = useThrottleFn( async (id) => {
-        await filter(id)
+    const categoryFilter = useThrottleFn(async (id) => {
+      await filter(id)
     }, 250)
 
     //Mobile Cart Modal

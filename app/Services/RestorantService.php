@@ -22,11 +22,15 @@ class RestorantService
             ]);
             $now = Carbon::now();
             $range = $openingHours->currentOpenRange($now);
+            $open = false;
             if ($range) {
-                return "It's open since " . $range->start() . "\n" . "It will close at " . $range->end() . "\n";
+                $openingHours->isOpen();
+                $openMsg = "Closing at " . $range->end() . "\n";
+                return ['openMsg' => $openMsg, 'openStatus' => $openingHours->isOpen()];
             } else {
-                return "It's closed since " . $openingHours->previousClose($now)->format('l H:i') . "\n" .
-                "It will re-open at " . $openingHours->nextOpen($now)->format('l H:i') . "\n";
+                $open = false;
+                $openMsg = "Opens at  " . $openingHours->nextOpen($now)->format('l h:i A') . "\n";
+                return ['openMsg' => $openMsg, 'openStatus' => $openingHours->isOpen()];
             }
         }
     }
