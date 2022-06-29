@@ -1,25 +1,27 @@
 <template>
+
   <div @click="openModal"
-    class="flex justify-between mx-4 sm:hidden hover:bg-blue-300 shadow bg-blue-400 rounded sticky p-4 mb-4 bottom-2">
+    class="flex justify-between mx-4 sm:hidden z-30 hover:bg-blue-300 shadow bg-blue-400 rounded-lg sticky p-4 mb-4 bottom-2">
     <div class="font-bold">
       <i class="pr-2 fa-solid fa-cart-shopping"></i>Cart({{ cart.getTotalItems }})
     </div>
     <div class="font-bold text-black">
     </div>
   </div>
+
   <TransitionRoot appear :show="isOpen" as="template">
-    <Dialog as="div" @close="closeModal" class="relative z-10">
+    <Dialog as="div" @close="closeModal" class="absolute z-30">
       <TransitionChild as="template">
         <div class="fixed inset-0 bg-black bg-opacity-25" />
       </TransitionChild>
 
-      <div class="fixed inset-0 overflow-y-auto">
+      <div class="fixed inset-0 w-screen h-auto overflow-y-auto">
         <div class="flex min-h-full items-center justify-center p-4 text-center">
-          <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0 scale-95"
-            enter-to="opacity-100 scale-100" leave="duration-200 ease-in" leave-from="opacity-100 scale-100"
-            leave-to="opacity-0 scale-95">
+          <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0 scale-80 translate-y-32"
+            enter-to="opacity-100 scale-100 translate-y-0" leave="duration-200 ease-in" leave-from="opacity-100 scale-100"
+            leave-to="opacity-0 scale-80 translate-y-32">
             <DialogPanel
-              class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
+              class="w-full h-screen transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
               <DialogTitle as="h3" class="px-6 py-2 bg-gray-200 text-lg font-medium leading-6 text-gray-900">
                 <i class="pr-2 fa-solid fa-cart-shopping"></i> Your Cart ({{ cart.getTotalItems }})
               </DialogTitle>

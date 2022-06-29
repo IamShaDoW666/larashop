@@ -216,11 +216,11 @@ class RestorantController extends Controller
       $this->imagePath,
       $image,
       [
-        ['name' => 'large', 'w' => 1246, 'h' => 495, 'type' => 'webp'],
-        ['name' => 'xl', 'w' => 500, 'h' => 480, 'type' => 'webp'],
+        ['name' => 'large', 'w' => 1324, 'h' => 384, 'type' => 'webp', 'quality' => 100],
+        ['name' => 'xl', 'w' => 500, 'h' => 480, 'type' => 'webp', 'quality' => 100],
         //['name'=>'thumbnail','w'=>300,'h'=>300, 'type'=>'webp'],
-        ['name' => 'logo', 'w' => 200, 'h' => 200, 'type' => 'webp'],
-        ['name' => 'thumbnail', 'w' => 200, 'h' => 200, 'type' => 'webp'],
+        ['name' => 'logo', 'w' => 200, 'h' => 200, 'type' => 'webp', 'quality' => 100],
+        ['name' => 'thumbnail', 'w' => 200, 'h' => 200, 'type' => 'webp', 'quality' => 100],
       ]
     );
   }
