@@ -128,7 +128,7 @@
         </div>
       </div>
     </div>
-    <!-- <CartModal :cart="cart" :fromCart="fromCart" /> -->
+    <CartModal v-if="cart.items.length" :cart="cart" :fromCart="fromCart" />
   </FrontEnd>
 </template>
 
