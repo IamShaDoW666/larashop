@@ -28,7 +28,14 @@ class LoginController extends Controller
             ]);
         }
         $user->tokens()->delete();
-        return $user->createToken($request->device_name)->plainTextToken;
+        $data = [
+            'token' => $user->createToken($request->device_name)->plainTextToken,
+            'name' => $user->name,
+            'email' => $user->email
+        ];
+
+        return json_encode($data);
+
     }
 
     public function check(Request $request)
