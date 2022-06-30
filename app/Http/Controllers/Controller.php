@@ -31,12 +31,17 @@ class Controller extends BaseController
           $ext = $version['type'];
         }
         if (isset($version['w']) && isset($version['h'])) {
-          $img = Image::make($laravel_image_resource->getRealPath())->fit($version['w'], $version['h'])->encode('webp', $version['quality']);
-          $img->save(public_path($folder) . $uuid . '_' . $version['name'] . '.' . 'webp', $version['quality'], $ext);
+          if ($ext == 'webp') {
+            $img = Image::make($laravel_image_resource->getRealPath())->fit($version['w'], $version['h'])->encode('webp', $version['quality']);
+            $img->save(public_path($folder) . $uuid . '_' . $version['name'] . '.' . $ext, $version['quality'], $ext);
+          } else {
+            $img = Image::make($laravel_image_resource->getRealPath())->fit($version['w'], $version['h']);
+            $img->save(public_path($folder) . $uuid . '_' . $version['name'] . '.' . $ext, $version['quality'], $ext);
+          }
         } else {
           //Original image
-          $img = Image::make($laravel_image_resource->getRealPath())->encode('webp', $version['quality']);;
-          $img->save(public_path($folder) . $uuid . '_' . $version['name'] . '.' . 'webp', $version['quality'], $ext);
+          $img = Image::make($laravel_image_resource->getRealPath())->encode('webp', $version['quality']);
+          $img->save(public_path($folder) . $uuid . '_' . $version['name'] . '.' . $ext, $version['quality'], $ext);
         }
       }
 

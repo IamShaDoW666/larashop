@@ -119,15 +119,15 @@ class RestorantController extends Controller
     $restorant = auth()->user()->restorant;
     //check for images
     if ($request->hasFile('banner')) {
-      $bannerImgPath = $this->uploadimage($request->banner);
+      $bannerImg = $this->uploadbanner($request->banner);
     } else {
-      $bannerImgPath = $restorant->banner;
+      $bannerImg = $restorant->banner;
     }
 
     if ($request->hasFile('logo')) {
-      $logoImgPath = $this->uploadimage($request->logo);
+      $logoImg = $this->uploadlogo($request->logo);
     } else {
-      $logoImgPath = $restorant->logo;
+      $logoImg = $restorant->logo;
     }
 
     //Need to validate if the owner is of the restorant
@@ -144,8 +144,8 @@ class RestorantController extends Controller
       'instagram' => $request->instagram,
       'facebook' => $request->facebook,
       'twitter' => $request->twitter,
-      'banner' => ($bannerImgPath != $restorant->banner) ? $this->imagePath . $bannerImgPath . '_large.webp' : $bannerImgPath,
-      'logo' => ($logoImgPath != $restorant->logo) ? $this->imagePath . $logoImgPath . '_logo.webp' : $logoImgPath
+      'banner' => ($bannerImg != $restorant->banner) ? $this->imagePath . $bannerImg : $bannerImg,
+      'logo' => ($logoImg != $restorant->logo) ? $this->imagePath . $logoImg : $logoImg
     ]);
     //Update Restorant Config
     $config = $restorant->config()->update([
@@ -216,11 +216,30 @@ class RestorantController extends Controller
       $this->imagePath,
       $image,
       [
-        ['name' => 'large', 'w' => 1324, 'h' => 384, 'type' => 'webp', 'quality' => 100],
-        ['name' => 'xl', 'w' => 500, 'h' => 480, 'type' => 'webp', 'quality' => 100],
-        //['name'=>'thumbnail','w'=>300,'h'=>300, 'type'=>'webp'],
-        ['name' => 'logo', 'w' => 200, 'h' => 200, 'type' => 'webp', 'quality' => 100],
+        ['name' => 'xl', 'w' => 500, 'h' => 480, 'type' => 'webp', 'quality' => 100],        
         ['name' => 'thumbnail', 'w' => 200, 'h' => 200, 'type' => 'webp', 'quality' => 100],
+      ]
+    );
+  }
+
+  private function uploadbanner($image)
+  {
+    return $this->saveImageVersions(
+      $this->imagePath,
+      $image,
+      [
+        ['name' => 'large', 'w' => 2648, 'h' => 768, 'type' => 'jpg', 'quality' => 100],
+      ]
+    );
+  }
+
+  private function uploadlogo($image) 
+  {
+    return $this->saveImageVersions(
+      $this->imagePath,
+      $image,
+      [
+        ['name' => 'logo', 'w' => 200, 'h' => 200, 'type' => 'webp', 'quality' => 100],
       ]
     );
   }
