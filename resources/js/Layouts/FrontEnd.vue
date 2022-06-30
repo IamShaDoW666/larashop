@@ -4,7 +4,7 @@
 
             <nav id="nav"
                 class="bg-transparent text-white transition-all duration-300 px-4 flex items-center sticky -mt-20 top-0 z-30 py-4">
-                <img :src="restaurant.logo"
+                <img :src="restaurant.logo + '_logo.webp'"
                     class="w-12 h-12 rounded-full">
                 <h1 class="ml-4 sm:text-lg md:text-xl font-bold">
                     {{ restaurant ? restaurant.name : 'Restaurant Name'}}
@@ -15,7 +15,7 @@
             <header class="bg-white shadow">
                 <div class="mx-auto h-96">
                     <img class="opacity-90 object-cover h-96 w-full"
-                        :src="restaurant.banner">
+                        :src="restaurant.banner + '_large.jpg'">
                 </div>
             </header>
 

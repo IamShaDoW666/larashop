@@ -107,7 +107,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 sm:gap-y-8">
               <div class="px-4 py-2" v-for="(product, index) in prod" :key="product.id">
                 <div class="shadow md:transform md:transition md:duration-300 md:hover:scale-110 bg-blue-400 rounded">
-                  <img :src="product.image_path" class="shadow rounded object-cover h-48 w-full">
+                  <img :src="product.image_path + '_large.webp'" class="shadow rounded object-cover h-48 w-full">
                 </div>
                 <div class="pl-4 pb-2 pt-6 pr-2 bg-gray-300 rounded-lg shadow-md">
                   <h1 class="font-bold mb-2">{{ product.name }}</h1>
