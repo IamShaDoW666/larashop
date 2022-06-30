@@ -79,8 +79,8 @@ public function store(StoreProductRequest $request)
       'name' => $request->name,
       'description' => $request->description,
       'price' => money($request->price, config('global.currency'), true)->getAmount(),
-      'image_path' => $this->imagePath.$imgpath . '_large.webp',
-      'image' => $imgpath
+      'image_path' => $this->imagePath . $imgpath,
+      'image' => 'default'
     ]);
     
     //Assign Category
@@ -129,12 +129,13 @@ public function store(StoreProductRequest $request)
     } else {
       $imgpath = $product->image;
     }
+
     $data = [
       'name' => $request->name,
       'description' => $request->description,
       'price' => money($request->price, env('APP_CURRENCY'), true)->getAmount(),
-      'image' => $imgpath,
-      'image_path' => $this->imagePath.$imgpath . '_large.webp',
+      'image' => 'default',
+      'image_path' => $this->imagePath . $imgpath,
     ];
     $product->update($data);
 
