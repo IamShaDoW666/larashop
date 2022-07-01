@@ -3,12 +3,29 @@
   <Head title="Products" />
   <FrontEnd :restaurant="restaurant">
     <div class="flex px-4 items-center md:mr-4 md:ml-8  my-2 justify-between">
-      <div>
-        <span class="rounded px-2 my-2 text-white font-bold"
-          :class="restaurant.open_status ? 'bg-green-400' : 'bg-red-500'">
-          {{ restaurant.open_status ? 'Open' : 'Closed' }}
-        </span>
-        <p class="text-xs sm:text-sm font-semibold">{{ restaurant.open_msg }}</p>
+      <div class="sm:flex sm:space-x-4 items-center">
+
+        <div class="flex space-x-2 items-center">
+          <span class="rounded px-2 my-2 text-white font-bold overflow-visible"
+            :class="restaurant.open_status ? 'bg-green-400' : 'bg-red-500'">
+            {{ restaurant.open_status ? 'Open' : 'Closed' }}
+          </span>
+          <span :class="restaurant.open_status ? 'bg-green-800' : 'bg-red-800'"
+            class="animate-ping inline-flex h-2 w-2 rounded opacity-75"></span>
+
+          <a target="_blank" :href="addressMap" class="sm:hidden flex space-x-2 items-center">
+            <span class="material-icons">place</span>
+            <span>{{ restaurant.address }}</span>
+          </a>
+        </div>
+
+        <p class="text-xs m-0 sm:text-sm font-semibold">{{ restaurant.open_msg }}</p>
+
+        <a target="_blank" :href="addressMap" class="hidden sm:flex space-x-2 items-center">
+          <span class="material-icons">place</span>
+          <span>{{ restaurant.address }}</span>
+        </a>
+
       </div>
       <div class="flex gap-y-4 sm:gap-y-0 gap-x-4">
         <Facebook v-if="restaurant.facebook" :link="restaurant.facebook" />
@@ -154,8 +171,8 @@ export default {
     Whatsapp,
     Facebook,
     Twitter,
-    Instagram
-},
+    Instagram,
+  },
 
   props: {
     restaurant: Object,
@@ -168,6 +185,8 @@ export default {
     const cart = useCart();
     const category_slider = ref();
     const form = useForm({});
+    let addressMap = `http://maps.google.com/maps?z=12&t=m&q=loc:${props.restaurant.lat}+${props.restaurant.lng}`
+
     watch(category_slider, (newvalue) => {
       console.log(newvalue)
     })
@@ -230,6 +249,7 @@ export default {
       cart,
       isOpen,
       formatPrice,
+      addressMap,
       prod
 
     }
