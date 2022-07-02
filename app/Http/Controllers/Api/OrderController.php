@@ -8,12 +8,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\OrderApiResource;
 
 use App\Models\Order;
+use App\Models\Restorant;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Restorant $restorant)
     {
-        return OrderApiResource::collection(Order::where('restorant_id', 1)
+        return OrderApiResource::collection(Order::where('restorant_id', $restorant->id)
             ->with('products')
             ->orderBy('created_at', 'DESC')
             ->get());

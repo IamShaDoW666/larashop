@@ -57,7 +57,8 @@
                                             <span class="material-icons">remove</span>
                                         </button>
                                         <span
-                                            class="w-6 h-6 text-white rounded-full bg-green-400 font-bold align-middle pt-[1px] text-center text-sm">{{
+                                            class="w-6 h-6 text-white rounded-full bg-green-400 font-bold align-middle pt-[1px] text-center text-sm">
+                                            {{
                                                     item.quantity
                                             }}</span>
                                         <button tabindex="-1" @click="cart.addCart(item.id)"
@@ -73,7 +74,9 @@
                             <div class="flex items-center justify-between mx-4">
                                 <div class="flex text-sm gap-x-2">
                                     <span class="font-bold">Subtotal: </span>
-                                    <span class="bg-green-400 px-1 rounded text-white font-extrabold">{{ formatPrice(cart.getSubTotal) }}</span>
+                                    <span class="bg-green-400 shadow-md px-1 rounded text-white font-extrabold">{{
+                                            formatPrice(cart.getSubTotal)
+                                    }}</span>
                                 </div>
                                 <div class="mt-4 mr-2 pb-4">
                                     <button type="button"

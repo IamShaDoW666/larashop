@@ -31,7 +31,8 @@ class LoginController extends Controller
         $data = [
             'token' => $user->createToken($request->device_name)->plainTextToken,
             'name' => $user->name,
-            'email' => $user->email
+            'email' => $user->email,
+            'restorant_id' => $user->restorant->id,
         ];
 
         return json_encode($data);
