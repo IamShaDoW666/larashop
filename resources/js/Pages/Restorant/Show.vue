@@ -145,7 +145,7 @@
         </div>
       </div>
     </div>
-    <CartModal v-if="cart.items.length" :cart="cart" :fromCart="fromCart" />
+    <CartModal v-if="cart.items.length" :checkout="checkout" :cart="cart" :formatPrice="formatPrice" :fromCart="fromCart" />
   </FrontEnd>
 </template>
 
