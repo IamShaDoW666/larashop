@@ -15,7 +15,7 @@
             <header class="bg-white shadow">
                 <div class="mx-auto h-96">
                     <img class="opacity-90 object-cover h-96 w-full"
-                        :src="restaurant.banner + '_large.jpg'">
+                        :src="restaurant.banner + '_large.webp'">
                 </div>
             </header>
 
