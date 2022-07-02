@@ -28,6 +28,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout']);
 });
 
-Route::get('/get-orders', [OrderController::class, 'index']);
+Route::get('/get-orders/{restorant}', [OrderController::class, 'index']);
 Route::post('/update-order-status/{order}', [OrderController::class, 'updateStatus']);
 Route::post('/sanctum/token', [LoginController::class, 'createToken']);
