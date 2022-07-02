@@ -228,7 +228,7 @@ class RestorantController extends Controller
       $this->imagePath,
       $image,
       [
-        ['name' => 'large', 'w' => 2648, 'h' => 768, 'type' => 'jpg', 'quality' => 100],
+        ['name' => 'large', 'w' => 2648, 'h' => 768, 'type' => 'webp', 'quality' => 90],
       ]
     );
   }

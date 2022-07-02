@@ -24,7 +24,7 @@ html {
 
 
 .butn {
-  @apply px-4 py-2 rounded
+  @apply px-4 py-2 bg-blue-400 hover:bg-blue-300 rounded shadow
 }
 
 input[type=number] {
