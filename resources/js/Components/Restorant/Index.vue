@@ -242,8 +242,8 @@ const emit = defineEmits(['input']);
 
 let restorant = usePage().props.value.auth.restorant;
 let conf = usePage().props.value.auth.restorant.config;
-
-const previewImage = ref(`${restorant.banner}_large.jpg`);
+console.log(restorant)
+const previewImage = ref(`${restorant.banner}_large.webp`);
 const logoPreviewImage = ref(`${restorant.logo}_logo.webp`);
 const fileInput = ref();
 const logoFileInput = ref();
