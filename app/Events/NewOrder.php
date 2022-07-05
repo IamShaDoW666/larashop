@@ -31,6 +31,6 @@ class NewOrder implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('test.' . $this->order->restorant->user->id);
+        return new Channel('test.' . $this->order->restorant->id);
     }
 }
