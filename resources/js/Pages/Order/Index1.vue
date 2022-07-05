@@ -25,7 +25,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="order in orders.data" :key="order.id">
-                            <th class="text-center" style="z-index: 0!important">
+                            <th class="text-center hover:bg-red-800" style="z-index: 0!important">
                                 <span
                                     class="text-sm font-medium mr-2 px-3 py-0.5 rounded-full bg-green-200 text-green-800">
                                     #{{ order.id }}
