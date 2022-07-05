@@ -3,15 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Product;
-use App\Models\Category;
 use App\Models\Restorant;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\RestorantResource;
-use App\Http\Resources\CategoryResource;
 
 use App\Http\Requests\StoreRestorantRequest;
 use App\Http\Requests\UpdateRestorantRequest;
@@ -19,7 +13,6 @@ use App\Models\Config;
 use App\Models\Hour;
 use App\Services\ConfChanger;
 use App\Services\RestorantService;
-use Spatie\Permission\Traits\HasRoles;
 
 class RestorantController extends Controller
 {
@@ -31,11 +24,11 @@ class RestorantController extends Controller
    */
   public function index()
   {
-    if (auth()->user()->hasRole('Owner')) {
+    if (auth()->user->hasRole('Owner')) {
       return inertia('views/admin/Restorant');
     }
 
-    if (auth()->user()->hasRole('Guest')) {
+    if (auth()->user->hasRole('Guest')) {
       return inertia('views/guest/Restorant');
     }
   }
@@ -65,8 +58,8 @@ class RestorantController extends Controller
       $restorant->save();
       Config::create(['restorant_id' => $restorant->id]);
       Hour::create(['restorant_id' => $restorant->id]);
-      auth()->user()->removeRole('Guest');
-      auth()->user()->assignRole('Owner');
+      auth()->user->removeRole('Guest');
+      auth()->user->assignRole('Owner');
       return redirect(route('admin.dashboard'));;
     } else {
       abort(403, 'You have a restaurant');
