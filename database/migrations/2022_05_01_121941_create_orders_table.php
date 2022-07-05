@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->string('customer_name');
             $table->string('customer_phone')->nullable();
             $table->string('status')->default('pending');
-            $table->text('address');
+            $table->text('address')->nullable();
             $table->string('order_type');
             $table->string('uuid')->unique();
             $table->foreignId('restorant_id');

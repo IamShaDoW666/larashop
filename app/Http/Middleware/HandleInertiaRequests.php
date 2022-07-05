@@ -43,7 +43,7 @@ class HandleInertiaRequests extends Middleware
       ],
     ];
     $pusherArray = [];
-    if (str_contains($request->fullUrl(), config('app.url') . '/admin')) {
+    if (str_contains($request->fullUrl(), config('app.url') . '/admin') || str_contains($request->fullUrl(), config('app.url') . '/order')) {
       if (str_contains($request->fullUrl(), '/settings') || str_contains($request->fullUrl(), '/dashboard') || ($request->fullUrl() == config('app.url') . '/admin/restorant')) {
         $authArray = !$request->user() ? [] : [
           'auth' => [

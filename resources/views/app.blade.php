@@ -30,6 +30,7 @@
   @endenv -->
   <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/0406cef030.js" crossorigin="anonymous"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </body>
 
 </html>

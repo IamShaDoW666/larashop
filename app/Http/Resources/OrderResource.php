@@ -28,6 +28,11 @@ class OrderResource extends JsonResource
             'delivery_fee' => money($this->delivery_fee, config('global.currency'))->format(),
             'created_at' => $this->created_at,
             'ordered_at' => $this->created_at->diffForhumans(),
+            'ordered_at_datetime' => [
+                'time' => $this->created_at->format('g:i A'),
+                'time_24' => $this->created_at->toTimeString('minute'),
+                'date' => $this->created_at->toDateString(),
+            ],
             'items' => ProductResource::collection($this->whenLoaded('products')),
             'restorant' => RestorantResource::make($this->whenLoaded('restorant'))
         ];

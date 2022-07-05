@@ -1,7 +1,7 @@
 <template>
   <Head title="Checkout" />
   <BreezeAuthenticatedLayout>
-    <div class="py-12">
+    <div class="py-12 relative">
       <div class="sm:px-6 lg:px-8 md:flex gap-x-4 justify-between">
         <CartList :cart="cart" :areas="areas" :restorant="restorant"/>
         <CustomerForm :restorant="restorant" v-if="cart.items.length" :areas="areas" :cart="cart" class="md:w-2/5 max-w-2xl" />
@@ -34,3 +34,4 @@ const cart = useCart();
 
 
 </script>
+

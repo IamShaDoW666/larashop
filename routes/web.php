@@ -83,7 +83,8 @@ Route::group(['middleware' => ['auth', 'role:Owner'], 'prefix' => 'admin'], func
   Route::resource('/categories', CategoryController::class);
   Route::resource('/areas', AreaController::class);
 
-  Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders');
+  Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+  Route::get('/order/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
   Route::post('/orders/update-status/{order}', [OrderController::class, 'updateStatus'])->name('admin.orders.update-status');
   Route::post('/products/import', [ProductController::class, 'import'])->name('owner.products.import');
   Route::get('/restorant', [RestorantController::class, 'index'])->name('owner.restorant.index');

@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\NewOrder;
-use App\Http\Resources\CategoryResource;
+
 use App\Http\Resources\RestorantResource;
-use App\Models\Category;
-use App\Models\Config;
-use App\Models\Hour;
-use App\Models\Product;
 use App\Models\Restorant;
-use Cknow\Money\Currency;
-use Cknow\Money\Money;
+use App\Services\ConfChanger;
 use Illuminate\Http\Request;
-use Spatie\OpeningHours\OpeningHours;
-use Illuminate\Support\Carbon;
+use Razorpay\Api\Api;
+
 
 
 class DebugController extends Controller
@@ -27,13 +21,22 @@ class DebugController extends Controller
 
   public function test()
   {
-    //
+    $time = now();
+    // $time->setTimezone('+5:30');
+    return $time->format('g:i A');
   }
 
   public function post(Request $request)
   {
-    NewOrder::dispatch(auth()->user());
-    return back();
+    ConfChanger::switchCurrency(Restorant::find($request->restorant));
+    $values = [
+      'receipt' => 'Payment',
+      'amount' => $request->amount * 100,
+      'currency' => config('global.currency')
+    ];
+    $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+    $order = $api->order->create($values);
+    return response($order->id);
   }
 
 

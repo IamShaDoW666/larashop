@@ -24,11 +24,11 @@ class RestorantController extends Controller
    */
   public function index()
   {
-    if (auth()->user->hasRole('Owner')) {
+    if (auth()->user()->hasRole('Owner')) {
       return inertia('views/admin/Restorant');
     }
 
-    if (auth()->user->hasRole('Guest')) {
+    if (auth()->user()->hasRole('Guest')) {
       return inertia('views/guest/Restorant');
     }
   }
@@ -58,8 +58,8 @@ class RestorantController extends Controller
       $restorant->save();
       Config::create(['restorant_id' => $restorant->id]);
       Hour::create(['restorant_id' => $restorant->id]);
-      auth()->user->removeRole('Guest');
-      auth()->user->assignRole('Owner');
+      auth()->user()->removeRole('Guest');
+      auth()->user()->assignRole('Owner');
       return redirect(route('admin.dashboard'));;
     } else {
       abort(403, 'You have a restaurant');

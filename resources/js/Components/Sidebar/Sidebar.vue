@@ -90,10 +90,10 @@
             </div>
           </li>
 
-          <li :class="{ 'text-black font-bold': route().current('admin.orders') }"
+          <li :class="{ 'text-black font-bold': route().current('admin.orders.index') }"
             class="items-center hover:text-gray-500">
             <div>
-              <Link :href="route('admin.orders')" preserve-scroll>
+              <Link :href="route('admin.orders.index')" preserve-scroll>
               <i class="material-icons mr-2 text-sm">list</i>
               Orders
               </Link>

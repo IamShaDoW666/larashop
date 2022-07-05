@@ -96,9 +96,11 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($order)
     {
-        //
+        $order = OrderResource::make(Order::find($order)->load('products'));
+        // return $order;
+        return inertia('Order/Show', compact('order'));
     }
 
     /**
