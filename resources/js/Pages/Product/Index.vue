@@ -58,10 +58,8 @@
 </template>
 
 <script setup>
-import axios from "axios";
 import { Head, useForm } from '@inertiajs/inertia-vue3';
-import { onMounted, computed, ref, reactive, provide } from 'vue';
-import { Inertia } from '@inertiajs/inertia';
+import { ref, provide } from 'vue';
 
 import Admin from "@/Layouts/Admin.vue";
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
@@ -71,7 +69,6 @@ import HeadlessProductEdit from '@/Components/Dialogs/HeadlessProductEdit.vue';
 import HeadlessProduct from '@/Components/Dialogs/HeadlessProduct.vue';
 import HeadlessImportCsv from "@/Components/Dialogs/HeadlessImportCsv.vue";
 // import HeadlessProductEdit from '@/Components/Dialogs/HeadlessProductEdit.vue';
-import CardStats from "@/Components/Cards/CardStats.vue";
 import Swal from 'sweetalert2';
 
 const props = defineProps({
