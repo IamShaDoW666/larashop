@@ -127,7 +127,7 @@ public function store(StoreProductRequest $request)
     if ($request->hasFile('product_image')) {
       $imgpath = $this->uploadimage($request->product_image);
     } else {
-      $imgpath = $product->image;
+      $imgpath = $product->image_path;
     }
 
     $data = [
@@ -135,7 +135,7 @@ public function store(StoreProductRequest $request)
       'description' => $request->description,
       'price' => money($request->price, env('APP_CURRENCY'), true)->getAmount(),
       'image' => 'default',
-      'image_path' => $this->imagePath . $imgpath,
+      'image_path' => ($imgpath != $product->image_path) ? $this->imagePath . $imgpath : $imgpath,
     ];
     $product->update($data);
 
