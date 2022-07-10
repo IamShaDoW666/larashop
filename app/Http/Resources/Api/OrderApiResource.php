@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderApiResource extends JsonResource
@@ -28,6 +29,12 @@ class OrderApiResource extends JsonResource
             'delivery_fee' => money($this->delivery_fee, config('global.currency'))->format(),
             'delivery_fee_int' => +$this->delivery_fee,
             'order_type' => (int)$this->order_type,
+            'order_time' => Carbon::make($this->order_time),
+            'order_time_datetime' => [
+                'time' => Carbon::make($this->order_time)->format('g:i A'),
+                'time_24' => Carbon::make($this->order_time)->toTimeString('minute'),
+                'date' => Carbon::make($this->order_time)->toDateString(),
+            ],
             'created_at' => $this->created_at,
             'ordered_at' => $this->created_at->diffForhumans(),
             'items' => ProductApiResource::collection($this->whenLoaded('products')),

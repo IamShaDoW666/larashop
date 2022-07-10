@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\RestorantResource;
+use Carbon\Carbon;
 
 class OrderResource extends JsonResource
 {
@@ -25,6 +26,12 @@ class OrderResource extends JsonResource
             'total' => money($this->total, config('global.currency'))->format(),
             'total_int' => $this->total,
             'order_type' => (int)$this->order_type,
+            'order_time' => Carbon::make($this->order_time),
+            'order_time_datetime' => [
+                'time' => Carbon::make($this->order_time)->format('g:i A'),
+                'time_24' => Carbon::make($this->order_time)->toTimeString('minute'),
+                'date' => Carbon::make($this->order_time)->toDateString(),
+            ],
             'delivery_fee' => money($this->delivery_fee, config('global.currency'))->format(),
             'created_at' => $this->created_at,
             'ordered_at' => $this->created_at->diffForhumans(),

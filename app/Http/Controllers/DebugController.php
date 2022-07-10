@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\RestorantResource;
+use App\Models\Order;
 use App\Models\Restorant;
 use App\Services\ConfChanger;
+use App\Services\RestorantService;
 use Illuminate\Http\Request;
 use Razorpay\Api\Api;
 
@@ -19,11 +21,10 @@ class DebugController extends Controller
     return inertia('Debug');
   }
 
-  public function test()
+  public function test(Order $order)
   {
-    $time = now();
-    // $time->setTimezone('+5:30');
-    return $time->format('g:i A');
+    // return $order;
+    return OrderResource::make($order);
   }
 
   public function post(Request $request)

@@ -46,6 +46,7 @@
         "pinia-plugin-persist": "^1.0.0",
         "pusher-js": "^7.1.1-beta",
         "sweetalert2": "^11.4.10",
+        "v-calendar": "^3.0.0-alpha.8",
         "vue-google-pay": "0.0.2",
         "vue3-google-map": "^0.13.0",
         "vue3-timepicker": "^1.0.0-beta.2"

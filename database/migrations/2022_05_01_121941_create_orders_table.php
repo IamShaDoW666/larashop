@@ -24,7 +24,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('restorant_id');
             $table->unsignedInteger('total');
             $table->integer('delivery_fee')->nullable();
-
+            $table->timestamp('order_time')->nullable();
             $table->timestamps();
         });
     }

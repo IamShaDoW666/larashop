@@ -12,6 +12,8 @@ use App\Http\Resources\RestorantResource;
 use App\Models\Order;
 use App\Models\Restorant;
 use App\Services\ConfChanger;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Facades\Crypt;
 use Inertia\Inertia;
 
@@ -47,7 +49,7 @@ class OrderController extends Controller
 
 
     public function store(StoreOrderRequest $request, Restorant $restorant)
-    {
+    {     
         ConfChanger::switchCurrency($restorant);
         $cart = $request->cart;
         $items_ids = array_column($cart['items'], 'quantity', 'id');
@@ -60,6 +62,7 @@ class OrderController extends Controller
             'customer_phone' => $request->form['customer_phone'],
             'address' => $request->form['address'],
             'order_type' => $request->form['order_type'],
+            'order_time' => Carbon::make($request->form['order_time']),
             'delivery_fee' => money($cart['delivery'], config('global.currency'), true)->getAmount(),
             'total' => money($cart['total'], config('global.currency'), true)->getAmount()
         ]);

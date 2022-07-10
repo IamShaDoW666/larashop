@@ -2,10 +2,12 @@ require('./bootstrap');
 
 import { createApp, h } from 'vue';
 import { createPinia } from 'pinia'
+import VCalendar from 'v-calendar';
 import { createInertiaApp } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
 import piniaPersist from 'pinia-plugin-persist'
 import 'maz-ui/css/main.css';
+import 'v-calendar/dist/style.css';
 // import 'flowbite';
 
 
@@ -20,6 +22,7 @@ createInertiaApp({
         return createApp({ render: () => h(app, props) })
             .use(plugin)
             .use(pinia)
+            .use(VCalendar, {})
             .mixin({ methods: { route } })
             .mount(el);
     },

@@ -28,6 +28,7 @@ class StoreOrderRequest extends FormRequest
             'form.customer_phone' => ['required', 'digits_between:9,17'],
             'form.address' => [],
             'form.order_type' => ['required'],
+            'form.order_time' => ['required'],
             'cart' => ['']
         ];
     }
@@ -40,6 +41,7 @@ class StoreOrderRequest extends FormRequest
             'form.customer_phone.digits_between' => 'Please enter valid phone number',
             // 'form.address.string' => 'Invalid address',
             'form.order_type.required' => 'Select order type',
+            'form.order_type.required' => 'Invalid Order Time',
 
 
         ];

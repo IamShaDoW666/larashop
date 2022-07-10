@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Carbon;
 
 $nl = "\n\n";
 $tabSpace = "      ";
@@ -44,6 +45,8 @@ foreach ($order->products()->get() as $key => $item) {
 {{ "*". __('Subtotal')."*".": ". set(money($order->total, $currency)->format())}}
 {{"*". __('Phone')."*.: ". set($order->customer_phone) }}
 {{ "*". __('Address')."*".": ". set($order->address)}}
+{{ "*". __('Date')."*".": ". set(Carbon::make($order->order_time)->toDateString())}}
+{{ "*". __('Time')."*".": ". set(Carbon::make($order->order_time)->format('g:i A'))}}
 
 {{ "*Order No*: " . $order->id}}
 {{ config('app.url') . '/restorants/'. $order->restorant->slug }}
