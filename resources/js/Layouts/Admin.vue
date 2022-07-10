@@ -89,7 +89,7 @@ export default {
 
           Toast.fire({
             icon: 'success',
-            title: 'Success',
+            title: 'New Order!',
           })
         })
     });

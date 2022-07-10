@@ -23,6 +23,11 @@ class CreateConfigsTable extends Migration
             $table->integer('minimum_order')->default(0);
             $table->string('currency')->default('INR');
             $table->integer('minimum_order_free')->nullable()->default(null);
+            $table->string('razorpay_api_key')->nullable();
+            $table->string('razorpay_api_secret')->nullable();
+            $table->string('stripe_api_key')->nullable();
+            $table->string('stripe_api_secret')->nullable();
+            $table->string('google_maps_api_key')->nullable();
             $table->timestamps();
         });
     }

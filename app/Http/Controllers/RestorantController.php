@@ -190,6 +190,7 @@ class RestorantController extends Controller
 
   public function location()
   {
+    ConfChanger::switchGoogleMapsApiKey(auth()->user()->restorant);
     $googleMapsApiKey = config('global.google_maps_api_key');
     return inertia('Restorant/Location', compact('googleMapsApiKey'));
   }
@@ -235,6 +236,16 @@ class RestorantController extends Controller
         ['name' => 'logo', 'w' => 200, 'h' => 200, 'type' => 'webp', 'quality' => 100],
       ]
     );
+  }
+
+  public function apps()
+  {
+    return inertia('Restorant/Apps');
+  }
+
+  public function payments()
+  {
+    return inertia('Restorant/Payments');
   }
 
 }

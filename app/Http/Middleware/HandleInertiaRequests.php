@@ -44,7 +44,7 @@ class HandleInertiaRequests extends Middleware
     ];
     $pusherArray = [];
     if (str_contains($request->fullUrl(), config('app.url') . '/admin') || str_contains($request->fullUrl(), config('app.url') . '/order')) {
-      if (str_contains($request->fullUrl(), '/settings') || str_contains($request->fullUrl(), '/dashboard') || ($request->fullUrl() == config('app.url') . '/admin/restorant')) {
+      if (str_contains($request->fullUrl(), '/dashboard')) {
         $authArray = !$request->user() ? [] : [
           'auth' => [
             'user' => $request->user(),
@@ -66,7 +66,6 @@ class HandleInertiaRequests extends Middleware
         'pusher' => config('pusher')
       ];
     }
-
 
     return array_merge(parent::share($request), $authArray, $pusherArray, [
       'flash' => [

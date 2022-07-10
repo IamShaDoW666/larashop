@@ -13,6 +13,20 @@ class ConfChanger
         }
     }
 
+    public static function switchGoogleMapsApiKey($restaurant)
+    {
+        if (strlen($restaurant->config->google_maps_api_key) > 1) {
+            config(['global.google_maps_api_key' => $restaurant->config->google_maps_api_key]);
+        }
+    }
+
+    public static function setConfs($restaurant)
+    {
+        if ($restaurant->config) {
+            config(['global.conf' => $restaurant->config]);
+        }
+    }
+
 
 
 

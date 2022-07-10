@@ -1,5 +1,5 @@
 <template>
-  <Admin :headerStats="true">
+  <Admin>
     <Head title="Restaurant" />
     <div class="w-full px-4">
       <Restorant />

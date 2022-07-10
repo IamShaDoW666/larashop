@@ -28,9 +28,10 @@ import { Head, usePage } from '@inertiajs/inertia-vue3';
 import { onMounted, reactive, ref } from 'vue';
 import axios from 'axios';
 
-const props = defineProps({
-    googleMapsApiKey: String
-})
+// const props = defineProps({
+//     googleMapsApiKey: String
+// })
+const googleMapsApiKey = usePage().props.value.auth.restorant.config.google_maps_api_key;
 const show = ref(false)
 const center = reactive({
     lat: Number(usePage().props.value.auth.restorant.lat),
