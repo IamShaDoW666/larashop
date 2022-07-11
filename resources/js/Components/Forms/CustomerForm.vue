@@ -61,7 +61,7 @@
             <label v-if="form.order_type == 2" class="font-semibold text-xs mt-3" for="pickup_time">
                 Pickup Time
             </label>
-            <v-date-picker :model-config="{mask: 'iso', type: 'string', timeAdjust: '12:00:00'}" timezone="utc" v-model="form.order_time" mode="dateTime" :available-dates='[
+            <v-date-picker :model-config="{mask: 'iso', type: 'string'}" timezone="utc" v-model="form.order_time" mode="dateTime" :available-dates='[
                 {
                     start: new Date(),
                     end: null
