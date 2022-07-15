@@ -48,6 +48,7 @@ require __DIR__ . '/auth.php';
 Route::get('/products/filter/{id}', [ProductController::class, 'filter'])->name('products.filter');
 Route::get('/restorants/{restorant:slug}', [RestorantController::class, 'show'])->name('restorants.show'); //restorantS.show for public
 Route::get('/order/{restorant}', [OrderController::class, 'checkin'])->name('orders.checkin');
+Route::get('/order/status/{order}', [OrderController::class, 'orderStatus'])->middleware('order_device_check')->name('order.status');
 Route::post('/checkout/{restorant:uuid}', [OrderController::class, 'store'])->name('orders.store');
 
 // Guest routes
@@ -63,9 +64,9 @@ Route::group(['middleware' => ['auth', 'role:Guest'], 'prefix' => 'guest'], func
 
 
 // DEBUGS
-Route::get('/debug', [DebugController::class, 'debug'])->name('debug');
-Route::get('/debug/test/{order}', [DebugController::class, 'test'])->name('test');
+Route::get('/debug/test', [DebugController::class, 'test'])->name('test');
 Route::post('/debug/post', [DebugController::class, 'post'])->name('debug.post');
+Route::get('/debug', [DebugController::class, 'debug'])->name('debug');
 
 Route::post('/debug', function () {
   $user = User::find(1);

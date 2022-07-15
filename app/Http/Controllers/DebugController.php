@@ -9,6 +9,7 @@ use App\Models\Restorant;
 use App\Services\ConfChanger;
 use App\Services\RestorantService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Razorpay\Api\Api;
 
 
@@ -18,13 +19,15 @@ class DebugController extends Controller
 
   public function debug()
   {
-    return inertia('Debug');
+    session(['order_token' => Crypt::encrypt('3')]);
+    // dd(Crypt::decrypt($cipher), config('app.url') . '/order/status/' . $cipher);
+    // return config('app.url') . '/order/status/' . $order_id;
+    // return inertia('Debug');
   }
 
   public function test(Order $order)
   {
-    // return $order;
-    return OrderResource::make($order);
+    dd(session()->all());
   }
 
   public function post(Request $request)

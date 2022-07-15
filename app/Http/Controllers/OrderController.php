@@ -49,7 +49,8 @@ class OrderController extends Controller
 
 
     public function store(StoreOrderRequest $request, Restorant $restorant)
-    {     
+    {
+
         ConfChanger::switchCurrency($restorant);
         $cart = $request->cart;
         $items_ids = array_column($cart['items'], 'quantity', 'id');
@@ -76,7 +77,8 @@ class OrderController extends Controller
         }
 
         $url = 'https://api.whatsapp.com/send?phone=' . $order->restorant->phone . '&text=' . $message;
-
+        //Set session token for customer viewing order status
+        session(['order_token' => Crypt::encrypt($order->id)]);
         return Inertia::location($url);
     }
 
@@ -161,7 +163,7 @@ class OrderController extends Controller
 
         // If positive action
         if ($action) {
-            switch($status) {
+            switch ($status) {
                 case 'pending':
                     $order->status = 'accepted';
                     $order->save();
@@ -182,6 +184,10 @@ class OrderController extends Controller
 
             return back()->with(['message' => 'Order status updated!']);
         }
-
     }
-}  
+
+    public function orderStatus(Order $order)
+    {
+        return $order;
+    }
+}

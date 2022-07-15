@@ -49,4 +49,5 @@ foreach ($order->products()->get() as $key => $item) {
 {{ "*". __('Time')."*".": ". set(Carbon::make($order->order_time)->format('g:i A'))}}
 
 {{ "*Order No*: " . $order->id}}
-{{ config('app.url') . '/restorants/'. $order->restorant->slug }}
+{{ __('Track your Order') }}
+{{ config('app.url') . '/order/status/' . $order->id }}

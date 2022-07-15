@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
-class OwnerMiddleware
+class OrderDeviceCheck
 {
     /**
      * Handle an incoming request.
@@ -17,13 +17,13 @@ class OwnerMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-      if (!session('order_token')) {
+        if (!session('order_token')) {
+            return abort(403, 'Access Denied');
+        }
+        $arr = explode('/', $request->url());
+        if (Crypt::decrypt(session('order_token')) == end($arr)) {
+            return $next($request);
+        }
         return abort(403, 'Access Denied');
-      }
-      $arr = explode('/', $request->url());
-      if (Crypt::decrypt(session('order_token')) == end($arr)) {
-        return $next($request);
-      }
-      return abort(403, 'Access Denied');
     }
 }
