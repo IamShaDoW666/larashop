@@ -17,9 +17,17 @@ class OrderDeviceCheck
      */
     public function handle(Request $request, Closure $next)
     {
+        // Grant for restaurant owner
+        if ($request->user()->hasRole('Owner')) {
+            return $next($request);
+        }
+
+        //Abort if no token
         if (!session('order_token')) {
             return abort(403, 'Access Denied');
         }
+
+        // Grant for ordered customer
         $arr = explode('/', $request->url());
         if (Crypt::decrypt(session('order_token')) == end($arr)) {
             return $next($request);

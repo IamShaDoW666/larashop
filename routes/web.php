@@ -15,12 +15,10 @@ use App\Http\Controllers\DebugController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SiteController;
+
 //Models
 use App\Models\User;
-use App\Models\Category;
 
-use Cknow\Money\Currency;
-use Cknow\Money\Money;
 
 
 

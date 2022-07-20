@@ -13,7 +13,6 @@ use App\Models\Order;
 use App\Models\Restorant;
 use App\Services\ConfChanger;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Support\Facades\Crypt;
 use Inertia\Inertia;
 
@@ -188,6 +187,8 @@ class OrderController extends Controller
 
     public function orderStatus(Order $order)
     {
-        return $order;
+        ConfChanger::switchCurrency($order->restorant);
+        $order = OrderResource::make($order);
+        return inertia('Order/Status', compact('order'));
     }
 }
