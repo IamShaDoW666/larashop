@@ -17,12 +17,22 @@ class ProductResource extends JsonResource
   public function toArray($request)
   {
     $price = money($this->price, config('global.currency'));
+    $price_int = $price->formatByDecimal();
+    $pivot_qty = $this->whenPivotLoaded('order_product', $this->pivot ? $this->pivot->quantity : null);
+    $subtotalFormatted = null;
+    $subtotal = null;
+    if (is_string($pivot_qty)) {
+      $subtotal = $price_int * $pivot_qty;
+      $subtotalFormatted = money($subtotal, config('global.currency'));
+    }
     return [
       'id' => $this->id,
       'name' => $this->name,
       'description' =>  ($this->description) . '...',
       'price' => $price->format(),
-      'price_int' => $price->formatByDecimal(),
+      'price_int' => $price_int,
+      'subtotal' => $subtotal ?? null,
+      'subtotal_formatted' => $subtotalFormatted ? $subtotalFormatted->format() : null,
       'category_id' => $this->category_id,
       'image' => $this->image,
       'image_path' => $this->image_path,
