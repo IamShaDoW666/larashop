@@ -3,7 +3,6 @@ use Illuminate\Support\Carbon;
 
 $nl = "\n\n";
 $tabSpace = "      ";
-
 function set($value)
 {
     return $value && isset($value) ? $value : "";
@@ -26,10 +25,11 @@ $orderTimeFormat = Carbon::make($order->order_time) ? Carbon::make($order->order
 {{"*". __('ORDERED ITEMS')."*".":"}}
 <?php
 foreach ($order->products()->get() as $key => $item) {
-    $lineprice = $item->pivot->quantity . ' X ' . $item->name . " - " . money($item->pivot->quantity * $item->price, $currency)->format();
-    // if (strlen($item->pivot->variant_name) > 3) {
-    //     $lineprice .= $nl . $tabSpace . __('Variant:') . " " . $item->pivot->variant_name;
-    // }
+    $item_name = $item->name;
+    if (strlen($item->pivot->variant_name)) {
+        $item_name = $item->name . ' ' . $item->pivot->variant_name;
+    }
+    $lineprice = $item->pivot->quantity . ' X ' . $item_name . " - " . money($item->pivot->quantity * (int)$item->pivot->variant_price, $currency)->format();  
     // if (strlen($item->pivot->extras) > 3) {
     //     foreach (json_decode($item->pivot->extras) as $key => $extra) {
     //         $lineprice .= $nl . $tabSpace . $extra;
@@ -42,7 +42,9 @@ foreach ($order->products()->get() as $key => $item) {
 }
 ?>
 *************************************** {{ "\n" }}
+@if ($order->delivery_fee)
 {{ "*". __('Delivery Fee')."*".": ". set(money($order->delivery_fee, $currency)->format())}}
+@endif
 {{ "*". __('Subtotal')."*".": ". set(money($order->total, $currency)->format())}}
 {{"*". __('Phone')."*.: ". set($order->customer_phone) }}
 {{ "*". __('Address')."*".": ". set($order->address)}}

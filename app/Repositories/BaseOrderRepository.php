@@ -108,7 +108,7 @@ class BaseOrderRepository extends Controller
             $this->order->customer_name = $this->request->customer_name;
             $this->order->customer_phone = $this->request->phone;
             $this->order->address = $this->request->address;
-
+            $this->order->delivery_fee = money($this->request->delivery_fee, config('global.currency', true))->getAmount();
 
             //Client
             // if(auth()->user()){
@@ -178,6 +178,11 @@ class BaseOrderRepository extends Controller
             $order_price += $item->pivot->quantity * $item->pivot->variant_price;            
             // $total_order_vat += $item->pivot->vatvalue;
         }
+        $this->order->subtotal = $order_price;
+        if ($this->order->delivery_fee) {
+            $order_price+= $this->order->delivery_fee;
+        }
+
         $this->order->total = $order_price;
         // $this->order->vatvalue = $total_order_vat;
 

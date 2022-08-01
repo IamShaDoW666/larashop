@@ -66,33 +66,34 @@ class OrderController extends Controller
         }
 
         //Phone 
-        $phone=null;
-        if($request->form['customer_phone']){
-            $phone=$request->form['customer_phone'];
+        $phone = null;
+        if ($request->form['customer_phone']) {
+            $phone = $request->form['customer_phone'];
         }
 
         //Order method in a integer format
         $order_method = $request->form['order_type'];
 
-        $requestData = [            
-            'order_method' => $order_method,        
-            'address' => $request->form['address'],            
+        $requestData = [
+            'order_method' => $order_method,
+            'address' => $request->form['address'],
             "items" => $itemsArray,
-            "comment" => $request->comment,                        
+            "comment" => $request->comment,
             "phone" => $phone,
-            "customer_name" => $request->form['customer_name'],            
+            "customer_name" => $request->form['customer_name'],
+            "delivery_fee" => $request->cart['delivery'] ?? null
         ];
 
         return new Request($requestData);
     }
 
     public function store(StoreOrderRequest $request, Restorant $restorant)
-    {
-        $mobileRequest = $this->toMobileRequest($request); 
+    {        
+        $mobileRequest = $this->toMobileRequest($request);
         // dd($mobileRequest);       
         ConfChanger::switchCurrency($restorant);
         $cart = $request->cart;
-       
+
 
         // $items_ids = array_column($cart['items'], 'quantity', 'id');
         // $arr = array();
@@ -102,11 +103,10 @@ class OrderController extends Controller
         // dd($mobileRequest);
         $orderRepo = new OrderRepository($restorant->id, $mobileRequest);
         $validatorValue = $orderRepo->makeOrder();
-        if ($validatorValue->fails()) { 
+        if ($validatorValue->fails()) {
             abort(401);
-            return $orderRepo->redirectOrInform(); 
+            return $orderRepo->redirectOrInform();
         }        
-
         return $orderRepo->redirectOrInform();
 
 

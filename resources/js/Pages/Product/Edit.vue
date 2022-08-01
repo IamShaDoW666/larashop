@@ -50,7 +50,7 @@
                         <div class="flex justify-between">
                             <BreezeLabel for="variants" value="Variants" />
                             <button v-if="product?.variants?.length" type="button" @click="variantOpen = !variantOpen"
-                                class="text-sm mt-4 px-4 py-2 bg-green-500 hover:bg-green-400 text-white font-bold rounded shadow">Add
+                                class="text-sm mt-4 px-2 py-1 sm:px-4 sm:py-2 bg-green-500 hover:bg-green-400 text-white font-bold rounded shadow">Add
                                 Variant</button>
                         </div>
                         <div class="overflow-x-auto mt-4">

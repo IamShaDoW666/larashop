@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -61,8 +62,10 @@ class OrderRepository extends BaseOrderRepository
             //     return Redirect::to($this->order->payment_link);
             // }
             $message = $this->order->getSocialMessageAttribute(true);
-            $url = 'https://api.whatsapp.com/send?phone=' . $this->vendor->whatsapp_phone . '&text=' . $message;
+            $url = 'https://api.whatsapp.com/send?phone=' . $this->vendor->phone . '&text=' . $message;
             // dd($this->order->payment_link);
+            //Set session token for customer viewing order status
+            session(['order_token' => Crypt::encrypt($this->order->id)]);
             return Inertia::location($url);
         } else {
             //There was some error, return back to the order page

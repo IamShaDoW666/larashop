@@ -23,6 +23,7 @@ class CreateOrdersTable extends Migration
             $table->string('uuid')->unique()->nullable();
             $table->foreignId('restorant_id');
             $table->unsignedInteger('total');
+            $table->unsignedInteger('subtotal')->nullable();
             $table->integer('delivery_fee')->nullable();
             $table->timestamp('order_time')->nullable();
             $table->timestamps();

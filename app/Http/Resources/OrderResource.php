@@ -25,6 +25,7 @@ class OrderResource extends JsonResource
             'status' => $this->status,
             'address' => $this->address,
             'total' => money($this->total, config('global.currency'))->format(),
+            'subtotal' => money($this->subtotal, config('global.currency'))->format(),
             'total_int' => $this->total,
             'order_type' => (int)$this->order_type,
             'order_time' => $orderTime ?? null,
