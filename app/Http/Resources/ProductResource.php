@@ -38,7 +38,11 @@ class ProductResource extends JsonResource
       'image_path' => $this->image_path,
       'imglarge' => $this->imglarge,
       'quantity' => null, //quantity for show.vue 
-      'pivot_quantity' => $this->whenPivotLoaded('order_product', $this->pivot ? $this->pivot->quantity : null) //quantity from order
+      'variants' => VariantResource::collection($this->whenLoaded('variants')),
+      'pivot_quantity' => $this->whenPivotLoaded('order_product', $this->pivot ? $this->pivot->quantity : null), //quantity from order
+      'variant_name' => $this->whenPivotLoaded('order_product', $this->pivot ? $this->pivot->variant_name : null), //quantity from order
+      'variant_price' => $this->whenPivotLoaded('order_product', $this->pivot ? $this->pivot->variant_price : null), //quantity from order
+      'variant_id' => $this->whenPivotLoaded('order_product', $this->pivot ? $this->pivot->variant_id : null) //quantity from order
     ];
   }
 }

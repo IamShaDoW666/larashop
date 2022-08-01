@@ -76,10 +76,10 @@ class RestorantController extends Controller
   {
     $restorant = Restorant::where('slug', $slug)
       ->with(['categories' => function ($q) {
-        $q->whereHas('products');
+        $q->whereHas('products')->with('products.variants');
       }], 'config')
       ->with('hours')
-      ->firstOrFail();
+      ->firstOrFail();    
     $restorant->openStatus = RestorantService::getOpeningTime($restorant->hours);
     // return $restorant;
     ConfChanger::switchCurrency($restorant);

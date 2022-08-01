@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('status')->default('pending');
             $table->text('address')->nullable();
             $table->string('order_type');
-            $table->string('uuid')->unique();
+            $table->string('uuid')->unique()->nullable();
             $table->foreignId('restorant_id');
             $table->unsignedInteger('total');
             $table->integer('delivery_fee')->nullable();

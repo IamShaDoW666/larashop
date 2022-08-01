@@ -18,6 +18,9 @@ class CreateOrderProductTable extends Migration
             $table->foreignId('order_id');
             $table->foreignId('product_id');
             $table->unsignedSmallInteger('quantity');
+            $table->unsignedBigInteger('variant_id')->nullable();
+            $table->unsignedBigInteger('variant_price')->nullable();
+            $table->string('variant_name')->nullable();
             $table->timestamps();
         });
     }

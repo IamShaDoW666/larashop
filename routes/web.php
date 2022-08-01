@@ -15,11 +15,11 @@ use App\Http\Controllers\DebugController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SiteController;
-
+use App\Http\Controllers\VariantController;
+use App\Http\Resources\OrderResource;
 //Models
 use App\Models\User;
-
-
+use App\Models\Order;
 
 
 Route::get('/', function () {
@@ -82,6 +82,9 @@ Route::group(['middleware' => ['auth', 'role:Owner'], 'prefix' => 'admin'], func
   Route::resource('/products', ProductController::class);
   Route::resource('/categories', CategoryController::class);
   Route::resource('/areas', AreaController::class);
+  Route::post('/variant/{product}', [VariantController::class, 'store'])->name('variant.store');
+  Route::patch('/variant/{variant}', [VariantController::class, 'update'])->name('variant.update');
+  Route::delete('/variant/{variant}', [VariantController::class, 'destroy'])->name('variant.destroy');
 
   Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
   Route::get('/order/{order}', [OrderController::class, 'show'])->name('admin.orders.show');

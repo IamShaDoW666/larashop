@@ -32,13 +32,13 @@
                 {{ item.price }} x <span>{{ item.quantity }}</span>
               </div>
             </div>
-            <button @click="cart.removeFromCart(item.id, index)"
+            <button @click="cart.removeFromCart(item, item.variantId, index)"
               class="px-4 mr-2 text-white font-bold py-2 hover:bg-gray-700 rounded shadow bg-gray-800">-</button>
             <span
               class="bg-gray-300 text-gray-800 text-sm px-3 font-bold inline-flex items-center p-2 rounded-full dark:bg-gray-200 dark:text-gray-800">
               {{ item.quantity }}
             </span>
-            <button @click="cart.addCart(item.id, index)"
+            <button @click="cart.addCart(item, item.variantId)"
               class="px-4 ml-2 text-white font-bold py-2 hover:bg-gray-700 rounded shadow bg-gray-800">+</button>
           </div>
         </li>

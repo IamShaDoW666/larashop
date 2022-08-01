@@ -2,6 +2,7 @@
 
   <Head title="Products" />
   <FrontEnd :restaurant="restaurant">
+    <HeadlessProductShow :productShowOpen="productShow" />
     <div class="flex px-4 items-center md:mr-4 md:ml-8  my-2 justify-between">
       <div class="sm:flex sm:space-x-4 items-center">
 
@@ -70,7 +71,7 @@
                     {{ item.name }}
                   </div>
                   <span>{{ item.price }} <strong>x</strong> </span>
-                  <button @click="fromCart(item.id, index)"
+                  <button @click="fromCart(item, item.variantId, index)"
                     class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 hover:ring-2 text-sm font-medium text-blue-600 bg-green-200 rounded-full dark:bg-green-900 dark:text-blue-200">
                     {{ item.quantity }}
                   </button>
@@ -117,23 +118,24 @@
       </aside>
     </transition>
 
-    <div class="py-10">
+    <div class="py-10">      
       <div class="max-w-7xl  sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg shadow-lg">
           <div class="p-6 bg-white border-b border-gray-200">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 sm:gap-y-8">
               <div class="px-4 py-2" v-for="(product, index) in prod" :key="product.id">
-                <div class="shadow md:transform md:transition md:duration-300 md:hover:scale-110 bg-blue-400 rounded">
+                <div @click="openModal(product.id)"
+                  class="shadow bg-red-600 md:transform md:transition md:duration-300 md:hover:scale-110 bg-blue-400 rounded">
                   <img :src="product.image_path + '_large.webp'" class="shadow rounded object-cover h-48 w-full">
                 </div>
                 <div class="pl-4 pb-2 pt-6 pr-2 bg-gray-300 rounded-lg shadow-md">
-                  <h1 class="font-bold mb-2">{{ product.name }}</h1>
+                  <h1 class="font-bold mb-2">{{ product.name }} {{ product.quantity }}</h1>
                   <div class="flex items-end justify-between ">
                     <div>
                       <h1>{{ product.price }}</h1>
                     </div>
                     <div>
-                      <button v-if="restaurant.open_status" @click="toCart(product.id, index)"
+                      <button v-if="restaurant.open_status" @click="toCart(product)"
                         class="sm:px-2 sm:py-2 px-1.5 py-1 text-lg sm:text-xs lg:text-xs active:bg-green-200 hover:ring-blue-900 text-white font-bold rounded bg-green-500 hover:bg-green-400">Add
                         To Cart</button>
                     </div>
@@ -145,13 +147,14 @@
         </div>
       </div>
     </div>
-    <CartModal v-if="cart.items.length" :checkout="checkout" :cart="cart" :formatPrice="formatPrice" :fromCart="fromCart" />
+    <CartModal v-if="cart.items.length" :checkout="checkout" :cart="cart" :formatPrice="formatPrice"
+      :fromCart="fromCart" />
   </FrontEnd>
 </template>
 
 <script>
 import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, provide } from 'vue';
 import { useCart } from '@/Stores/cart.js';
 import FrontEnd from '@/Layouts/FrontEnd.vue';
 import CartModal from '@/Components/CartModal.vue';
@@ -160,6 +163,7 @@ import Facebook from '@/Components/Social/Facebook.vue';
 import Whatsapp from '@/Components/Social/Whatsapp.vue';
 import Twitter from '@/Components/Social/Twitter.vue';
 import Instagram from '@/Components/Social/Instagram.vue';
+import HeadlessProductShow from '@/Components/Dialogs/HeadlessProductShow.vue';
 import { useThrottleFn } from '@vueuse/core';
 
 
@@ -172,6 +176,7 @@ export default {
     Facebook,
     Twitter,
     Instagram,
+    HeadlessProductShow
   },
 
   props: {
@@ -185,8 +190,9 @@ export default {
     const cart = useCart();
     const category_slider = ref();
     const form = useForm({});
+    const productShow = ref(false);
+    const dproduct = ref(prod[0]);
     let addressMap = `http://maps.google.com/maps?z=12&t=m&q=loc:${props.restaurant.lat}+${props.restaurant.lng}`
-
     watch(category_slider, (newvalue) => {
       console.log(newvalue)
     })
@@ -227,15 +233,28 @@ export default {
 
     }
 
-    const toCart = (p_id, id) => {
-      console.log('ID CLICKED : ' + p_id)
-      cart.addCart(p_id, id);
+    const toCart = (product) => {
+      if (!product?.variants?.length) {
+        cart.addCart(product);
+      } else {
+        openModal(product.id)
+      }
     }
 
-    const fromCart = (p_id, id) => {
-      console.log(p_id + " ||| " + id)
-      cart.removeFromCart(p_id, id);
+    const fromCart = (p, variant_id, idx) => {
+      console.log(p + " ||| " + variant_id)
+      cart.removeFromCart(p, variant_id, idx);
     }
+
+    const openModal = (id) => {      
+      dproduct.value = prod.value.find(p => p.id == id)
+      productShow.value = !productShow.value
+    }
+
+    provide('data', {
+      productShowOpen: productShow,
+      product: dproduct
+    })
 
     return {
       categoryFilter,
@@ -250,6 +269,8 @@ export default {
       isOpen,
       formatPrice,
       addressMap,
+      openModal,
+      productShow,
       prod
 
     }

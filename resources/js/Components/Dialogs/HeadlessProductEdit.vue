@@ -1,35 +1,19 @@
 <template>
   <TransitionRoot appear :show="productOpenEdit" as="template">
     <Dialog as="div" @close="closeModal" class="relative z-10">
-      <TransitionChild
-        as="template"
-        enter="duration-300 ease-out"
-        enter-from="opacity-0"
-        enter-to="opacity-100"
-        leave="duration-200 ease-in"
-        leave-from="opacity-100"
-        leave-to="opacity-0"
-      >
+      <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0" enter-to="opacity-100"
+        leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
         <div class="fixed inset-0 bg-black bg-opacity-25" />
       </TransitionChild>
 
       <div class="fixed inset-0 overflow-y-scroll">
         <div class="flex min-h-full items-center justify-center p-4 text-center">
-          <TransitionChild
-            as="template"
-            enter="duration-300 ease-out"
-            enter-from="opacity-0 scale-95"
-            enter-to="opacity-100 scale-100"
-            leave="duration-200 ease-in"
-            leave-from="opacity-100 scale-100"
-            leave-to="opacity-0 scale-95"
-          >
+          <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0 scale-95"
+            enter-to="opacity-100 scale-100" leave="duration-200 ease-in" leave-from="opacity-100 scale-100"
+            leave-to="opacity-0 scale-95">
             <DialogPanel
               class="w-full max-w-3xl transform rounded-2xl bg-white text-left align-middle shadow-xl transition-all">
-              <DialogTitle
-                as="h3"
-                class="bg-gray-300 text-lg pl-4 py-4 font-medium leading-6 text-gray-900"
-              >
+              <DialogTitle as="h3" class="bg-gray-300 text-lg pl-4 py-4 font-medium leading-6 text-gray-900">
                 Edit Product
               </DialogTitle>
 
@@ -38,26 +22,30 @@
                   <div class="w-1/2 px-4 mb-5 mt-4">
                     <input id="image" ref="fileInput" type="file" class="mt-1 block w-full" @input="pickFile">
                   </div>
-                  <div v-if="previewImage"
-                  class="imagePreviewWrapper mb-3"
-                  :style="{ 'background-image': `url(${previewImage})` }"
-                  @click="selectImage">
+                  <div v-if="previewImage" class="imagePreviewWrapper mb-3"
+                    :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage">
                   </div>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-2">
                     <div>
                       <BreezeLabel for="name" value="Product Name" />
-                      <input id="name" type="text" class="mt-2 border-gray-300 w-full
-                      sm:w-2/3 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" v-model="form.name" required>
+                      <input id="name" type="text"
+                        class="mt-2 border-gray-300 w-full
+                      sm:w-2/3 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                        v-model="form.name" required>
                     </div>
 
                     <div>
                       <BreezeLabel for="description" value="Description" />
-                      <textarea id="description" class="mt-2 border-gray-300 focus:border-w-full indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" v-model="form.description" required></textarea>
+                      <textarea id="description"
+                        class="mt-2 border-gray-300 focus:border-w-full indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                        v-model="form.description" required></textarea>
                     </div>
 
                     <div>
                       <BreezeLabel for="price" value="Price" />
-                      <input id="price" type="text" class="mt-2 border-gray-300 w-full sm:w-2/3 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" v-model="form.price" required>
+                      <input id="price" type="text"
+                        class="mt-2 border-gray-300 w-full sm:w-2/3 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                        v-model="form.price" required>
                     </div>
 
                     <div>
@@ -65,34 +53,55 @@
                       <HeadlessList class="mt-2" />
                     </div>
                   </div>
-
+                  <div class="mt-4" v-if="dProduct?.variants?.length">
+                    <BreezeLabel for="variants" value="Variants" />
+                    <div class="overflow-x-auto">
+                      <table class="table w-full">
+                        <!-- head -->
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <!-- row 1 -->
+                          <tr v-for="(variant, index) in dProduct?.variants" :key="variant.id">
+                            <td>{{ index + 1 }}</td>
+                            <td>{{ variant.name }}</td>
+                            <td>{{ variant.price }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <button
+                      class="text-sm mt-4 px-4 py-2 bg-green-500 hover:bg-green-400 text-white font-bold rounded shadow">Add
+                      Variant</button>
+                  </div>
                 </form>
               </div>
               <div class="flex justify-between">
                 <div class="mt-4 p-4 float-left">
-                  <form @submit.prevent = "deleteProduct">
-                    <button
-                      type="submit"
+                  <form @submit.prevent="deleteProduct">
+                    <button type="submit"
                       class="mr-3 inline-flex justify-center rounded-md border border-transparent bg-red-200 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
-                      @click="deleteProduct"
-                    >
+                      @click="deleteProduct">
                       Delete
                     </button>
                   </form>
                 </div>
                 <div class="mt-4 p-4 float-right">
-                  <button
-                    type="button"
+                  <button type="button"
                     class="mr-3 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    @click="submit"
-                  >
+                    @click="submit">
                     Update
                   </button>
-                  <button
-                    type="button"
+                  <button type="button"
                     class="inline-flex justify-center rounded-md border border-transparent bg-gray-200 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
-                    @click="closeModal"
-                  >
+                    @click="closeModal">
                     Cancel
                   </button>
                 </div>
@@ -106,7 +115,6 @@
 </template>
 
 <script setup>
-import axios from "axios";
 import { ref, inject, provide } from 'vue';
 import { useForm, Link } from '@inertiajs/inertia-vue3';
 import { Inertia } from '@inertiajs/inertia';
@@ -202,28 +210,28 @@ const submit = () => {
   } else {
     //Use manual Inertia.post to upload file
     Inertia.post(route('products.update', { product: dProduct.value.id }),
-    {
-      name: form.name,
-      description: form.description,
-      price: form.price,
-      category: form.category,
-      product_image: form.product_image,
+      {
+        name: form.name,
+        description: form.description,
+        price: form.price,
+        category: form.category,
+        product_image: form.product_image,
 
-      _method: 'put',  //disguise as put method
+        _method: 'put',  //disguise as put method
 
-    },
+      },
 
-    {
-    onSuccess: () => {
-      closeModal()
-      Swal.fire({
-        icon: 'success',
-        title: "Product Updated!",
-        timer: 2000,
+      {
+        onSuccess: () => {
+          closeModal()
+          Swal.fire({
+            icon: 'success',
+            title: "Product Updated!",
+            timer: 2000,
+          })
+        },
+
       })
-    },
-
-  })
 
   }
 }

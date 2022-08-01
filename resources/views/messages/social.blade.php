@@ -10,7 +10,8 @@ function set($value)
 }
 
 $currency = config('global.currency');
-
+$orderTimeDate = Carbon::make($order->order_time) ? Carbon::make($order->order_time)->toDateString() : '';
+$orderTimeFormat = Carbon::make($order->order_time) ? Carbon::make($order->order_time)->format('g:i A') : '';
 ?>
 @if($order->order_type==1)
 {{ "Delivery order from " . set($order->customer_name) . "👇" }}
@@ -45,8 +46,8 @@ foreach ($order->products()->get() as $key => $item) {
 {{ "*". __('Subtotal')."*".": ". set(money($order->total, $currency)->format())}}
 {{"*". __('Phone')."*.: ". set($order->customer_phone) }}
 {{ "*". __('Address')."*".": ". set($order->address)}}
-{{ "*". __('Date')."*".": ". set(Carbon::make($order->order_time)->toDateString())}}
-{{ "*". __('Time')."*".": ". set(Carbon::make($order->order_time)->format('g:i A'))}}
+{{ "*". __('Date')."*".": ". set($orderTimeDate)}}
+{{ "*". __('Time')."*".": ". set($orderTimeFormat)}}
 
 {{ "*Order No*: " . $order->id}}
 {{ __('Track your Order') }}
