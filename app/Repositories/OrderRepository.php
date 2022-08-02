@@ -60,7 +60,8 @@ class OrderRepository extends BaseOrderRepository
         if ($this->status) {
             // if ($this->order->payment_link) {
             //     return Redirect::to($this->order->payment_link);
-            // }
+            // }            
+            
             $message = $this->order->getSocialMessageAttribute(true);
             $url = 'https://api.whatsapp.com/send?phone=' . $this->vendor->phone . '&text=' . $message;
             // dd($this->order->payment_link);

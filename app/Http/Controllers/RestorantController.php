@@ -13,6 +13,7 @@ use App\Models\Config;
 use App\Models\Hour;
 use App\Services\ConfChanger;
 use App\Services\RestorantService;
+use Nwidart\Modules\Facades\Module;
 
 class RestorantController extends Controller
 {
@@ -239,8 +240,19 @@ class RestorantController extends Controller
   }
 
   public function apps()
+  {        
+    $hasTaxConfig = Module::has('TaxConfig');        
+    return inertia('Restorant/Apps', compact('hasTaxConfig'));
+  }
+
+  public function updateApps(Request $request, Restorant $restorant)
   {
-    return inertia('Restorant/Apps');
+    $restorant->config->update([
+      'tax' => $request->tax,
+      'tax_name' => $request->tax_name
+    ]);
+
+    return back();
   }
 
   public function payments()

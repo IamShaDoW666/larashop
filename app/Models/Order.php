@@ -32,7 +32,7 @@ class Order extends Model
   public function getSocialMessageAttribute($encode = false)
   {
     ConfChanger::switchCurrency($this->restorant);
-    $message = view('messages.social', ['order' => OrderResource::make($this)])->render();
+    $message = view('messages.social', ['order' => $this])->render();
     $message = str_replace('&#039;', "'", $message);
     if ($encode) {
       $message = urlencode($message);

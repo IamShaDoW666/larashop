@@ -66,7 +66,7 @@ class HandleInertiaRequests extends Middleware
         'pusher' => config('pusher')
       ];
     }
-
+        
     return array_merge(parent::share($request), $authArray, $pusherArray, [
       'flash' => [
         'message' => session('message')

@@ -25,6 +25,9 @@ class CreateOrdersTable extends Migration
             $table->unsignedInteger('total');
             $table->unsignedInteger('subtotal')->nullable();
             $table->integer('delivery_fee')->nullable();
+            $table->unsignedInteger('tax')->nullable();
+            $table->string('tax_name')->nullable();
+            $table->unsignedInteger('tax_percent')->nullable();
             $table->timestamp('order_time')->nullable();
             $table->timestamps();
         });

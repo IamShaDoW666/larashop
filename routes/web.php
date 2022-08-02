@@ -95,6 +95,7 @@ Route::group(['middleware' => ['auth', 'role:Owner'], 'prefix' => 'admin'], func
   Route::get('/restorant/location', [RestorantController::class, 'location'])->name('owner.restorant.location');
   Route::get('/restorant/apps', [RestorantController::class, 'apps'])->name('owner.restorant.apps');
   Route::get('/restorant/payments', [RestorantController::class, 'payments'])->name('owner.restorant.payments');
+  Route::patch('/restorant/apps/update/{restorant}', [RestorantController::class, 'updateApps'])->name('owner.restorant.apps.update');
   Route::patch('/restorant/payments/update/{config}', [PaymentController::class, 'update'])->name('owner.restorant.payment.update');
   Route::get('/restorant/working-hours', [RestorantController::class, 'workingHours'])->name('owner.restorant.working-hours');
   Route::post('/restorant/update-working-hours/{restorant}', [RestorantController::class, 'updateWorkingHours'])->name('owner.restorant.update-working-hours');

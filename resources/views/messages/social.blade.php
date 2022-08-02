@@ -41,11 +41,17 @@ foreach ($order->products()->get() as $key => $item) {
 <?php
 }
 ?>
-*************************************** {{ "\n" }}
+
+********************************************************
+{{ "    *". __('Subtotal')."*".": ". set(money($order->subtotal, $currency)->format())}}
 @if ($order->delivery_fee)
-{{ "*". __('Delivery Fee')."*".": ". set(money($order->delivery_fee, $currency)->format())}}
+{{ "    *". __('Delivery Fee')."*".": ". set(money($order->delivery_fee, $currency)->format())}}
 @endif
-{{ "*". __('Subtotal')."*".": ". set(money($order->total, $currency)->format())}}
+@if(Module::has('TaxConfig') && $order->tax)
+{{ "    *". __($order->tax_name). " " . $order->restorant->config->tax . "%" . "*".": ". set(money($order->tax, $currency)->format())}}
+@endif
+{{ "    *". __('Total')."*".": ". set(money($order->total, $currency)->format())}}
+********************************************************
 {{"*". __('Phone')."*.: ". set($order->customer_phone) }}
 {{ "*". __('Address')."*".": ". set($order->address)}}
 {{ "*". __('Date')."*".": ". set($orderTimeDate)}}

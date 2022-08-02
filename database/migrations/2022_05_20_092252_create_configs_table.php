@@ -22,6 +22,8 @@ class CreateConfigsTable extends Migration
             $table->boolean('can_pickup')->default(false);
             $table->integer('minimum_order')->default(0);
             $table->string('currency')->default('INR');
+            $table->integer('tax')->nullable();
+            $table->string('tax_name')->nullable();
             $table->integer('minimum_order_free')->nullable()->default(null);
             $table->string('razorpay_api_key')->nullable();
             $table->string('razorpay_api_secret')->nullable();

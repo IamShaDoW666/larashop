@@ -141,17 +141,6 @@
                                         {{ item.subtotal_formatted }}
                                     </td>
                                 </tr>
-                                <tr v-if="order.order_type == 1">
-                                    <td colspan="3" class="">
-                                        &nbsp;
-                                    </td>
-                                    <td class="sm:px-8 px-4 py-4">
-                                        Delivery
-                                    </td>
-                                    <td class="sm:px-8 px-4 py-4 text-right">
-                                        {{ order.delivery_fee }}
-                                    </td>
-                                </tr>
                                 <tr>
                                     <td colspan="3" class="">
                                         &nbsp;
@@ -163,7 +152,28 @@
                                         {{ order.subtotal }}
                                     </td>
                                 </tr>
-
+                                <tr v-if="order.order_type == 1">
+                                    <td colspan="3" class="">
+                                        &nbsp;
+                                    </td>
+                                    <td class="sm:px-8 px-4 py-4">
+                                        Delivery
+                                    </td>
+                                    <td class="sm:px-8 px-4 py-4 text-right">
+                                        {{ order.delivery_fee }}
+                                    </td>
+                                </tr>                                
+                                <tr v-if="order.tax">
+                                    <td colspan="3" class="">
+                                        &nbsp;
+                                    </td>
+                                    <td class="sm:px-8 px-4 py-4 text-sm">
+                                        {{ order.tax_name + " " + order.tax_percent + '%' }}
+                                    </td>
+                                    <td class="sm:px-8 px-4 py-4 text-right">
+                                        {{ order.tax }}
+                                    </td>
+                                </tr>                                
                                 <tr>
                                     <td colspan="3" class="">
                                         &nbsp;

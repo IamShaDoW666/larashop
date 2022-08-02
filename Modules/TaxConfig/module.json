@@ -1,0 +1,13 @@
+{
+    "name": "TaxConfig",
+    "alias": "taxconfig",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\TaxConfig\\Providers\\TaxConfigServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []    
+}

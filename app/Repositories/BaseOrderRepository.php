@@ -7,11 +7,11 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Restorant as Vendor;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Events\NewOrder as PusherNewOrder;
 use App\Http\Resources\OrderResource;
 use App\Models\Variant;
+use Nwidart\Modules\Facades\Module;
 
 class BaseOrderRepository extends Controller
 {
@@ -25,7 +25,7 @@ class BaseOrderRepository extends Controller
     public $vendor;
 
     public $order;
-    
+
     public $status = true;
 
     public $isNewOrder = true;
@@ -43,6 +43,7 @@ class BaseOrderRepository extends Controller
     public function __construct($vendor_id, $request)
     {
         $this->request = $request;
+
         $this->orderType = $request->order_method;
         // $this->hasPayment=$hasPayment;
         // $this->isStripe=$isStripe;
@@ -59,7 +60,7 @@ class BaseOrderRepository extends Controller
         $this->createOrder();
 
         // Set Items
-        $this->setItems();        
+        $this->setItems();
 
         //Set Comment
         // $this->setComment();
@@ -116,7 +117,9 @@ class BaseOrderRepository extends Controller
             // }
 
             $this->order->total = 0;
-            // $this->order->vatvalue=0;
+            $this->order->tax = 0;
+            $this->order->tax_name = $this->vendor->config->tax_name;
+            $this->order->tax_percent = $this->vendor->config->tax;
 
             //Save order
             $this->order->save();
@@ -160,13 +163,13 @@ class BaseOrderRepository extends Controller
             //     }
 
             //Total vat on this item
-            // $totalCalculatedVAT = $item['qty'] * ($theItem->vat > 0?$itemSelectedPrice * ($theItem->vat / 100):0);
+            // $totalCalculatedVAT = $item['quantity'] * ($theItem->vat > 0?$itemSelectedPrice * ($theItem->vat / 100):0);
 
             $this->order->products()->attach($item['id'], [
                 'quantity' => $item['quantity'],
-                'variant_price'=>$itemSelectedPrice,
+                'variant_price' => $itemSelectedPrice,
                 'variant_id' => $variant->id ?? null,
-                'variant_name' => $variant->name ?? null,                
+                'variant_name' => $variant->name ?? null,
             ]);
         }
 
@@ -175,14 +178,23 @@ class BaseOrderRepository extends Controller
         $order_price = 0;
         // $total_order_vat = 0;
         foreach ($this->order->products()->get() as $key => $item) {
-            $order_price += $item->pivot->quantity * $item->pivot->variant_price;            
+            $order_price += $item->pivot->quantity * $item->pivot->variant_price;
             // $total_order_vat += $item->pivot->vatvalue;
         }
+
         $this->order->subtotal = $order_price;
-        if ($this->order->delivery_fee) {
-            $order_price+= $this->order->delivery_fee;
+
+        //calculate tax if module available
+        if (Module::has('TaxConfig')) {
+            $orderTaxValue = ($order_price * $this->vendor->config->tax) / 100;            
+            $this->order->tax = $orderTaxValue;
+            $order_price +=  $orderTaxValue;
         }
 
+
+        if ($this->order->delivery_fee) {
+            $order_price += $this->order->delivery_fee;
+        }
         $this->order->total = $order_price;
         // $this->order->vatvalue = $total_order_vat;
 
@@ -230,9 +242,10 @@ class BaseOrderRepository extends Controller
     //     //Does nothing
     // }
 
-    public function notifyOwner(){
+    public function notifyOwner()
+    {
         //Inform owner - via email, sms or db
-       // $this->vendor->user->notify((new OrderNotification($this->order))->locale(strtolower(config('settings.app_locale'))));
+        // $this->vendor->user->notify((new OrderNotification($this->order))->locale(strtolower(config('settings.app_locale'))));
 
         // Broadcast Pusher if exists        
         if (config('pusher') && config('pusher.exists')) {
