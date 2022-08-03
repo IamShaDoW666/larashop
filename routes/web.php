@@ -13,6 +13,7 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DebugController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\VariantController;
@@ -22,18 +23,19 @@ use App\Models\User;
 use App\Models\Order;
 
 
-Route::get('/', function () {
-  if (auth()->user()) {
-    if (auth()->user()->hasRole('Owner')) {
-      return redirect(route('admin.dashboard'));
-    } else {
-      return redirect(route('guest.restorant.create'));
-    }
-  } else {
-    return redirect(route('login'));
-  }
-});
+// Route::get('/', function () {
+//   if (auth()->user()) {
+//     if (auth()->user()->hasRole('Owner')) {
+//       return redirect(route('admin.dashboard'));
+//     } else {
+//       return redirect(route('guest.restorant.create'));
+//     }
+//   } else {
+//     return redirect(route('login'));
+//   }
+// });
 
+Route::get('/', [FrontEndController::class, 'index'])->name('front');
 
 require __DIR__ . '/auth.php';
 
@@ -44,7 +46,7 @@ require __DIR__ . '/auth.php';
 
 // Public Routes
 Route::get('/products/filter/{id}', [ProductController::class, 'filter'])->name('products.filter');
-Route::get('/restorants/{restorant:slug}', [RestorantController::class, 'show'])->name('restorants.show'); //restorantS.show for public
+Route::get('/restorants/{restorant:slug}', [FrontEndController::class, 'restorant'])->name('restorants.show'); //restorantS.show for public
 Route::get('/order/{restorant}', [OrderController::class, 'checkin'])->name('orders.checkin');
 Route::get('/order/status/{order}', [OrderController::class, 'orderStatus'])->middleware('order_device_check')->name('order.status');
 Route::post('/checkout/{restorant:uuid}', [OrderController::class, 'store'])->name('orders.store');
