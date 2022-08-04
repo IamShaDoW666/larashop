@@ -19,10 +19,10 @@ class DebugController extends Controller
 
   public function debug()
   {
-    session(['order_token' => Crypt::encrypt('3')]);
+    // session(['order_token' => Crypt::encrypt('3')]);
     // dd(Crypt::decrypt($cipher), config('app.url') . '/order/status/' . $cipher);
     // return config('app.url') . '/order/status/' . $order_id;
-    // return inertia('Debug');
+    return inertia('Debug');
   }
 
   public function test(Order $order)

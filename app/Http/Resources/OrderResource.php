@@ -17,20 +17,25 @@ class OrderResource extends JsonResource
      */
     public function toArray($request)
     {
+        $orderTime = Carbon::make($this->order_time);
         return [
             'id' => $this->id,
             'customer_name' => $this->customer_name,
             'customer_phone' => $this->customer_phone,
             'status' => $this->status,
             'address' => $this->address,
+            'tax' => money($this->tax, config('global.curreny'))->format(),
+            'tax_name' => $this->tax_name,
+            'tax_percent' => $this->tax_percent,
+            'subtotal' => money($this->subtotal, config('global.currency'))->format(),
             'total' => money($this->total, config('global.currency'))->format(),
             'total_int' => $this->total,
             'order_type' => (int)$this->order_type,
-            'order_time' => Carbon::make($this->order_time),
+            'order_time' => $orderTime ?? null,
             'order_time_datetime' => [
-                'time' => Carbon::make($this->order_time)->format('g:i A'),
-                'time_24' => Carbon::make($this->order_time)->toTimeString('minute'),
-                'date' => Carbon::make($this->order_time)->toDateString(),
+                'time' => $orderTime ? $orderTime->format('g:i A') : null,
+                'time_24' => $orderTime ? $orderTime->toTimeString('minute') : null,
+                'date' => $orderTime ? $orderTime->toDateString() : null,
             ],
             'delivery_fee' => money($this->delivery_fee, config('global.currency'))->format(),
             'created_at' => $this->created_at,

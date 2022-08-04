@@ -17,6 +17,7 @@ use App\Services\ConfChanger;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ProductsImport;
+use App\Models\Variant;
 use Image;
 
 use Cknow\Money\Currency;
@@ -40,7 +41,7 @@ class ProductController extends Controller
     //   ->first());
 
     $categories = Category::query()
-      ->with('products')
+      ->with('products.variants')
       ->where('restorant_id', $restorant->id)
       ->get();
     $c = CategoryResource::collection($categories);
@@ -107,8 +108,13 @@ public function store(StoreProductRequest $request)
   * @return \Illuminate\Http\Response
   */
   public function edit(Product $product)
-  {
-    //
+  {    
+    $product->load('variants');
+    $product = ProductResource::make($product);    
+    $categories = CategoryResource::collection(Category::query()      
+      ->where('restorant_id', $product->category->restorant->id)
+      ->get());
+    return inertia('Product/Edit', compact('product', 'categories'));
   }
 
   /**
@@ -123,12 +129,12 @@ public function store(StoreProductRequest $request)
     if (auth()->user()->id != $product->category->restorant->user_id) {
       abort(403);
     }
-
+    
     if ($request->hasFile('product_image')) {
       $imgpath = $this->uploadimage($request->product_image);
     } else {
       $imgpath = $product->image_path;
-    }
+    }    
 
     $data = [
       'name' => $request->name,

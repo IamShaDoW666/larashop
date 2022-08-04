@@ -20,10 +20,14 @@ class CreateOrdersTable extends Migration
             $table->string('status')->default('pending');
             $table->text('address')->nullable();
             $table->string('order_type');
-            $table->string('uuid')->unique();
+            $table->string('uuid')->unique()->nullable();
             $table->foreignId('restorant_id');
             $table->unsignedInteger('total');
+            $table->unsignedInteger('subtotal')->nullable();
             $table->integer('delivery_fee')->nullable();
+            $table->unsignedInteger('tax')->nullable();
+            $table->string('tax_name')->nullable();
+            $table->unsignedInteger('tax_percent')->nullable();
             $table->timestamp('order_time')->nullable();
             $table->timestamps();
         });

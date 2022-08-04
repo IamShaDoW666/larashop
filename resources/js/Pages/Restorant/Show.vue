@@ -1,5 +1,6 @@
 <template>
   <Head title="Products" />
+
   <div class="drawer drawer-end" :class="currentTheme" >
     <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content mb-4">
@@ -97,6 +98,7 @@
                 <span>{{ restaurant.address }}</span>
               </a>
             </div>
+
 
             <p class="text-xs m-0 sm:text-sm dark:text-white font-semibold">
               {{ restaurant.open_msg }}
@@ -325,6 +327,7 @@
                       <span class="ml-2 text-green-700 dark:text-white">
                         {{ formatPrice(cart.getSubTotal) }}
                       </span>
+
                     </div>
                   </div>
                   <!-- <div class="font-bold rounded shadow-lg bg-white text-center flex items-center p-3 text-base text-gray-900 rounded-lg dark:text-white">
@@ -442,6 +445,8 @@ import SideCart from "@/Components/Restorant/SideCart.vue";
 import { useThrottleFn } from "@vueuse/core";
 import FooterEnd from "@/Components/Footers/Footer.vue";
 import { useThemeSwitcher } from "@/Composables/useThemeSwitcher";
+
+
 export default {
   components: {
     FrontEnd,
@@ -454,6 +459,8 @@ export default {
     Instagram,
     ProductsList,
     SideCart,
+    HeadlessProductShow
+
   },
 
   props: {
@@ -466,9 +473,12 @@ export default {
     const cart = useCart();
     const category_slider = ref();
     const form = useForm({});
+
     let addressMap = `http://maps.google.com/maps?z=12&t=m&q=loc:${props.restaurant.lat}+${props.restaurant.lng}`;
-    const { currentTheme } = useThemeSwitcher()
-   
+    const { currentTheme } = useThemeSwitcher() 
+    const productShow = ref(false);
+    const dproduct = ref(prod[0]);
+
     watch(category_slider, (newvalue) => {
       console.log(newvalue);
     });
@@ -508,15 +518,28 @@ export default {
       active.value = [];
     };
 
-    const toCart = (p_id, id) => {
-      console.log("ID CLICKED : " + p_id);
-      cart.addCart(p_id, id);
-    };
+    const toCart = (product) => {
+      if (!product?.variants?.length) {
+        cart.addCart(product);
+      } else {
+        openModal(product.id)
+      }
+    }
 
-    const fromCart = (p_id, id) => {
-      console.log(p_id + " ||| " + id);
-      cart.removeFromCart(p_id, id);
-    };
+    const fromCart = (p, variant_id, idx) => {
+      console.log(p + " ||| " + variant_id)
+      cart.removeFromCart(p, variant_id, idx);
+    }
+
+    const openModal = (id) => {      
+      dproduct.value = prod.value.find(p => p.id == id)
+      productShow.value = !productShow.value
+    }
+
+    provide('data', {
+      productShowOpen: productShow,
+      product: dproduct
+    })
 
     return {
       categoryFilter,
@@ -531,11 +554,15 @@ export default {
       isOpen,
       formatPrice,
       addressMap,
+      openModal,
+      productShow,
       prod,
       currentTheme
     };
   },
 };
+
+
 </script>
 <style>
 .slide-fade-enter-active {

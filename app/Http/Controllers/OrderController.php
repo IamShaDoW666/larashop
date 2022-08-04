@@ -5,16 +5,22 @@ namespace App\Http\Controllers;
 use App\Events\NewOrder as PusherNewOrder;
 use Illuminate\Http\Request;
 
-use App\Http\Resources\AreaResource;
 use App\Http\Requests\StoreOrderRequest;
+
+use App\Http\Resources\AreaResource;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\RestorantResource;
+
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\Variant;
 use App\Models\Restorant;
-use App\Services\ConfChanger;
+
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Inertia\Inertia;
+use App\Services\ConfChanger;
+use App\Repositories\OrderRepository;
 
 class OrderController extends Controller
 {
@@ -46,39 +52,93 @@ class OrderController extends Controller
         //
     }
 
+    private function toMobileRequest(Request $request)
+    {
+        // dd($request->all());
+        //Organise Items in Cart
+        $itemsArray = array();
+        foreach ($request->cart['items'] as $key => $item) {
+            array_push($itemsArray, array(
+                "id" => $item['id'],
+                "quantity" => $item['quantity'],
+                "variantId" => $item['variantId']
+            ));
+        }
+
+        //Phone 
+        $phone = null;
+        if ($request->form['customer_phone']) {
+            $phone = $request->form['customer_phone'];
+        }
+
+        //Order method in a integer format
+        $order_method = $request->form['order_type'];
+
+        $requestData = [
+            'order_method' => $order_method,
+            'address' => $request->form['address'],
+            "items" => $itemsArray,
+            "comment" => $request->comment,
+            "phone" => $phone,
+            "customer_name" => $request->form['customer_name'],
+            "delivery_fee" => $request->cart['delivery'] ?? null
+        ];
+
+        return new Request($requestData);
+    }
 
     public function store(StoreOrderRequest $request, Restorant $restorant)
-    {
-
+    {        
+        $mobileRequest = $this->toMobileRequest($request);
+        // dd($mobileRequest);       
         ConfChanger::switchCurrency($restorant);
         $cart = $request->cart;
-        $items_ids = array_column($cart['items'], 'quantity', 'id');
-        $arr = array();
-        foreach ($items_ids as $key => $items_id) {
-            $arr[$key] = ['quantity' => $items_id];
-        }
-        $order = Order::factory()->create([
-            'customer_name' => $request->form['customer_name'],
-            'customer_phone' => $request->form['customer_phone'],
-            'address' => $request->form['address'],
-            'order_type' => $request->form['order_type'],
-            'order_time' => Carbon::make($request->form['order_time']),
-            'delivery_fee' => money($cart['delivery'], config('global.currency'), true)->getAmount(),
-            'total' => money($cart['total'], config('global.currency'), true)->getAmount()
-        ]);
-        $order->restorant()->associate($restorant);
-        $order->products()->sync($arr);
-        $order->save();
-        $message = $order->getSocialMessageAttribute(true);
-        //Broadcast Pusher if exists        
-        if (config('pusher') && config('pusher.exists')) {
-            broadcast(new PusherNewOrder(new OrderResource($order)));
-        }
 
-        $url = 'https://api.whatsapp.com/send?phone=' . $order->restorant->phone . '&text=' . $message;
+
+        // $items_ids = array_column($cart['items'], 'quantity', 'id');
+        // $arr = array();
+        // foreach ($items_ids as $key => $items_id) {
+        //     $arr[$key] = ['quantity' => $items_id];
+        // }
+        // dd($mobileRequest);
+        $orderRepo = new OrderRepository($restorant->id, $mobileRequest);
+        $validatorValue = $orderRepo->makeOrder();
+        if ($validatorValue->fails()) {
+            abort(401);
+            return $orderRepo->redirectOrInform();
+        }        
+        return $orderRepo->redirectOrInform();
+
+
+        // $order = Order::factory()->create([
+        //     'customer_name' => $request->form['customer_name'],
+        //     'customer_phone' => $request->form['customer_phone'],
+        //     'address' => $request->form['address'],
+        //     'order_type' => $request->form['order_type'],
+        //     'order_time' => Carbon::make($request->form['order_time']),
+        //     'delivery_fee' => money($cart['delivery'], config('global.currency'), true)->getAmount(),
+        //     'total' => money($cart['total'], config('global.currency'), true)->getAmount()
+        // ]);
+        // $order->restorant()->associate($restorant);
+
+        // $order->products()->attach($item['id'], [
+        //     'quantity'=>$item['quantity'],                     
+        //     'variant_id'=>$item['variantId']
+        // ]);
+
+        // $order->products()->sync($arr);
+        // $order->save();
+        // dd($cart['items']);
+        // $message = $order->getSocialMessageAttribute(true);
+        //Broadcast Pusher if exists        
+        // if (config('pusher') && config('pusher.exists')) {
+        //     broadcast(new PusherNewOrder(new OrderResource($order)));
+        // }
+
+        // $url = 'https://api.whatsapp.com/send?phone=' . $order->restorant->phone . '&text=' . $message;
         //Set session token for customer viewing order status
-        session(['order_token' => Crypt::encrypt($order->id)]);
-        return Inertia::location($url);
+        // session(['order_token' => Crypt::encrypt($order->id)]);
+        // return Inertia::location($url);
     }
 
     public function checkin($id)
@@ -102,7 +162,7 @@ class OrderController extends Controller
      */
     public function show($order)
     {
-        $order = OrderResource::make(Order::find($order)->load('products'));        
+        $order = OrderResource::make(Order::find($order)->load('products'));
         // return $order;
         return inertia('Order/Show', compact('order'));
     }

@@ -32,14 +32,14 @@
                 {{ item.price }} x <span>{{ item.quantity }}</span>
               </div>
             </div>
-            <button @click="cart.removeFromCart(item.id, index)"
-              class="px-4 mr-2 text-white dark:text-black font-bold py-2 hover:bg-gray-700 rounded shadow bg-gray-800 dark:bg-golden-yellow">-</button>
+            <button @click="cart.removeFromCart(item, item.variantId, index)"
+              class="px-4 mr-2 text-white font-bold py-2 hover:bg-gray-700 rounded shadow bg-gray-800">-</button>
             <span
               class="bg-gray-300 text-gray-800 text-sm px-3 font-bold inline-flex items-center p-2 rounded-full dark:bg-golden-yellow dark:text-gray-800">
               {{ item.quantity }}
             </span>
-            <button @click="cart.addCart(item.id, index)"
-              class="px-4 ml-2 text-white dark:text-black font-bold py-2 hover:bg-gray-700 rounded shadow bg-gray-800 dark:bg-golden-yellow">+</button>
+            <button @click="cart.addCart(item, item.variantId)"
+              class="px-4 ml-2 text-white font-bold py-2 hover:bg-gray-700 rounded shadow bg-gray-800">+</button>
           </div>
         </li>
         <li class="shadow-md bg-white dark:bg-golden-yellow dark:text-black rounded-md flex flex-1 py-4 px-8 flex flex-col gap-y-4 mb-2">

@@ -13,40 +13,47 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DebugController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SiteController;
 use App\Http\Resources\RestorantResource;
 use App\Models\Restorant;
+use App\Http\Controllers\VariantController;
+use App\Http\Resources\OrderResource;
 
 //Models
 use App\Models\User;
+use App\Models\Order;
 
 
+// Route::get('/', function () {
+//   if (auth()->user()) {
+//     if (auth()->user()->hasRole('Owner')) {
+//       return redirect(route('admin.dashboard'));
+//     } else {
+//       return redirect(route('guest.restorant.create'));
+//     }
+//   } else {
+//     return redirect(route('login'));
+//   }
+// });
 
+Route::get('/', [FrontEndController::class, 'index'])->name('front');
 
-Route::get('/', function () {
-  if (auth()->user()) {
-    if (auth()->user()->hasRole('Owner')) {
-      return redirect(route('admin.dashboard'));
-    } else {
-      return redirect(route('guest.restorant.create'));
-    }
-  } else {
-    return redirect(route('login'));
-  }
-});
-
+//Language Routes
+Route::get('language/{locale}', function($locale) {
+  app()->setlocale($locale);
+  session()->put('locale', $locale);
+  return back();
+})->name('lang');
 
 require __DIR__ . '/auth.php';
 
-// Route::get('/dashboard', function () {
-//     $restorants = Restorant::all();
-//     return Inertia::render('Dashboard', compact('restorants'));
-// })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 // Public Routes
 Route::get('/products/filter/{id}', [ProductController::class, 'filter'])->name('products.filter');
-Route::get('/restorants/{restorant:slug}', [RestorantController::class, 'show'])->name('restorants.show'); //restorantS.show for public
+Route::get('/restorants/{restorant:slug}', [FrontEndController::class, 'restorant'])->name('restorants.show'); //restorantS.show for public
 Route::get('/order/{restorant}', [OrderController::class, 'checkin'])->name('orders.checkin');
 Route::get('/order/status/{order}', [OrderController::class, 'orderStatus'])->middleware('order_device_check')->name('order.status');
 Route::post('/checkout/{restorant:uuid}', [OrderController::class, 'store'])->name('orders.store');
@@ -91,6 +98,9 @@ Route::group(['middleware' => ['auth', 'role:Owner'], 'prefix' => 'admin'], func
   Route::resource('/products', ProductController::class);
   Route::resource('/categories', CategoryController::class);
   Route::resource('/areas', AreaController::class);
+  Route::post('/variant/{product}', [VariantController::class, 'store'])->name('variant.store');
+  Route::patch('/variant/{variant}', [VariantController::class, 'update'])->name('variant.update');
+  Route::delete('/variant/{variant}', [VariantController::class, 'destroy'])->name('variant.destroy');
 
   Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
   Route::get('/order/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
@@ -101,6 +111,7 @@ Route::group(['middleware' => ['auth', 'role:Owner'], 'prefix' => 'admin'], func
   Route::get('/restorant/location', [RestorantController::class, 'location'])->name('owner.restorant.location');
   Route::get('/restorant/apps', [RestorantController::class, 'apps'])->name('owner.restorant.apps');
   Route::get('/restorant/payments', [RestorantController::class, 'payments'])->name('owner.restorant.payments');
+  Route::patch('/restorant/apps/update/{restorant}', [RestorantController::class, 'updateApps'])->name('owner.restorant.apps.update');
   Route::patch('/restorant/payments/update/{config}', [PaymentController::class, 'update'])->name('owner.restorant.payment.update');
   Route::get('/restorant/working-hours', [RestorantController::class, 'workingHours'])->name('owner.restorant.working-hours');
   Route::post('/restorant/update-working-hours/{restorant}', [RestorantController::class, 'updateWorkingHours'])->name('owner.restorant.update-working-hours');

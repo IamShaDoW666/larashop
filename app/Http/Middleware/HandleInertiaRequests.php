@@ -66,15 +66,16 @@ class HandleInertiaRequests extends Middleware
         'pusher' => config('pusher')
       ];
     }
-
+        
     return array_merge(parent::share($request), $authArray, $pusherArray, [
       'flash' => [
         'message' => session('message')
       ],
 
       'app' => [
-        'locale' => 'fr',
-        'faker_locale' => 'fr',
+        'locale' => config('app.locale'),
+        'faker_locale' => config('app.faker_locale'),
+        'available_languages' => config('global.available_lang'),
         'url' => config('app.url'),
         'timezone' => config('app.timezone')
       ],

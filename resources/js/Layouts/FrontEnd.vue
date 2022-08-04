@@ -32,7 +32,6 @@
         </div>
         <ThemeSwitcher />
       </nav>
-
       <!-- Page Heading / Image -->
       <header class="bg-white shadow">
         <div class="mx-auto h-96">
@@ -56,6 +55,8 @@ import { watch } from "vue";
 import { useWindowScroll } from "@vueuse/core";
 import FooterEnd from "@/Components/Footers/Footer.vue";
 import ThemeSwitcher from "@/Components/ThemeSwitcher.vue";
+import LanguageList from '@/Components/Dropdowns/LanguageList.vue';
+
 
 const props = defineProps({
   restaurant: Object,

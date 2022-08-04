@@ -1,41 +1,30 @@
 <template>
-  <FrontEnd :restaurant="restaurant">
-    <div class="py-12">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-          <div class="loader"></div>
-        </div>
+  <div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+      <div class="flex justify-between">
+        <Link :href="route('lang', { locale: 'en' })" class="px-2 py-1 rounded shadow bg-blue-400">Change to English
+        </Link>
+        <Link :href="route('lang', { locale: 'ar' })" class="px-2 py-1 rounded shadow bg-blue-400">Change to Arabic
+        </Link>
+        <Link :href="route('lang', { locale: 'fr' })" class="px-2 py-1 rounded shadow bg-blue-400">Change to French
+        </Link>
+      </div>
+      <div class="py-12 w-32">
+        <LanguageList />
+      </div>
+      <div class="grid grid-cols-3 gap-4 mt-12">
+        <h1>{{ __('Cart Empty') }}</h1>
+        <h1>{{ __('All Category') }}</h1>
       </div>
     </div>
-  </FrontEnd>
+  </div>
 </template>
 
 <script setup>
-import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
-import { reactive } from "vue";
-import { Head } from "@inertiajs/inertia-vue3";
-import FrontEnd from "@/Layouts/FrontEnd.vue";
-const props = defineProps({
-  restaurant: Object
-})
+import { Link } from '@inertiajs/inertia-vue3';
+import LanguageList from '../Components/Dropdowns/LanguageList.vue';
+
+
+
 </script>
 
-<style scoped>
-.loader {
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #3498db; /* Blue */
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-</style>

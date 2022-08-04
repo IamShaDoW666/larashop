@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Resources\OrderResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Checkout;
@@ -25,7 +26,7 @@ class Order extends Model
 
   public function products()
   {
-    return $this->belongsToMany(Product::class)->withPivot(['quantity']);
+    return $this->belongsToMany(Product::class)->withPivot(['quantity', 'variant_id', 'variant_name', 'variant_price']);
   }
 
   public function getSocialMessageAttribute($encode = false)

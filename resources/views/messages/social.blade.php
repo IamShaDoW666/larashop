@@ -3,14 +3,14 @@ use Illuminate\Support\Carbon;
 
 $nl = "\n\n";
 $tabSpace = "      ";
-
 function set($value)
 {
     return $value && isset($value) ? $value : "";
 }
 
 $currency = config('global.currency');
-
+$orderTimeDate = Carbon::make($order->order_time) ? Carbon::make($order->order_time)->toDateString() : '';
+$orderTimeFormat = Carbon::make($order->order_time) ? Carbon::make($order->order_time)->format('g:i A') : '';
 ?>
 @if($order->order_type==1)
 {{ "Delivery order from " . set($order->customer_name) . "👇" }}
@@ -25,10 +25,11 @@ $currency = config('global.currency');
 {{"*". __('ORDERED ITEMS')."*".":"}}
 <?php
 foreach ($order->products()->get() as $key => $item) {
-    $lineprice = $item->pivot->quantity . ' X ' . $item->name . " - " . money($item->pivot->quantity * $item->price, $currency)->format();
-    // if (strlen($item->pivot->variant_name) > 3) {
-    //     $lineprice .= $nl . $tabSpace . __('Variant:') . " " . $item->pivot->variant_name;
-    // }
+    $item_name = $item->name;
+    if (strlen($item->pivot->variant_name)) {
+        $item_name = $item->name . ' ' . $item->pivot->variant_name;
+    }
+    $lineprice = $item->pivot->quantity . ' X ' . $item_name . " - " . money($item->pivot->quantity * (int)$item->pivot->variant_price, $currency)->format();  
     // if (strlen($item->pivot->extras) > 3) {
     //     foreach (json_decode($item->pivot->extras) as $key => $extra) {
     //         $lineprice .= $nl . $tabSpace . $extra;
@@ -40,13 +41,21 @@ foreach ($order->products()->get() as $key => $item) {
 <?php
 }
 ?>
-*************************************** {{ "\n" }}
-{{ "*". __('Delivery Fee')."*".": ". set(money($order->delivery_fee, $currency)->format())}}
-{{ "*". __('Subtotal')."*".": ". set(money($order->total, $currency)->format())}}
+
+********************************************************
+{{ "    *". __('Subtotal')."*".": ". set(money($order->subtotal, $currency)->format())}}
+@if ($order->delivery_fee)
+{{ "    *". __('Delivery Fee')."*".": ". set(money($order->delivery_fee, $currency)->format())}}
+@endif
+@if(Module::has('TaxConfig') && $order->tax)
+{{ "    *". __($order->tax_name). " " . $order->restorant->config->tax . "%" . "*".": ". set(money($order->tax, $currency)->format())}}
+@endif
+{{ "    *". __('Total')."*".": ". set(money($order->total, $currency)->format())}}
+********************************************************
 {{"*". __('Phone')."*.: ". set($order->customer_phone) }}
 {{ "*". __('Address')."*".": ". set($order->address)}}
-{{ "*". __('Date')."*".": ". set(Carbon::make($order->order_time)->toDateString())}}
-{{ "*". __('Time')."*".": ". set(Carbon::make($order->order_time)->format('g:i A'))}}
+{{ "*". __('Date')."*".": ". set($orderTimeDate)}}
+{{ "*". __('Time')."*".": ". set($orderTimeFormat)}}
 
 {{ "*Order No*: " . $order->id}}
 {{ __('Track your Order') }}

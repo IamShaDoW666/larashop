@@ -9,7 +9,7 @@ use App\Models\Restorant;
 class Config extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $guarded = [];    
 
     public function restorant()
     {

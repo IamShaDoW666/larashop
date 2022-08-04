@@ -18,8 +18,10 @@ class OrderDeviceCheck
     public function handle(Request $request, Closure $next)
     {
         // Grant for restaurant owner
-        if ($request->user()->hasRole('Owner')) {
-            return $next($request);
+        if ($request->user()) {
+            if ($request->user()->hasRole('Owner')) {
+                return $next($request);
+            }
         }
 
         //Abort if no token

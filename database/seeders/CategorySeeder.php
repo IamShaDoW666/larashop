@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Variant;
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
@@ -15,7 +16,11 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        Category::factory(15)->create();
-        Product::factory(50)->create();
+        Category::factory(15)
+                    ->has(Product::factory()->has(Variant::factory()->count(3))->count(3))
+                    ->create();
+        Product::factory(50)
+                    ->has(Variant::factory()->count(3))
+                    ->create();
     }
 }
