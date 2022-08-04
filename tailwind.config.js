@@ -9,12 +9,22 @@ module.exports = {
     './resources/views/**/*.blade.php',
     './resources/js/**/*.vue',
   ],
-
+  darkMode: 'class',
   theme: {
     colors: {
       ...colors,
     },
     extend: {
+      colors: {
+        'primary-light': '#F7F8FC',
+				'secondary-light': '#FFFFFF',
+				'ternary-light': '#f6f7f8',
+        'golden-yellow': '#f59e0b',
+
+				'primary-dark': '#0D2438',
+				'secondary-dark': '#102D44',
+				'ternary-dark': '#1E3851',
+      },
       fontFamily: {
         sans: ['Nunito', ...defaultTheme.fontFamily.sans],
       },
@@ -97,7 +107,7 @@ module.exports = {
       {
         mytheme: {
           primary: "#3760E0",
-          secondary: "#85DE12",
+          secondary: "#10b981",
           accent: "#DE4D28",
           neutral: "#3d4451",
           "base-100": "#ffffff",
@@ -105,7 +115,6 @@ module.exports = {
       },
     ],
   },
-
   plugins: [
     require('@tailwindcss/forms'),
     require('daisyui'),

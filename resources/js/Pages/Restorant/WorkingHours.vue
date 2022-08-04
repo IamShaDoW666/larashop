@@ -29,10 +29,10 @@
                                     </span>
                                 </th>
                                 <td>
-                                    <input class="rounded-lg" type="time" v-model="form.m_from">
+                                    <input class="rounded-lg" type="time" style="width:280 px ! important" v-model="form.m_from">
                                 </td>
                                 <td>
-                                    <input class="rounded-lg" type="time" v-model="form.m_to">
+                                    <input class="rounded-lg" type="time" style="width:280 px ! important" v-model="form.m_to">
                                 </td>
                             </tr>
                             <tr>

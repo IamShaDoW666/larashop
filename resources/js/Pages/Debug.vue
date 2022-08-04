@@ -27,3 +27,4 @@ import LanguageList from '../Components/Dropdowns/LanguageList.vue';
 
 
 </script>
+

@@ -16,8 +16,11 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SiteController;
+use App\Http\Resources\RestorantResource;
+use App\Models\Restorant;
 use App\Http\Controllers\VariantController;
 use App\Http\Resources\OrderResource;
+
 //Models
 use App\Models\User;
 use App\Models\Order;
@@ -68,9 +71,16 @@ Route::group(['middleware' => ['auth', 'role:Guest'], 'prefix' => 'guest'], func
 
 
 // DEBUGS
+Route::get('/layout', function(){
+  $restaurant = RestorantResource::make(Restorant::find(1));
+  return inertia('Landing', compact('restaurant'));
+});
 Route::get('/debug/test', [DebugController::class, 'test'])->name('test');
 Route::post('/debug/post', [DebugController::class, 'post'])->name('debug.post');
-Route::get('/debug', [DebugController::class, 'debug'])->name('debug');
+Route::get('/debug', function(){
+  $restaurant = RestorantResource::make(Restorant::find(1));
+  return inertia('Debug', compact('restaurant'));
+});
 
 Route::post('/debug', function () {
   $user = User::find(1);

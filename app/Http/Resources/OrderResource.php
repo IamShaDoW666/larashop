@@ -46,7 +46,8 @@ class OrderResource extends JsonResource
                 'date' => $this->created_at->toDateString(),
             ],
             'items' => ProductResource::collection($this->whenLoaded('products')),
-            'restorant' => RestorantResource::make($this->whenLoaded('restorant'))
+            'restorant' => RestorantResource::make($this->whenLoaded('restorant')),
+            'status_text' => $this->status_text
         ];
     }
 }

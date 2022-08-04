@@ -1,6 +1,6 @@
 <template>
-  <footer class="relative bg-blueGray-200 pt-8 pb-6">
-    <div
+  <footer class="relative bg-blueGray-200 dark:bg-primary-dark pt-8 pb-6">
+    <!-- <div
       class="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20 h-20"
       style="transform: translateZ(0);"
     >
@@ -18,15 +18,26 @@
           points="2560 0 2560 100 0 100"
         ></polygon>
       </svg>
-    </div>
+    </div> -->
     <div class="container mx-auto px-4">
       <div class="flex flex-wrap text-center lg:text-left">
         <div class="w-full lg:w-6/12 px-4">
-          <h4 class="text-3xl font-semibold">Let's keep in touch!</h4>
-          <h5 class="text-lg mt-0 mb-2 text-blueGray-600">
-            Find us on any of these platforms, we respond 1-2 business days.
+          <h4 class="text-3xl font-semibold dark:text-white">Ordering as easy as chatwith friend!</h4>
+          <h5 class="text-lg mt-0 mb-2 text-blueGray-600 dark:text-white">
+            Whatsapp ordering system.
           </h5>
-          <div class="mt-6 lg:mb-0 mb-6">
+          <div class="flex gap-y-4 sm:gap-y-0 gap-x-4">
+            <Facebook v-if="restaurant.facebook" :link="restaurant.facebook" />
+            <Whatsapp v-if="restaurant.phone" :phone="restaurant.phone" />
+            <Twitter v-if="restaurant.twitter" :link="restaurant.twitter" />
+            <Instagram
+              v-if="restaurant.instagram"
+              :link="restaurant.instagram"
+            />
+          </div>
+          <!-- <div class="mt-6 lg:mb-0 mb-6">
+
+           
             <button
               class="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
               type="button"
@@ -43,15 +54,10 @@
               class="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
               type="button"
             >
-              <i class="fab fa-dribbble"></i>
+              <i class="fab fa-instagram"></i>
             </button>
-            <button
-              class="bg-white text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
-              type="button"
-            >
-              <i class="fab fa-github"></i>
-            </button>
-          </div>
+            
+          </div> -->
         </div>
         <div class="w-full lg:w-6/12 px-4">
           <div class="flex flex-wrap items-top mb-6">
@@ -160,12 +166,17 @@
     </div>
   </footer>
 </template>
-<script>
-export default {
-  data() {
-    return {
-      date: new Date().getFullYear(),
-    };
-  },
-};
+
+
+<script setup>
+import { ref } from 'vue';
+import Facebook from "@/Components/Social/Facebook.vue";
+import Whatsapp from "@/Components/Social/Whatsapp.vue";
+import Twitter from "@/Components/Social/Twitter.vue";
+import Instagram from "@/Components/Social/Instagram.vue";
+const date = ref(new Date().getFullYear());
+
+const props = defineProps({
+  restaurant: Object
+})
 </script>
