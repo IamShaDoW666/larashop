@@ -75,6 +75,7 @@ class HandleInertiaRequests extends Middleware
       'app' => [
         'locale' => config('app.locale'),
         'faker_locale' => config('app.faker_locale'),
+        'available_languages' => config('global.available_lang'),
         'url' => config('app.url'),
         'timezone' => config('app.timezone')
       ],

@@ -23,6 +23,7 @@ createInertiaApp({
             .use(plugin)
             .use(pinia)
             .use(VCalendar, {})
+            .mixin(require('./base'))
             .mixin({ methods: { route } })
             .mount(el);
     },

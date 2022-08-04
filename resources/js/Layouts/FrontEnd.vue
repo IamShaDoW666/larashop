@@ -9,6 +9,7 @@
                 <h1 class="ml-4 sm:text-lg md:text-xl font-bold">
                     {{ restaurant ? restaurant.name : 'Restaurant Name'}}
                 </h1>
+                <LanguageList class="ml-4 w-32" />
             </nav>
 
             <!-- Page Heading / Image -->
@@ -30,6 +31,7 @@
 <script setup>
 import { watch } from 'vue';
 import { useWindowScroll } from '@vueuse/core'
+import LanguageList from '@/Components/Dropdowns/LanguageList.vue';
 const { x, y } = useWindowScroll();
 
 const props = defineProps({

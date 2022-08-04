@@ -1973,9 +1973,6 @@ body[dir="rtl"] .checkbox:checked,
 .mt-6 {
   margin-top: 1.5rem;
 }
-.ml-8 {
-  margin-left: 2rem;
-}
 .mb-0 {
   margin-bottom: 0px;
 }
@@ -2198,6 +2195,9 @@ body[dir="rtl"] .checkbox:checked,
 .w-2 {
   width: 0.5rem;
 }
+.w-32 {
+  width: 8rem;
+}
 .min-w-0 {
   min-width: 0px;
 }
@@ -2336,6 +2336,9 @@ body[dir="rtl"] .checkbox:checked,
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
 .flex-row {
   flex-direction: row;
 }
@@ -2377,6 +2380,9 @@ body[dir="rtl"] .checkbox:checked,
 }
 .justify-around {
   justify-content: space-around;
+}
+.gap-4 {
+  gap: 1rem;
 }
 .gap-5 {
   gap: 1.25rem;
@@ -3609,7 +3615,7 @@ input[type=time] {
   color: #2a2c2d;
   font-size: 14px;
   font-family: helvetica;
-  width: 180px;
+  width: 210px;
 }
 /* Wrapper around the hour, minute, second, and am/pm fields as well as 
 the up and down buttons and the 'X' button */
@@ -3669,11 +3675,6 @@ input[type=time]::-webkit-inner-spin-button {
 .checked\:bg-blue-500:checked {
   --tw-bg-opacity: 1;
   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
-}
-.hover\:scale-110:hover {
-  --tw-scale-x: 1.1;
-  --tw-scale-y: 1.1;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .hover\:border-gray-300:hover {
   --tw-border-opacity: 1;

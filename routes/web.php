@@ -37,12 +37,16 @@ use App\Models\Order;
 
 Route::get('/', [FrontEndController::class, 'index'])->name('front');
 
+//Language Routes
+Route::get('language/{locale}', function($locale) {
+  app()->setlocale($locale);
+  session()->put('locale', $locale);
+  return back();
+})->name('lang');
+
 require __DIR__ . '/auth.php';
 
-// Route::get('/dashboard', function () {
-//     $restorants = Restorant::all();
-//     return Inertia::render('Dashboard', compact('restorants'));
-// })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 // Public Routes
 Route::get('/products/filter/{id}', [ProductController::class, 'filter'])->name('products.filter');
