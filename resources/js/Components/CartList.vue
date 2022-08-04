@@ -1,13 +1,13 @@
 <template>
-  <div class="container flex flex-col w-full md:w-3/5">
-    <div class="px-4 py-5 sm:px-6 w-full flex justify-between border dark:bg-gray-800 bg-white shadow mb-2 rounded-md">
+  <div class="container flex flex-col w-full md:w-3/5" >
+    <div class="px-4 py-5 sm:px-6 w-full flex justify-between border bg-green-500 dark:bg-golden-yellow bg-white shadow mb-2 rounded-md">
       <div>
-        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+        <h3 class="text-lg leading-6 font-medium text-gray-900  dark:text-black">
           <i class="pr-2 fa-solid fa-cart-shopping"></i>
           Your Cart
         </h3>
-        <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-200">
-          Make changes to your cart
+        <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-black">
+          Make changes your cart
         </p>
       </div>
       <div class="font-bold text-lg">
@@ -16,9 +16,9 @@
     </div>
     <div class="overflow-y-auto max-h-full">
       <ul class="flex flex-col">
-        <li v-for="(item, index) in cart.items" class="border-gray-400 flex flex-row mb-2">
+        <li v-for="(item, index) in cart.items" :key="item.id" class="border-gray-400 flex flex-row mb-2">
           <div
-            class="shadow border select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 items-center p-4">
+            class="shadow border select-none cursor-pointer bg-white dark:bg-secondary-dark rounded-md flex flex-1 items-center p-4">
             <div class="flex flex-col w-10 h-10 justify-center items-center mr-4">
               <a href="#" class="block relative">
                 <img alt="profil" :src="`${item.image_path}_thumbnail.webp`" class="mx-auto object-cover rounded-full h-10 w-10" />
@@ -33,16 +33,16 @@
               </div>
             </div>
             <button @click="cart.removeFromCart(item.id, index)"
-              class="px-4 mr-2 text-white font-bold py-2 hover:bg-gray-700 rounded shadow bg-gray-800">-</button>
+              class="px-4 mr-2 text-white dark:text-black font-bold py-2 hover:bg-gray-700 rounded shadow bg-gray-800 dark:bg-golden-yellow">-</button>
             <span
-              class="bg-gray-300 text-gray-800 text-sm px-3 font-bold inline-flex items-center p-2 rounded-full dark:bg-gray-200 dark:text-gray-800">
+              class="bg-gray-300 text-gray-800 text-sm px-3 font-bold inline-flex items-center p-2 rounded-full dark:bg-golden-yellow dark:text-gray-800">
               {{ item.quantity }}
             </span>
             <button @click="cart.addCart(item.id, index)"
-              class="px-4 ml-2 text-white font-bold py-2 hover:bg-gray-700 rounded shadow bg-gray-800">+</button>
+              class="px-4 ml-2 text-white dark:text-black font-bold py-2 hover:bg-gray-700 rounded shadow bg-gray-800 dark:bg-golden-yellow">+</button>
           </div>
         </li>
-        <li class="shadow-md bg-white dark:bg-gray-800 rounded-md flex flex-1 py-4 px-8 flex flex-col gap-y-4 mb-2">
+        <li class="shadow-md bg-white dark:bg-golden-yellow dark:text-black rounded-md flex flex-1 py-4 px-8 flex flex-col gap-y-4 mb-2">
           <div v-if="cart.delivery" class="flex justify-between">
             <h1>Subtotal: </h1><span>{{ formatPrice(cart.getSubTotal) }}</span>
           </div>
@@ -61,7 +61,9 @@
 <script setup>
 import { useCart } from '@/Stores/cart.js';
 import { usePage } from '@inertiajs/inertia-vue3';
+import { useThemeSwitcher } from "@/Composables/useThemeSwitcher";
 
+const { currentTheme } = useThemeSwitcher();
 const cart = useCart();
 const props = defineProps({
   areas: Object,

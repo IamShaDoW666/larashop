@@ -1,23 +1,23 @@
 <template>
-
-    <Head title="Dashboard" />
-
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">                
-                    <button class="butn ml-8 hover:scale-110 transition-all duration-200">Click</button>
-                    <div class="loader absolute inset-0"></div>
-                </div>
-            </div>
+  <FrontEnd :restaurant="restaurant">
+    <div class="py-12">
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+          <div class="loader"></div>
         </div>
+      </div>
+    </div>
+  </FrontEnd>
 </template>
 
 <script setup>
-import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
-import { reactive } from 'vue';
-import { Head } from '@inertiajs/inertia-vue3';
-
-
+import BreezeAuthenticatedLayout from "@/Layouts/Authenticated.vue";
+import { reactive } from "vue";
+import { Head } from "@inertiajs/inertia-vue3";
+import FrontEnd from "@/Layouts/FrontEnd.vue";
+const props = defineProps({
+  restaurant: Object
+})
 </script>
 
 <style scoped>
@@ -31,7 +31,11 @@ import { Head } from '@inertiajs/inertia-vue3';
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

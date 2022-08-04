@@ -188,7 +188,31 @@ class OrderController extends Controller
     public function orderStatus(Order $order)
     {
         ConfChanger::switchCurrency($order->restorant);
-        $order = OrderResource::make($order);
+        switch ($order->status) {
+            case "pending":
+                $order->status_text = "Recieved your order, preparing your order.";
+                break;                
+            case "accepted":
+                $order->status_text = "Recieved your order, preparing your order.";
+                break;                
+            case "prepared":
+                $order->status_text = "Your order is ready!";
+                break;
+            case "delivered":
+                $order->status_text = "Order delivered!";
+                break;
+            case "closed":
+                $order->status_text = "Order closed!";            
+                break;
+            case "rejected":
+                $order->status_text = "Your order was rejected!";            
+                break;
+            default:
+                $order->status_text = null;
+                break;            
+        }        
+        $order = OrderResource::make($order);     
+        
         return inertia('Order/Status', compact('order'));
     }
 }

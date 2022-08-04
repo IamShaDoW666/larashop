@@ -10,7 +10,7 @@
       <Link :href="route('admin.dashboard')" v-if="$page.props.auth.user.restorant"
         class="text-black text-sm uppercase hidden lg:inline-block font-semibold"
       >
-        Dashboard
+         Dashboard
       </Link>
       <!-- Form -->
       <!-- <form

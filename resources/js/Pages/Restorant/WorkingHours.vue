@@ -29,10 +29,10 @@
                                     </span>
                                 </th>
                                 <td>
-                                    <input class="rounded-lg" type="time" v-model="form.m_from">
+                                    <input class="rounded-lg" type="time" style="width:280 px ! important" v-model="form.m_from">
                                 </td>
                                 <td>
-                                    <input class="rounded-lg" type="time" v-model="form.m_to">
+                                    <input class="rounded-lg" type="time" style="width:280 px ! important" v-model="form.m_to">
                                 </td>
                             </tr>
                             <tr>
@@ -125,7 +125,7 @@
                         class="px-4 py-2 float-right mr-5 mb-4 rounded bg-blue-500 hover:bg-blue-400 text-white font-bold">
                         Update
                     </button>
-                    <input class="rounded-lg" type="time" v-model="form.m_from">
+                    <input class="rounded-lg" type="time" style="width:280 px ! important" v-model="form.m_from">
                 </form>
             </div>
         </div>
