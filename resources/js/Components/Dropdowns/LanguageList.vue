@@ -52,7 +52,5 @@ import { usePage, Link } from '@inertiajs/inertia-vue3';
 const languages = usePage().props.value.app.available_languages
 const languageName = new Intl.DisplayNames(['en'], { type: 'language' });
 
-onMounted(() => console.log(JSON.stringify(languages)))
-
 const currentLanguage = ref(usePage().props.value.locale)
 </script>

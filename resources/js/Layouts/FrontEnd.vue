@@ -30,7 +30,10 @@
             {{ restaurant ? restaurant.name : "Restaurant Name" }}
           </h1>
         </div>
-        <ThemeSwitcher />
+        <div class="flex gap-x-4">
+          <LanguageList />
+          <ThemeSwitcher />          
+        </div>
       </nav>
       <!-- Page Heading / Image -->
       <header class="bg-white shadow">

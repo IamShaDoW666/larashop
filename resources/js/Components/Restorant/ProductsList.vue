@@ -39,7 +39,7 @@
                   <div>
                     <button
                       v-if="restaurant.open_status"
-                      @click="toCart(product.id, index)"
+                      @click="toCart(product, product.variantId, index)"
                       class="
                         sm:px-2 sm:py-2
                         px-1.5

@@ -5,7 +5,7 @@
     <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content mb-4">
       <!-- Page content here -->
-
+      <HeadlessProductShow :productShowOpen="productShow" />              
       <FrontEnd :restaurant="restaurant">
         <label
           for="my-drawer-4"
@@ -278,7 +278,7 @@
                     </div>
                     <span>{{ item.price }} <strong>x</strong> </span>
                     <button
-                      @click="fromCart(item.id, index)"
+                      @click="fromCart(item, item.variantId, index)"
                       class="
                         inline-flex
                         justify-center
@@ -431,7 +431,7 @@
 
 <script>
 import { Head, useForm, usePage } from "@inertiajs/inertia-vue3";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, provide } from "vue";
 import { useCart } from "@/Stores/cart.js";
 import FrontEnd from "@/Layouts/FrontEnd.vue";
 import CartModal from "@/Components/CartModal.vue";
@@ -441,6 +441,7 @@ import Whatsapp from "@/Components/Social/Whatsapp.vue";
 import Twitter from "@/Components/Social/Twitter.vue";
 import Instagram from "@/Components/Social/Instagram.vue";
 import ProductsList from "@/Components/Restorant/ProductsList.vue";
+import HeadlessProductShow from "@/Components/Dialogs/HeadlessProductShow.vue"
 import SideCart from "@/Components/Restorant/SideCart.vue";
 import { useThrottleFn } from "@vueuse/core";
 import FooterEnd from "@/Components/Footers/Footer.vue";
