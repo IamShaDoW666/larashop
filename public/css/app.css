@@ -3011,6 +3011,9 @@ body[dir="rtl"] .checkbox:checked,
 .self-start {
   align-self: flex-start;
 }
+.self-end {
+  align-self: flex-end;
+}
 .overflow-auto {
   overflow: auto;
 }
@@ -5232,6 +5235,10 @@ input[type=time]::-webkit-inner-spin-button {
     align-items: stretch;
   }
 
+  .md\:justify-start {
+    justify-content: flex-start;
+  }
+
   .md\:justify-end {
     justify-content: flex-end;
   }
@@ -5667,6 +5674,10 @@ input[type=time]::-webkit-inner-spin-button {
 
   .lg\:text-center {
     text-align: center;
+  }
+
+  .lg\:text-right {
+    text-align: right;
   }
 
   .lg\:text-xs {
