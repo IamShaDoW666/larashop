@@ -30,7 +30,7 @@
             {{ restaurant ? restaurant.name : "Restaurant Name" }}
           </h1>
         </div>
-        <div class="flex gap-x-4">
+        <div class="flex gap-x-4 items-center">
           <LanguageList />
           <ThemeSwitcher />          
         </div>

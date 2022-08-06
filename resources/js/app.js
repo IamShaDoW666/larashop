@@ -6,9 +6,12 @@ import VCalendar from 'v-calendar';
 import { createInertiaApp } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
 import piniaPersist from 'pinia-plugin-persist'
+import { useThemeSwitcher } from './Composables/useThemeSwitcher';
 import 'maz-ui/css/main.css';
 import 'v-calendar/dist/style.css';
 // import 'flowbite';
+
+const { currentTheme } = useThemeSwitcher()
 
 
 const pinia = createPinia()
@@ -29,8 +32,15 @@ createInertiaApp({
     },
 });
 
-InertiaProgress.init({
-  color: '#4B5563' ,
-});
+if (currentTheme.value == 'dark') {
+  InertiaProgress.init({
+    color: '#FFF' ,  //#4B5563
+  });
+} else {
+  InertiaProgress.init({
+    color: '#4B5563' ,  //#4B5563
+  });
+}
+
 
 //9605639438
