@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\NewOrder as PusherNewOrder;
+use App\Events\UpdateOrder;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\StoreOrderRequest;
@@ -88,7 +89,7 @@ class OrderController extends Controller
     }
 
     public function store(StoreOrderRequest $request, Restorant $restorant)
-    {        
+    {
         $mobileRequest = $this->toMobileRequest($request);
         // dd($mobileRequest);       
         ConfChanger::switchCurrency($restorant);
@@ -106,7 +107,7 @@ class OrderController extends Controller
         if ($validatorValue->fails()) {
             abort(401);
             return $orderRepo->redirectOrInform();
-        }        
+        }
         return $orderRepo->redirectOrInform();
 
 
@@ -211,8 +212,7 @@ class OrderController extends Controller
     public function updateStatus(Request $request, Order $order)
     {
         $status = $request->current_status;
-        $action = $request->action;
-
+        $action = $request->action;        
         // Check Reject 
         if (!$action && $status == 'pending') {
             $order->status = 'rejected';
@@ -240,7 +240,11 @@ class OrderController extends Controller
                     $order->save();
                     break;
             }
-
+            
+            // Broadcast Pusher if exists        
+            if (config('pusher') && config('pusher.exists')) {
+                broadcast(new UpdateOrder($order));
+            }
             return back()->with(['message' => 'Order status updated!']);
         }
     }
@@ -251,10 +255,10 @@ class OrderController extends Controller
         switch ($order->status) {
             case "pending":
                 $order->status_text = "Recieved your order, preparing your order.";
-                break;                
+                break;
             case "accepted":
                 $order->status_text = "Recieved your order, preparing your order.";
-                break;                
+                break;
             case "prepared":
                 $order->status_text = "Your order is ready!";
                 break;
@@ -262,17 +266,17 @@ class OrderController extends Controller
                 $order->status_text = "Order delivered!";
                 break;
             case "closed":
-                $order->status_text = "Order closed!";            
+                $order->status_text = "Order closed!";
                 break;
             case "rejected":
-                $order->status_text = "Your order was rejected!";            
+                $order->status_text = "Your order was rejected!";
                 break;
             default:
                 $order->status_text = null;
-                break;            
-        }        
-        $order = OrderResource::make($order);     
-        
-        return inertia('Order/Status', compact('order'));
+                break;
+        }
+        $restorant_id = $order->restorant->id;
+        $order = OrderResource::make($order);
+        return inertia('Order/Status', compact('order', 'restorant_id'));
     }
 }

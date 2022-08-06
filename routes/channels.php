@@ -23,3 +23,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('test.{id}', function () {
     return true;
 });
+
+Broadcast::channel('order.{id}', function () {
+    return true;
+});
