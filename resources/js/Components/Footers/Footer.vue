@@ -24,7 +24,7 @@
             <li>
               <a
                 class="
-                  text-blueGray-600
+                  text-blueGray-600 dark:text-white dark:hover:text-blueGray-400
                   hover:text-blueGray-800
                   font-semibold
                   block
@@ -39,7 +39,7 @@
             <li>
               <a
                 class="
-                  text-blueGray-600
+                  text-blueGray-600 dark:text-white dark:hover:text-blueGray-400
                   hover:text-blueGray-800
                   font-semibold
                   block
@@ -60,14 +60,8 @@
       >
         <div class="w-full md:w-4/12 px-4 mx-auto text-center">
           <div class="text-sm text-blueGray-500 font-semibold py-1">
-            Copyright © {{ date }} Vue Notus by
-            <a
-              href="https://www.creative-tim.com?ref=vn-footer"
-              class="text-blueGray-500 hover:text-blueGray-800"
-            >
-              Creative Tim
-            </a>
-            .
+            Copyright © {{ date }} {{ restaurant.name }}
+                      
           </div>
         </div>
       </div>
