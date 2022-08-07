@@ -12,12 +12,14 @@ use App\Models\Order;
 use App\Models\Config;
 use App\Models\Hour;
 use App\Models\Category;
+use App\Traits\HasConfig;
 use Carbon\Carbon;
 
 class Restorant extends Model
 {
-    use HasFactory;
+    use HasFactory, HasConfig;
     protected $guarded = [];
+    public $modelName = 'App\Models\Restorant';
     // protected $appends = ['salesCount', 'counts', 'logo', 'banner'];
 
     public function user()
