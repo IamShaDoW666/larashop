@@ -63,15 +63,25 @@
         <div class="flex px-4 items-center md:mr-4 md:ml-8 my-2 justify-between">
           <div class="sm:flex sm:space-x-4 items-center">
             <div class="flex space-x-2 items-center">
-              <span class="rounded px-2 my-2 text-white dark:text-black font-bold overflow-visible"
-                :class="restaurant.open_status ? 'bg-green-400 dark:bg-golden-yellow' : 'bg-red-500'">
+              <span
+                class="rounded px-2 my-2 text-white dark:text-black font-bold overflow-visible"
+                :class="restaurant.open_status ? 'bg-green-400 dark:bg-red' : 'bg-red-100'"
+              >
                 {{ restaurant.open_status ? "Open" : "Closed" }}
               </span>
-              <span :class="restaurant.open_status ? 'bg-green-800 dark:bg-white' : 'bg-red-800'"
-                class="animate-bounce inline-flex h-2 w-2 rounded opacity-75"></span>
+              <span
+                :class="restaurant.open_status ? 'bg-green-800 dark:bg-golden-yellow' : 'bg-red-800'"
+                class="animate-bounce inline-flex h-2 w-2 rounded opacity-75"
+               
+              ></span>
 
-              <a target="_blank" :href="addressMap" class="sm:hidden flex space-x-2 items-center dark:text-white">
-                <span class="material-icons"></span>
+              <a
+                target="_blank"
+                :href="addressMap"
+                class="sm:hidden flex space-x-2 items-center dark:text-white"
+              >
+                <span class="material-icons"></span> 
+
                 <span>{{ restaurant.address }}</span>
               </a>
             </div>
