@@ -79,12 +79,12 @@
             <div class="flex space-x-2 items-center">
               <span
                 class="rounded px-2 my-2 text-white dark:text-black font-bold overflow-visible"
-                :class="restaurant.open_status ? 'bg-green-400 dark:bg-golden-yellow' : 'bg-red-500'"
+                :class="restaurant.open_status ? 'bg-green-400 dark:bg-red' : 'bg-red-100'"
               >
                 {{ restaurant.open_status ? "Open" : "Closed" }}
               </span>
               <span
-                :class="restaurant.open_status ? 'bg-green-800 dark:bg-white' : 'bg-red-800'"
+                :class="restaurant.open_status ? 'bg-green-800 dark:bg-golden-yellow' : 'bg-red-800'"
                 class="animate-bounce inline-flex h-2 w-2 rounded opacity-75"
                
               ></span>

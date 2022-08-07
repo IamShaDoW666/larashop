@@ -214,7 +214,8 @@
                         </label>
                         <input
                             type="text"
-                            v-model="form.currency"
+                            :value="form.currency"
+                             @input="event => form.currency = event.target.value.toUpperCase()"
                             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         />
                     </div>
