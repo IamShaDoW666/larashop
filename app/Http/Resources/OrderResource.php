@@ -24,7 +24,7 @@ class OrderResource extends JsonResource
             'customer_phone' => $this->customer_phone,
             'status' => $this->status,
             'address' => $this->address,
-            'tax' => money($this->tax, config('global.curreny'))->format(),
+            'tax' => money($this->tax, config('global.currency'))->format(),
             'tax_name' => $this->tax_name,
             'tax_percent' => $this->tax_percent,
             'subtotal' => money($this->subtotal, config('global.currency'))->format(),
