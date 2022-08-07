@@ -145,12 +145,14 @@ class OrderController extends Controller
     {
         $restorant_id = Crypt::decrypt($id);
         $restorant = Restorant::with('config')->find($restorant_id);
+        $delivery_info = $restorant->getConfig('delivery_info');
         ConfChanger::switchCurrency($restorant);
         $areas = AreaResource::collection($restorant->areas);
 
         return inertia('Order/Checkout', compact(
             'restorant',
             'areas',
+            'delivery_info'
         ));
     }
 
