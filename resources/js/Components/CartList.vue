@@ -43,14 +43,17 @@
           </div>
         </li>
         <li class="shadow-md bg-white dark:bg-golden-yellow dark:text-black rounded-md flex flex-1 py-4 px-8 flex flex-col gap-y-4 mb-2">
-          <div v-if="cart.delivery" class="flex justify-between">
+          <div v-if="cart.delivery || cart.tax" class="flex justify-between">
             <h1>Subtotal: </h1><span>{{ formatPrice(cart.getSubTotal) }}</span>
           </div>
           <div v-if="cart.delivery" class="flex justify-between">
             <h1>Delivery Fee: </h1><span>{{ cart.delivery }}</span>
           </div>
+          <div v-if="cart.tax" class="flex justify-between">
+            <h1>{{ restorant.config.tax_name }}<span class="text-sm">({{ cart.tax }}%)</span>: </h1><span>{{ formatPrice(cart.getTaxValue) }}</span>
+          </div>
           <div class="flex justify-between">
-            <h1>Payable: </h1><span>{{ formatPrice(cart.getSubTotal) }}</span>
+            <h1>Payable: </h1><span>{{ formatPrice(cart.getTotal) }}</span>
           </div>
         </li>
       </ul>

@@ -260,7 +260,7 @@
                       </span>                      
                     </div>
                     <div v-if="cart.getTaxValue" class="text-sm">
-                      {{ restaurant.config.tax_name }}: {{ formatPrice(cart.getTaxValue) }}  ({{ restaurant.config.tax }}%)
+                      {{ restaurant.config.tax_name }}({{ restaurant.config.tax }}%): {{ formatPrice(cart.getTaxValue) }}
                     </div>
                     <div class="font-bold text-lg text-green-700 dark:text-white">
                       Total: {{ formatPrice(cart.getTotal) }}
