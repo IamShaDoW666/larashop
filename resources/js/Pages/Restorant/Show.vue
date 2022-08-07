@@ -238,36 +238,40 @@
                 <div class="flex flex-col space-y-4">
                   <div class="
                       px-4
-                      font-bold
+                      font-medium
                       rounded
                       shadow-lg
                       bg-white
                       dark:bg-primary-dark
-                      text-center
+                      text-left
                       flex
-                      gap-x-2
+                      flex-col
+                      gap-y-2
                       justify-between
-                      items-center
+                      items-stary
                       p-3
                       text-base text-gray-900
                       rounded-lg
                       dark:text-white
                     ">
-                    <div class="rounded p-4">
-                      <span class="ml-2 text-green-700 dark:text-white">
+                    <div class="rounded">
+                      <span class="text-sm dark:text-white">
                         Subtotal: {{ formatPrice(cart.getSubTotal) }}
-                      </span>
-                      <p v-if="!cart.isAboveMinimum">Minimum order value is {{ formatPrice(cart.minimum_order) }}</p>
+                      </span>                      
+                    </div>
+                    <div v-if="cart.getTaxValue" class="text-sm">
+                      {{ restaurant.config.tax_name }}: {{ formatPrice(cart.getTaxValue) }}  ({{ restaurant.config.tax }}%)
+                    </div>
+                    <div class="font-bold text-lg text-green-700 dark:text-white">
+                      Total: {{ formatPrice(cart.getTotal) }}
                     </div>
                   </div>
-                  <!-- <div class="font-bold rounded shadow-lg bg-white text-center flex items-center p-3 text-base text-gray-900 rounded-lg dark:text-white">
-                Total: <span class="ml-2 text-green-700">${{ cart.getSubTotal }}</span>
-              </div> -->
                 </div>
               </li>
             </ul>
             <!-- Checkout Options -->
             <form @submit.prevent="checkout">
+              <p class="text-sm p-3 mt-4 dark:text-white font-medium" v-if="!cart.isAboveMinimum">Minimum order value is {{ formatPrice(cart.minimum_order) }}</p>
               <div class="p-3 mt-4 flex gap-x-4 justify-between float-right">
                 <button :class="{
                   'opacity-25 hover:bg-green-500': (form.processing || !cart.isAboveMinimum),
