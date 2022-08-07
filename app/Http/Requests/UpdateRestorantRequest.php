@@ -50,7 +50,8 @@ class UpdateRestorantRequest extends FormRequest
           'logo' => [],
           'facebook' => [''],
           'instagram' => [''],
-          'twitter' => ['']
+          'twitter' => [''],
+          'delivery_info' => ['']
         ];
     }
 }

@@ -28,10 +28,10 @@ class ProductController extends Controller
 
   private $imagePath = '/imgs/';
   /**
-  * Display a listing of the resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
   public function index()
   {
     $restorant = auth()->user()->restorant;
@@ -49,10 +49,10 @@ class ProductController extends Controller
   }
 
   /** 
-  * Show the form for creating a new resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
   public function create()
   {
     $categories = Category::all();
@@ -61,12 +61,12 @@ class ProductController extends Controller
   }
 
   /**
-  * Store a newly created resource in storage.
-  *
-  * @param  \Illuminate\Http\Request  $request
-  * @return \Illuminate\Http\Response
-  */
-public function store(StoreProductRequest $request)
+   * Store a newly created resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function store(StoreProductRequest $request)
   {
     //Save Image Versions
     if ($request->hasFile('product_image')) {
@@ -83,7 +83,7 @@ public function store(StoreProductRequest $request)
       'image_path' => $this->imagePath . $imgpath,
       'image' => 'default'
     ]);
-    
+
     //Assign Category
     $category = Category::where('id', $request->category['id'])->first();
     $product->category()->associate($category)->save();
@@ -91,50 +91,50 @@ public function store(StoreProductRequest $request)
   }
 
   /**
-  * Display the specified resource.
-  *
-  * @param  \App\Models\Product  $product
-  * @return \Illuminate\Http\Response
-  */
+   * Display the specified resource.
+   *
+   * @param  \App\Models\Product  $product
+   * @return \Illuminate\Http\Response
+   */
   public function show(Product $product)
   {
     //
   }
 
   /**
-  * Show the form for editing the specified resource.
-  *
-  * @param  \App\Models\Product  $product
-  * @return \Illuminate\Http\Response
-  */
+   * Show the form for editing the specified resource.
+   *
+   * @param  \App\Models\Product  $product
+   * @return \Illuminate\Http\Response
+   */
   public function edit(Product $product)
-  {    
+  {
     $product->load('variants');
-    $product = ProductResource::make($product);    
-    $categories = CategoryResource::collection(Category::query()      
+    $product = ProductResource::make($product);
+    $categories = CategoryResource::collection(Category::query()
       ->where('restorant_id', $product->category->restorant->id)
       ->get());
     return inertia('Product/Edit', compact('product', 'categories'));
   }
 
   /**
-  * Update the specified resource in storage.
-  *
-  * @param  \Illuminate\Http\Request  $request
-  * @param  \App\Models\Product  $product
-  * @return \Illuminate\Http\Response
-  */
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  \App\Models\Product  $product
+   * @return \Illuminate\Http\Response
+   */
   public function update(UpdateProductRequest $request, Product $product)
   {
     if (auth()->user()->id != $product->category->restorant->user_id) {
       abort(403);
     }
-    
+
     if ($request->hasFile('product_image')) {
       $imgpath = $this->uploadimage($request->product_image);
     } else {
       $imgpath = $product->image_path;
-    }    
+    }
 
     $data = [
       'name' => $request->name,
@@ -151,11 +151,11 @@ public function store(StoreProductRequest $request)
   }
 
   /**
-  * Remove the specified resource from storage.
-  *
-  * @param  \App\Models\Product  $product
-  * @return \Illuminate\Http\Response
-  */
+   * Remove the specified resource from storage.
+   *
+   * @param  \App\Models\Product  $product
+   * @return \Illuminate\Http\Response
+   */
   public function destroy(Product $product)
   {
     // dd($product);
@@ -167,7 +167,9 @@ public function store(StoreProductRequest $request)
   {
     $restaurant = Category::findOrFail($id)->restorant;
     ConfChanger::switchCurrency($restaurant);
-    return ProductResource::collection(Product::where('category_id', $id)->get());
+    return ProductResource::collection(Product::where('category_id', $id)
+      ->with('variants')
+      ->get());
   }
 
   private function uploadimage($image)
@@ -177,16 +179,16 @@ public function store(StoreProductRequest $request)
       $this->imagePath,
       $image,
       [
-        ['name'=>'large', 'w'=>590, 'h'=>350, 'type'=>'webp', 'quality' => 100], //239 x 192
+        ['name' => 'large', 'w' => 590, 'h' => 350, 'type' => 'webp', 'quality' => 100], //239 x 192
         ['name' => 'xl', 'w' => 500, 'h' => 480, 'type' => 'webp', 'quality' => 100],
         //['name'=>'thumbnail','w'=>300,'h'=>300, 'type'=>'webp'],
-        ['name'=>'medium', 'w'=>295, 'h'=>200, 'type'=>'webp', 'quality' => 100],
-        ['name'=>'thumbnail', 'w'=>200, 'h'=>200, 'type'=>'webp', 'quality' => 100],
+        ['name' => 'medium', 'w' => 295, 'h' => 200, 'type' => 'webp', 'quality' => 100],
+        ['name' => 'thumbnail', 'w' => 200, 'h' => 200, 'type' => 'webp', 'quality' => 100],
       ]
     );
   }
 
-  public function import(Request $request)  
+  public function import(Request $request)
   {
     $restorant = Restorant::findOrFail($request->restorant_id);
 
@@ -194,5 +196,4 @@ public function store(StoreProductRequest $request)
 
     return back()->with(['message' => 'Imported Successfully!']);
   }
-
 }
