@@ -8,6 +8,7 @@ use App\Models\Restorant;
 use App\Services\ConfChanger;
 use App\Services\RestorantService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FrontEndController extends Controller
 {
@@ -22,6 +23,11 @@ class FrontEndController extends Controller
 
     public function index()
     {
+        try {
+            \DB::connection()->getPdo();
+        } catch (\Exception $e) {
+            return redirect()->route('LaravelInstaller::index');
+        }
         return $this->singleMode();
     }
 

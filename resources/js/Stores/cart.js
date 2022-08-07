@@ -8,6 +8,8 @@ export const useCart = defineStore("cart", {
         subTotal: 0,
         totalItems: 0,
         products: [],
+        tax: 0,
+        minimum_order: 0,
         delivery: 0,
     }),
 
@@ -24,9 +26,15 @@ export const useCart = defineStore("cart", {
         },
 
         getTotal: (state) => {
-            return (state.total = unformat(state.delivery)
-                ? unformat(state.delivery) + unformat(state.subTotal)
-                : unformat(state.subTotal));
+            let sum = unformat(state.subTotal);
+            if (state.tax) {
+                sum += (unformat(state.subTotal) * state.tax) / 100;
+            }
+            if (state.delivery) {
+                return sum += unformat(state.delivery);
+            }
+            
+            return sum;
         },
 
         getTotalItems: (state) => {
@@ -37,6 +45,18 @@ export const useCart = defineStore("cart", {
             }
             return state.totalItems;
         },
+
+        getTaxValue: (state) => {
+            return state.tax ? (unformat(state.subTotal) * state.tax) / 100 : null;
+        },
+        
+        isAboveMinimum: (state) => {
+            if (state.minimum_order) {
+                return state.subTotal >= state.minimum_order;            
+            }
+
+            return null
+        }
     },
 
     actions: {
@@ -99,6 +119,8 @@ export const useCart = defineStore("cart", {
         getProps(props) {
             //Function to assign props state
             this.products = props.products;
+            this.minimum_order = Number(props.restaurant.config.minimum_order);
+            this.tax = Number(props.restaurant.config.tax)
         },
 
         getCart() {
@@ -106,6 +128,7 @@ export const useCart = defineStore("cart", {
                 items: this.items,
                 subTotal: this.subTotal,
                 totalItems: this.totalItems,
+                minimum_order: this.minimum_order,
                 delivery: unformat(this.delivery),
                 total: this.total,
             };

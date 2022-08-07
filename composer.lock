@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c424e7e65ab46a34aa300fd37055f0a",
+    "content-hash": "570404dd79f52fc3897674027d29b171",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -254,6 +254,69 @@
                 "source": "https://github.com/cknow/laravel-money/tree/v6.5.1"
             },
             "time": "2022-05-20T17:20:23+00:00"
+        },
+        {
+            "name": "dacoto/laravel-setenv",
+            "version": "v2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dacoto/laravel-setenv.git",
+                "reference": "c2994606b722b3b034c582c6b152d65e4bf8ea26"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dacoto/laravel-setenv/zipball/c2994606b722b3b034c582c6b152d65e4bf8ea26",
+                "reference": "c2994606b722b3b034c582c6b152d65e4bf8ea26",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^7.0|^8.74|^9.0",
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0|^5.0|^6.4",
+                "phpunit/phpunit": "^8.0|^9.5.8",
+                "roave/security-advisories": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "dacoto\\SetEnv\\SetEnvServiceProvider"
+                    ],
+                    "aliases": {
+                        "SetEnv": "dacoto\\SetEnv\\Facades\\SetEnv"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "dacoto\\SetEnv\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Cortés",
+                    "email": "cortestoledanodavid@gmail.com"
+                }
+            ],
+            "description": "A .env editor for Laravel",
+            "homepage": "https://dacoto.github.io/laravel-setenv/",
+            "support": {
+                "issues": "https://github.com/dacoto/laravel-setenv/issues",
+                "source": "https://github.com/dacoto/laravel-setenv/tree/v2.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/dacoto97",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-12-28T16:05:50+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -4260,6 +4323,57 @@
                 "source": "https://github.com/spatie/opening-hours/tree/2.11.2"
             },
             "time": "2021-12-09T10:16:57+00:00"
+        },
+        {
+            "name": "spot/laravel-installer",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/IamShaDoW666/laravel-installer.git",
+                "reference": "02b9f2f98e0042da5517420fe5500bf5e77ff7d7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/IamShaDoW666/laravel-installer/zipball/02b9f2f98e0042da5517420fe5500bf5e77ff7d7",
+                "reference": "02b9f2f98e0042da5517420fe5500bf5e77ff7d7",
+                "shasum": ""
+            },
+            "require": {
+                "dacoto/laravel-setenv": "^2.0",
+                "ext-json": "*",
+                "laravel/framework": "^7.0|^8.0",
+                "php": "^7.3|^8.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spot\\LaravelInstaller\\LaravelInstallerProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spot\\LaravelInstaller\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "IamShaDoW666",
+                    "email": "www.gaming2018@gmail.com"
+                }
+            ],
+            "description": "Laravel GUI Installer",
+            "support": {
+                "issues": "https://github.com/IamShaDoW666/laravel-installer/issues",
+                "source": "https://github.com/IamShaDoW666/laravel-installer/tree/main"
+            },
+            "time": "2022-08-06T14:53:34+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -9656,7 +9770,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "spot/laravel-installer": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
