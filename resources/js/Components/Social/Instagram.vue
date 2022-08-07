@@ -1,6 +1,6 @@
 <template>
     <a :href="link" target="_blank">
-        <InstagramIcon width="8" height="8" />
+        <InstagramIcon width="5" height="5" smWidth="8" smHeight="8" />
     </a>
 </template>
 

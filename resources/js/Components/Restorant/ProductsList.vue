@@ -1,8 +1,8 @@
 <template>
   <div class="py-10">
-    <div class="max-w-7xl mx-auto sm:px-4 lg:px-6 bg-white dark:bg-primary-dark overflow-hidden shadow-sm sm:rounded-lg shadow-lg">
+    <div class="max-w-7xl mx-auto sm:px-2 lg:px-2 bg-white dark:bg-primary-dark overflow-hidden shadow-sm sm:rounded-lg shadow-lg">
       <!-- <div class=""> -->
-        <div class="p-6 bg-white dark:bg-primary-dark border-b border-gray-200">
+        <div class="p-1 bg-white dark:bg-primary-dark border-b border-gray-200">
           <div
             class="
               grid grid-cols-1

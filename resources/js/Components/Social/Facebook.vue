@@ -1,6 +1,6 @@
 <template>
     <a target="_blank" :href="link">
-        <FacebookIcon width="8" height="8" />        
+        <FacebookIcon width="5" height="5" smWidth="8" smHeight="8" />        
     </a>
 </template>
 
