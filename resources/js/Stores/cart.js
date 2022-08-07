@@ -8,6 +8,7 @@ export const useCart = defineStore("cart", {
         subTotal: 0,
         totalItems: 0,
         products: [],
+        minimum_order: 0,
         delivery: 0,
     }),
 
@@ -36,7 +37,15 @@ export const useCart = defineStore("cart", {
                 state.totalItems += unformat(state.items[i].quantity);
             }
             return state.totalItems;
-        },
+        }, 
+        
+        isAboveMinimum: (state) => {
+            if (state.minimum_order) {
+                return state.subTotal >= state.minimum_order;            
+            }
+
+            return null
+        }
     },
 
     actions: {
@@ -99,6 +108,7 @@ export const useCart = defineStore("cart", {
         getProps(props) {
             //Function to assign props state
             this.products = props.products;
+            this.minimum_order = Number(props.restaurant.config.minimum_order);
         },
 
         getCart() {
@@ -106,6 +116,7 @@ export const useCart = defineStore("cart", {
                 items: this.items,
                 subTotal: this.subTotal,
                 totalItems: this.totalItems,
+                minimum_order: this.minimum_order,
                 delivery: unformat(this.delivery),
                 total: this.total,
             };
