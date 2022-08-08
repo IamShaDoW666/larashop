@@ -444,7 +444,6 @@ const form = useForm({
 });
 const results = ref();
 const update = () => {
-    console.log(form);
     Inertia.post(
         route("owner.restorant.update", { restorant: restorant.id }),
         form,

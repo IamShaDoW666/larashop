@@ -2,18 +2,18 @@
   <div class="py-10">
     <div class="max-w-7xl mx-auto sm:px-4 lg:px-6 bg-white dark:bg-primary-dark overflow-hidden shadow-sm sm:rounded-lg shadow-lg">
       <!-- <div class=""> -->
-        <div class="p-6 bg-white dark:bg-primary-dark border-b border-gray-200">
+        <div class="p-1 bg-white dark:bg-primary-dark border-b border-gray-200">
           <div
             class="
               grid grid-cols-1
               md:grid-cols-2
               lg:grid-cols-5
-              gap-y-10
+              gap-y-4
               sm:gap-y-8
             "
           >
             <div
-              class="px-4 py-2"
+              class="px-2 py-2 sm:px-4"
               v-for="(product, index) in prod"
               :key="product.id"
             >
@@ -58,7 +58,7 @@
                         hover:dark:bg-secondary-dark
                       "
                     >
-                      Add To Cart
+                      {{ __('Add To Cart') }}
                     </button>
                   </div>
                 </div>

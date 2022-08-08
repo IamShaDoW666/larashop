@@ -55,7 +55,7 @@
               </g>
             </svg>
 
-            <span class="flex ml-2">{{ cart.getTotalItems }} Items</span></span><span
+            <span class="flex ml-2">{{ cart.getTotalItems }} {{ __('Items') }}</span></span><span
             class="bg-white dark:bg-primary-dark rounded w-full py-2 px-2 text-green-500 dark:text-white mt-3">{{
                 formatPrice(cart.getSubTotal)
             }}</span>
@@ -67,7 +67,7 @@
                 class="rounded px-2 my-2 text-white dark:text-black font-bold overflow-visible"
                 :class="restaurant.open_status ? 'bg-green-400 dark:bg-red' : 'bg-red-100'"
               >
-                {{ restaurant.open_status ? "Open" : "Closed" }}
+                {{ restaurant.open_status ? __('Open') : __('Closed') }}
               </span>
               <span
                 :class="restaurant.open_status ? 'bg-green-800 dark:bg-golden-yellow' : 'bg-red-800'"
@@ -82,7 +82,7 @@
               >
                 <span class="material-icons"></span> 
 
-                <span>{{ restaurant.address }}</span>
+                <span>{{ __(restaurant.address) }}</span>
               </a>
             </div>
 
@@ -140,7 +140,7 @@
               " :class="[
                 active[0] ? 'bg-green-400 hover:bg-green-400' : 'bg-green-300',
               ]">
-              All Category
+              {{ __('All Category') }}
             </div>
             <div @click="categoryFilter(category.id)" :class="[
               active[category.id]
@@ -266,14 +266,14 @@
                     ">
                     <div class="rounded">
                       <span class="text-sm dark:text-white">
-                        Subtotal: {{ formatPrice(cart.getSubTotal) }}
+                        {{ __('Subtotal') }}: {{ formatPrice(cart.getSubTotal) }}
                       </span>                      
                     </div>
                     <div v-if="cart.getTaxValue" class="text-sm">
                       {{ restaurant.config.tax_name }}({{ restaurant.config.tax }}%): {{ formatPrice(cart.getTaxValue) }}
                     </div>
                     <div class="font-bold text-lg text-green-700 dark:text-white">
-                      Total: {{ formatPrice(cart.getTotal) }}
+                      {{ __('Total') }}: {{ formatPrice(cart.getTotal) }}
                     </div>
                   </div>
                 </div>
