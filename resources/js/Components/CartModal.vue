@@ -1,6 +1,6 @@
 <template>
     <div @click="openModal"
-        class="flex justify-between items-center mx-auto max-w-md sm:hidden z-30 hover:bg-blue-300 shadow dark:bg-green-800 bg-blue-400 rounded-lg w-full p-4 absolute mb-4 bottom-2 left-0 right-0">
+        class="flex justify-between items-center mx-auto max-w-md sm:hidden z-50 hover:bg-blue-300 shadow dark:bg-green-800 bg-blue-400 rounded-lg w-full p-4 absolute mb-2 bottom-0 left-0 right-0">
         <div class="font-bold dark:text-white">
             <i class="pr-2 fa-solid fa-cart-shopping dark:text-white"></i>Cart({{
                     cart.getTotalItems

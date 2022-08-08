@@ -22,7 +22,7 @@
         <div class="px-4">
           <ul class="list-unstyled">
             <li>
-              <a
+              <Link
                 class="
                   text-blueGray-600 dark:text-white dark:hover:text-blueGray-400
                   hover:text-blueGray-800
@@ -31,10 +31,10 @@
                   pb-2
                   text-sm
                 "
-                href="https://creative-tim.com/terms?ref=vn-footer"
+                :href="route('terms')"
               >
                 Terms & Conditions
-              </a>
+              </Link>
             </li>
             <li>
               <a
@@ -76,6 +76,7 @@ import Facebook from "@/Components/Social/Facebook.vue";
 import Whatsapp from "@/Components/Social/Whatsapp.vue";
 import Twitter from "@/Components/Social/Twitter.vue";
 import Instagram from "@/Components/Social/Instagram.vue";
+import { Link } from "@inertiajs/inertia-vue3";
 const date = ref(new Date().getFullYear());
 
 const props = defineProps({

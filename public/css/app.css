@@ -2322,6 +2322,9 @@ body[dir="rtl"] .checkbox:checked,
 .top-\[72px\] {
   top: 72px;
 }
+.bottom-1 {
+  bottom: 0.25rem;
+}
 .z-0 {
   z-index: 0;
 }
@@ -4988,6 +4991,18 @@ input[type=time]::-webkit-inner-spin-button {
 
   .sm\:rounded-lg {
     border-radius: 0.5rem;
+  }
+
+  .sm\:rounded-md {
+    border-radius: 0.375rem;
+  }
+
+  .sm\:rounded-full {
+    border-radius: 9999px;
+  }
+
+  .sm\:rounded {
+    border-radius: 0.25rem;
   }
 
   .sm\:px-6 {

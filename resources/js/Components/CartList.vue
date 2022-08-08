@@ -1,6 +1,6 @@
 <template>
   <div class="container flex flex-col w-full md:w-3/5" >
-    <div class="px-4 py-5 sm:px-6 w-full flex justify-between border bg-green-500 dark:bg-golden-yellow bg-white shadow mb-2 rounded-md">
+    <div class="px-4 py-5 sm:px-6 w-full flex justify-between border bg-green-500 dark:bg-golden-yellow bg-white shadow mb-2 sm:rounded-md">
       <div>
         <h3 class="text-lg leading-6 font-medium text-gray-900  dark:text-black">
           <i class="pr-2 fa-solid fa-cart-shopping"></i>
@@ -18,10 +18,10 @@
       <ul class="flex flex-col">
         <li v-for="(item, index) in cart.items" :key="item.id" class="border-gray-400 flex flex-row mb-2">
           <div
-            class="shadow border select-none cursor-pointer bg-white dark:bg-secondary-dark rounded-md flex flex-1 items-center p-4">
+            class="shadow border select-none cursor-pointer bg-white dark:bg-secondary-dark sm:rounded-md flex flex-1 items-center p-4">
             <div class="flex flex-col w-10 h-10 justify-center items-center mr-4">
               <a href="#" class="block relative">
-                <img alt="profil" :src="`${item.image_path}_thumbnail.webp`" class="mx-auto object-cover rounded-full h-10 w-10" />
+                <img alt="profil" :src="`${item.image_path}_thumbnail.webp`" class="mx-auto object-cover sm:rounded-full h-10 w-10" />
               </a>
             </div>
             <div class="flex-1 pl-1 md:mr-16">
@@ -42,7 +42,7 @@
               class="px-4 ml-2 text-white font-bold py-2 hover:bg-gray-700 rounded shadow bg-gray-800">+</button>
           </div>
         </li>
-        <li class="shadow-md bg-white dark:bg-golden-yellow dark:text-black rounded-md flex flex-1 py-4 px-8 flex flex-col gap-y-4 mb-2">
+        <li class="shadow-md bg-white dark:bg-golden-yellow dark:text-black sm:rounded-md flex flex-1 py-4 px-8 flex flex-col gap-y-4 mb-2">
           <div v-if="cart.delivery || cart.tax" class="flex justify-between">
             <h1>Subtotal: </h1><span>{{ formatPrice(cart.getSubTotal) }}</span>
           </div>

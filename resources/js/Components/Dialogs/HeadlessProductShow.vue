@@ -3,7 +3,7 @@
     <Dialog
       as="div"
       @close="closeModal"
-      class="relative z-30 overflow-y-scroll"
+      class="z-20 overflow-y-scroll"
       :class="currentTheme"
     >
       <TransitionChild
