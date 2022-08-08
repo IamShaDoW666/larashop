@@ -4,7 +4,7 @@
     <div class="relative" :class="currentTheme">
       <div class="sm:px-6 lg:px-8 py-12 md:flex gap-x-4 dark:bg-primary-dark justify-between">
         <CartList :cart="cart" :areas="areas" :restorant="restorant"/>
-        <CustomerForm :restorant="restorant" v-if="cart.items.length" :areas="areas" :cart="cart" class="md:w-2/5 max-w-2xl" />
+        <CustomerForm :restorant="restorant" :delivery_info="delivery_info" v-if="cart.items.length" :areas="areas" :cart="cart" class="md:w-2/5 max-w-2xl" />
       </div>
     </div>
 <!-- </BreezeAuthenticatedLayout> -->
@@ -26,6 +26,7 @@ const props = defineProps({
   subtotal: String,
   order_type: String,
   areas: Object,
+  delivery_info: String
 });
 
 provide('restorant', {

@@ -1,6 +1,6 @@
 <template>
     <a :href="link" target="_blank">
-        <WhatsappIcon width="8" height="8" />
+        <WhatsappIcon width="5" height="5" smWidth="8" smHeight="8" />
     </a>
 </template>
 

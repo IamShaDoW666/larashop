@@ -65,25 +65,16 @@
             <div class="flex space-x-2 items-center">
               <span
                 class="rounded px-2 my-2 text-white dark:text-black font-bold overflow-visible"
-                :class="restaurant.open_status ? 'bg-green-400 dark:bg-red' : 'bg-red-100'"
+                :class="restaurant.open_status ? 'bg-green-400 dark:bg-golden-yellow' : 'bg-blood-red'"
               >
                 {{ restaurant.open_status ? __('Open') : __('Closed') }}
               </span>
               <span
-                :class="restaurant.open_status ? 'bg-green-800 dark:bg-golden-yellow' : 'bg-red-800'"
+                :class="restaurant.open_status ? 'bg-green-800 dark:bg-golden-yellow' : 'bg-blood-red'"
                 class="animate-bounce inline-flex h-2 w-2 rounded opacity-75"
                
-              ></span>
 
-              <a
-                target="_blank"
-                :href="addressMap"
-                class="sm:hidden flex space-x-2 items-center dark:text-white"
-              >
-                <span class="material-icons"></span> 
-
-                <span>{{ __(restaurant.address) }}</span>
-              </a>
+              ></span>        
             </div>
 
 
@@ -91,9 +82,9 @@
               {{ restaurant.open_msg }}
             </p>
 
-            <a target="_blank" :href="addressMap" class="hidden sm:flex space-x-2 items-center">
-              <span class="material-icons dark:text-white">place</span>
+            <a target="_blank" :href="addressMap" class="flex gap-x-2 text-xs sm:text-sm items-center">
               <span class="dark:text-white">{{ restaurant.address }}</span>
+              <span class="material-icons dark:text-white text-sm md:text-md">place</span>
             </a>
           </div>
           <div class="flex gap-y-4 sm:gap-y-0 gap-x-4">

@@ -26,7 +26,8 @@ class RestorantController extends Controller
   public function index()
   {
     if (auth()->user()->hasRole('Owner')) {
-      return inertia('views/admin/Restorant');
+      $confs = Restorant::find(1)->getAllConfigs();      
+      return inertia('views/admin/Restorant', compact('confs'));
     }
 
     if (auth()->user()->hasRole('Guest')) {
@@ -149,6 +150,8 @@ class RestorantController extends Controller
       'minimum_order' => $request->minimum_order,
       'currency' => $request->currency
     ]);
+
+    $restorant->setConfig('delivery_info', $request->delivery_info);
     //Rename Images Folder
     // if (File::exists($this->imagePath . $oldSlug)) {
     //   $copyDirectory = File::copyDirectory(

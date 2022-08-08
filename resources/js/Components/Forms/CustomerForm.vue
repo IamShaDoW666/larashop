@@ -36,37 +36,45 @@
                     </label>
                 </div>
             </div>
-            <label v-if="form.order_type == 1" class="font-semibold text-xs mt-3 dark:text-white" for="address">Address</label>
+            <label v-if="form.order_type == 1" class="font-semibold text-xs mt-3 dark:text-white"
+                for="address">Address</label>
             <textarea v-model="form.address" v-if="form.order_type == 1" rows="4"
                 class="flex items-center mb-4 px-4 w-full bg-gray-200 dark:bg-primary-dark dark:text-white mt-2 rounded focus:outline-none focus:ring-2"
                 type="text"></textarea>
             <!-- <button id="dropdownDefault" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none w-full font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown button <i class="fa-solid fa-caret-down"></i></button> -->
-            <span v-if="areas.length && form.order_type == 1" class="font-bold dark:text-white">Select Delivery Area</span>
+            <span v-if="areas.length && form.order_type == 1" class="font-bold dark:text-white">Select Delivery
+                Area</span>
             <select v-if="areas.length && form.order_type == 1" v-model="cart.delivery"
                 class="w-full text-sm mt-2 rounded group dark:text-white dark:bg-primary-dark ring-0 shadow active:text-black hover:text-black font-bold text-white bg-gray-600 hover:bg-gray-100"
                 aria-labelledby="dropdownDefaselectt">
                 <option placeholder="Delivery Area" aria-placeholder="Delivery Area" :value="area.delivery_fee"
                     v-for="area in areas" :key="area.id">
-                    <span class="block dark:text-white text-sm py-2 dark:bg-primary-dark hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{
-                            area.name
-                    }} {{ area.delivery_fee }}</span>
+                    <span
+                        class="block dark:text-white text-sm py-2 dark:bg-primary-dark hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{
+                                area.name
+                        }} {{ area.delivery_fee }}</span>
                 </option>
             </select>
-            <label v-if="form.order_type == 1" class="font-semibold text-xs mt-3 dark:text-white" for="delivery_time">
-                Delivery Time
-            </label>
-            <label v-if="form.order_type == 3" class="font-semibold text-xs mt-3 dark:text-white" for="dinein_time">
-                Dine-in Time
-            </label>
-            <label v-if="form.order_type == 2" class="font-semibold text-xs mt-3 dark:text-white" for="pickup_time">
-                Pickup Time
-            </label>
-            <v-date-picker :model-config="{mask: 'iso', type: 'string'}" timezone="utc" v-model="form.order_time" mode="dateTime" :available-dates='[
-                {
-                    start: new Date(),
-                    end: null
-                }
-            ]'>
+            <div class="flex gap-x-2">
+                <label v-if="form.order_type == 1" class="font-semibold text-xs mt-3 dark:text-white"
+                    for="delivery_time">
+                    Delivery Time
+                </label>
+                <label v-if="form.order_type == 3" class="font-semibold text-xs mt-3 dark:text-white" for="dinein_time">
+                    Dine-in Time
+                </label>
+                <label v-if="form.order_type == 2" class="font-semibold text-xs mt-3 dark:text-white" for="pickup_time">
+                    Pickup Time
+                </label>
+                <h4 class="text-xs mt-3 dark:text-white">[{{ delivery_info }}]</h4>
+            </div>
+            <v-date-picker :model-config="{ mask: 'iso', type: 'string' }" timezone="utc" v-model="form.order_time"
+                mode="dateTime" :available-dates='[
+                    {
+                        start: new Date(),
+                        end: null
+                    }
+                ]'>
                 <template v-slot="{ inputValue, inputEvents }">
                     <input
                         class="flex items-center h-12 px-4 w-full bg-gray-200 dark:text-white dark:bg-primary-dark mt-2 mb-2 rounded focus:outline-none focus:ring-2"
@@ -76,7 +84,8 @@
             <div class="flex items-center my-4 px-4">
                 <input id="default-checkbox" type="checkbox" v-model="form.checked"
                     class="w-4 h-4 text-blue-600 dark:text-golden-yellow bg-gray-100 border-gray-300 dark:border-primary-dark dark:bg-golden-yellow rounded focus:ring-blue-500 dark:focus:ring-golden-yellow dark:ring-offset-gray-800 focus:ring-2 dark:bg-golden-yellow dark:border-gray-600" />
-                <label for="default-checkbox" class="ml-2 dark:text-white text-sm font-medium text-gray-900 dark:text-gray-300">I agree
+                <label for="default-checkbox"
+                    class="ml-2 dark:text-white text-sm font-medium text-gray-900 dark:text-gray-300">I agree
                     to terms and conditions</label>
             </div>
             <button type="submit" :disabled="!form.checked || form.processing || loading" :class="{
@@ -172,6 +181,7 @@ const props = defineProps({
     areas: Object,
     cart: Object,
     restorant: Object,
+    delivery_info: String
 });
 const cart = useCart();
 
