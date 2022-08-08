@@ -44,7 +44,7 @@
         </div>
         <!-- Heading -->
         <h6 class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-          Admin
+          {{ __('Admin') }}
         </h6>
         <!-- Navigation -->
 
@@ -55,7 +55,7 @@
             <div>
               <Link :href="route('admin.dashboard')">
               <i class="fas fa-tv mr-2 text-sm"></i>
-              Dashboard
+              {{ __('Dashboard') }}
               </Link>
             </div>
           </li>
@@ -65,7 +65,7 @@
             <div>
               <Link :href="route('admin.settings')" preserve-scroll>
               <i class="fas fa-tools mr-2 text-sm"></i>
-              Settings
+              {{ __('Settings') }}
               </Link>
             </div>
           </li>
@@ -75,7 +75,7 @@
             <div>
               <Link :href="route('owner.restorant.index')" preserve-scroll>
               <i class="mr-2 text-sm lni lni-restaurant"></i>
-              Restaurant
+             {{ __(' Restaurant') }}
               </Link>
             </div>
           </li>
@@ -85,7 +85,7 @@
             <div>
               <Link :href="route('products.index')" preserve-scroll>
               <i class="fa-solid fa-utensils mr-2 text-sm"></i>
-              Menu
+              {{ __('Menu') }}
               </Link>
             </div>
           </li>
@@ -95,7 +95,7 @@
             <div>
               <Link :href="route('admin.orders.index')" preserve-scroll>
               <i class="material-icons mr-2 text-sm">list</i>
-              Orders
+             {{ __('Orders') }}
               </Link>
             </div>
           </li>
@@ -105,7 +105,7 @@
             <div>
               <Link :href="route('areas.index')" preserve-scroll>
               <i class="fa-solid fa-truck mr-2 text-sm"></i>
-              Delivery Areas
+              {{ __('Delivery Areas') }}
               </Link>
             </div>
           </li>
@@ -115,7 +115,7 @@
             <div>
               <Link :href="route('owner.restorant.share')" preserve-scroll>
               <i class="material-icons mr-2 text-sm">mobile_screen_share</i>
-              Share
+              {{ __('Share') }}
               </Link>
             </div>
           </li>
@@ -125,7 +125,7 @@
             <div>
               <Link :href="route('owner.restorant.working-hours')" preserve-scroll>
               <i class="material-icons mr-2 text-sm">schedule</i>
-              Working Hours
+              {{ __('Working Hours') }}
               </Link>
             </div>
           </li>
@@ -135,7 +135,7 @@
             <div>
               <Link :href="route('owner.restorant.location')" preserve-scroll>
               <i class="material-icons mr-2 text-sm">place</i>
-              Location
+              {{ __('Location') }}
               </Link>
             </div>
           </li>

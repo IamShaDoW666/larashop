@@ -53,7 +53,7 @@
             <h1>{{ restorant.config.tax_name }}<span class="text-sm">({{ cart.tax }}%)</span>: </h1><span>{{ formatPrice(cart.getTaxValue) }}</span>
           </div>
           <div class="flex justify-between">
-            <h1>Payable: </h1><span>{{ formatPrice(cart.getTotal) }}</span>
+            <h1>Payable </h1><span>{{ formatPrice(cart.getTotal) }}</span>
           </div>
         </li>
       </ul>

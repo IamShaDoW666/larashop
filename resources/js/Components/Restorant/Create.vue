@@ -3,7 +3,7 @@
       flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
       <div class="rounded-t bg-white mb-0 px-6 py-6">
          <div class="text-center flex justify-between">
-            <h6 class="text-gray-700 text-xl font-bold">Register Restaurant</h6>
+            <h6 class="text-gray-700 text-xl font-bold">{{ __('Register Restaurant') }}</h6>
             <UserDropdown />
          </div>
       </div>
@@ -11,7 +11,7 @@
         <BreezeValidationErrors class="mb-4 bg-red-100 rounded my-4 py-2 px-4" />
          <form @submit.prevent="register">
             <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-               Restaurant Information
+               {{ __('Restaurant Information') }}
             </h6>
             <div class="flex flex-wrap">
                <div class="w-full lg:w-6/12 px-4">

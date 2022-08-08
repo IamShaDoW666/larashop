@@ -2,14 +2,14 @@
     <RestaurantLayout>
         <div class="rounded-t bg-white mb-0 px-6 py-6">
             <div class="text-center flex justify-between">
-                <h6 class="text-gray-700 text-xl font-bold">Restaurant Settings</h6>
+                <h6 class="text-gray-700 text-xl font-bold">{{ __('Restaurant Settings') }}</h6>
                 <Link :href="
                     route('restorants.show', {
                         restorant: $page.props.auth.restorant.slug,
                     })
                 " class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
                     type="button">
-                View
+                {{__('View')}}
                 </Link>
             </div>
         </div>
@@ -17,14 +17,14 @@
             <BreezeValidationErrors class="mb-4 bg-red-100 rounded my-4 py-2 px-4" />
             <form @submit.prevent="update">
                 <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                    Restaurant Information
+                    {{__('Restaurant Information')}}
                 </h6>
                 <div class="flex flex-wrap">
                     <div class="w-full lg:w-6/12 px-4">
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                 htmlFor="grid-password">
-                                Restaurant Name
+                                {{ __('Restaurant Name') }}
                             </label>
                             <input v-model="form.name" type="text"
                                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
@@ -34,7 +34,7 @@
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                 htmlFor="grid-password">
-                                Whatsapp Phone
+                                {{ __('Whatsapp Phone') }}
                             </label>
                             <MazPhoneNumberInput no-use-browser-locale no-example v-model="form.phone" show-code-on-list
                                 color="info" :preferred-countries="[
@@ -51,7 +51,7 @@
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                 htmlFor="grid-password">
-                                Country
+                                {{ __('Country') }}
                             </label>
                             <input type="text" v-model="form.country"
                                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
@@ -61,7 +61,7 @@
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                 htmlFor="grid-password">
-                                City
+                                {{__('City')}}
                             </label>
                             <input type="text" v-model="form.city"
                                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
@@ -71,7 +71,7 @@
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                 htmlFor="grid-password">
-                                Address
+                                {{__('Address')}}
                             </label>
                             <input type="text" v-model="form.address"
                                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
@@ -82,14 +82,14 @@
                 <hr class="mt-6 border-b-1 border-blueGray-300" />
 
                 <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                    Ordering Information
+                    {{__('Ordering Information')}}
                 </h6>
                 <div class="flex flex-wrap">
                     <div class="w-full lg:w-4/12 px-4">
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                 htmlFor="grid-password">
-                                Minimum Order
+                              {{ __('Minimum Order') }}
                             </label>
                             <input type="number" v-model="form.minimum_order"
                                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -100,26 +100,26 @@
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                 htmlFor="grid-password">
-                                Order Types
+                               {{ __(' Order Types') }}
                             </label>
                             <div class="grid grid-cols-2 gap-x-2 gap-y-4 items-center">
                                 <div class="flex items-center">
                                     <label class="mr-2 block uppercase text-blueGray-600 text-xs"
-                                        for="Delivery">Delivery</label>
+                                        for="Delivery">{{ __('Delivery') }}</label>
                                     <input type="checkbox" v-model="form.can_deliver"
                                         class="border-0 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
                                         value="Delivery" />
                                 </div>
                                 <div class="flex items-center">
                                     <label class="mr-2 block uppercase text-blueGray-600 text-xs"
-                                        for="Delivery">Pickup</label>
+                                        for="Delivery">{{ __('Pickup') }}</label>
                                     <input type="checkbox" v-model="form.can_pickup"
                                         class="border-0 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
                                         value="Pickup" />
                                 </div>
                                 <div class="flex items-center">
                                     <label class="mr-2 block uppercase text-blueGray-600 text-xs"
-                                        for="Delivery">Dine-in</label>
+                                        for="Delivery">{{ __('Dine-in') }}</label>
                                     <input type="checkbox" v-model="form.can_dinein"
                                         class="border-0 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
                                         value="Dine-in" />
@@ -131,7 +131,7 @@
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                 htmlFor="grid-password">
-                                Postal Code
+                               {{ __('Postal Code') }}
                             </label>
                             <input type="number" v-model="form.postal_code"
                                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
@@ -141,7 +141,7 @@
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                 htmlFor="grid-password">
-                                Currency
+                              {{ __('Currency') }}
                             </label>
                             <input type="text" :value="form.currency"
                                 @input="event => form.currency = event.target.value.toUpperCase()"
@@ -152,7 +152,7 @@
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                 htmlFor="grid-password">
-                                Delivery Info
+                                {{ __('Delivery Info') }}
                             </label>
                             <input type="text" v-model="form.delivery_info"
                                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
@@ -163,14 +163,14 @@
                 <hr class="mt-6 border-b-1 border-blueGray-300" />
 
                 <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                    Page Settings
+                    {{ __('Page Settings') }}
                 </h6>
                 <div class="flex flex-wrap">
                     <div class="w-full lg:w-4/12 px-4">
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                 htmlFor="grid-password">
-                                Restaurant Logo
+                                {{ __('Restaurant Logo') }}
                             </label>
                             <div v-if="logoPreviewImage" class="logoPreviewWrapper mb-3" :style="{
                                 'background-image': `url(${logoPreviewImage})`,
@@ -181,7 +181,7 @@
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                 htmlFor="grid-password">
-                                Restaurant Banner
+                                {{ __('Restaurant Banner') }}
                             </label>
                             <div v-if="previewImage" class="bannerPreviewWrapper mb-3" :style="{
                                 'background-image': `url(${previewImage})`,
@@ -195,7 +195,7 @@
                 <hr class="mt-6 border-b-1 border-blueGray-300" />
 
                 <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                    Social Links
+                    {{ __('Social Links') }}
                 </h6>
                 <div class="flex flex-wrap">
                     <div class="w-full lg:w-6/12 px-4">
@@ -203,7 +203,7 @@
                             <div class="flex items-center">
                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                     htmlFor="grid-password">
-                                    Facebook
+                                   {{ __('Facebook') }}
                                 </label>
                                 <FacebookIcon class="ml-2 mb-4" width="6" height="6" />
                             </div>
@@ -251,12 +251,12 @@
                 <hr class="mt-6 border-b-1 border-blueGray-300" />
 
                 <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                    Confirmation
+                    {{ __('Confirmation') }}
                 </h6>
                 <button :class="{ 'opacity-25': form.processing || !form.isDirty }"
                     :disabled="form.processing || !form.isDirty"
                     class="px-4 py-2 rounded shadow bg-blue-500 hover:bg-blue-600 text-white">
-                    Update
+                    {{ __('Update') }}
                 </button>
             </form>
         </div>
