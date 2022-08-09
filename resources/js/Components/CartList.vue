@@ -42,7 +42,7 @@
               class="px-4 ml-2 text-white font-bold py-2 hover:bg-gray-700 rounded shadow bg-gray-800">+</button>
           </div>
         </li>
-        <li class="shadow-md bg-white dark:bg-golden-yellow dark:text-black sm:rounded-md flex flex-1 py-4 px-8 flex flex-col gap-y-4 mb-2">
+        <li class="shadow-md bg-white dark:bg-secondary-dark dark:text-white sm:rounded-md flex flex-1 py-4 px-8 flex flex-col gap-y-4 mb-2">
           <div v-if="cart.delivery || cart.tax" class="flex justify-between">
             <h1>Subtotal: </h1><span>{{ formatPrice(cart.getSubTotal) }}</span>
           </div>
