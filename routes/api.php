@@ -31,7 +31,7 @@ use Illuminate\Validation\ValidationException;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function() {
-        return auth()->user();
+        return auth()->user()->restorant->load('user');
     });
     Route::get('/get-order/{order}', [OrderController::class, 'show']);
     Route::post('/auth-check', [LoginController::class, 'check']);
