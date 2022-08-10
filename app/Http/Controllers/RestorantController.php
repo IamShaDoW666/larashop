@@ -152,7 +152,9 @@ class RestorantController extends Controller
       'currency' => $request->currency
     ]);
 
-    $restorant->setConfig('delivery_info', $request->delivery_info);
+    if ($request->delivery_info) {
+      $restorant->setConfig('delivery_info', $request->delivery_info);
+    }
     //Rename Images Folder
     // if (File::exists($this->imagePath . $oldSlug)) {
     //   $copyDirectory = File::copyDirectory(
