@@ -3,7 +3,7 @@
     <Dialog
       as="div"
       @close="closeModal"
-      class="relative z-30 overflow-y-scroll"
+      class="z-20 overflow-y-scroll"
       :class="currentTheme"
     >
       <TransitionChild
@@ -51,19 +51,19 @@
                   mt-4
                   px-6
                   pb-6
-                  sm:flex
+                  lg:flex
                   gap-x-8
                   justify-between
                   items-start
                 "
               >
                 <div
-                  class="imagePreviewWrapper mb-3 rounded mx-auto sm:mx-0"
+                  class="imagePreviewWrapper shrink-0 w-[300px] h-[200px] sm:h-[200px] sm:w-[400px] lg:h-[200px] lg:w-[200px] mb-3 rounded mx-auto lg:mx-0"
                   :style="{
                     'background-image': `url(${product.image_path}_large.webp)`,
                   }"
                 />
-                <div class="p-2 mt-4 sm:mt-0 flex-1 max-w-2xl dark:text-white">
+                <div class="p-2 mt-4 lg:mt-0 flex-1 max-w-2xl dark:text-white">
                   <h1 class="text-center text-2xl sm:text-3xl p-0.5 font-bold">
                     {{ product.name }}
                   </h1>
@@ -103,7 +103,7 @@
                                             }}
                                         </div>-->
                   </div>
-                  <div v-if="product.variants.length" class="flex gap-x-5">
+                  <div v-if="product.variants.length" class="flex justify-center gap-x-2 sm:gap-x-5">
                     <div
                       v-for="variant in product.variants"
                       :key="variant.id"
@@ -176,7 +176,7 @@
                     focus-visible:ring-offset-2
                   "
                 >
-                  Add to Cart
+                  {{ __('Add to Cart') }}
                 </button>
                 <button
                   type="button"
@@ -200,7 +200,7 @@
                   "
                   @click="closeModal()"
                 >
-                  Close
+                  {{ __('Close') }}
                 </button>
               </div>
             </DialogPanel>
@@ -250,8 +250,6 @@ const { productShowOpen, product } = inject("data");
 <style scoped>
 .imagePreviewWrapper {
   display: block;
-  width: 200px;
-  height: 200px;
   cursor: pointer;
   background-size: cover;
   background-position: center center;

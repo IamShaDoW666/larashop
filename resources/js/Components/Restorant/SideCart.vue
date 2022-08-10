@@ -139,7 +139,7 @@
                 font-bold
               "
             >
-              Checkout
+              {{ __('Checkout') }}
             </button>
           </div>
         </form>

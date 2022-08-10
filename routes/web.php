@@ -57,6 +57,9 @@ Route::get('/restorants/{restorant:slug}', [FrontEndController::class, 'restoran
 Route::get('/order/{restorant}', [OrderController::class, 'checkin'])->name('orders.checkin');
 Route::get('/order/status/{order}', [OrderController::class, 'orderStatus'])->middleware('order_device_check')->name('order.status');
 Route::post('/checkout/{restorant:uuid}', [OrderController::class, 'store'])->name('orders.store');
+Route::get('/terms-and-conditions', function() {
+  return inertia('Terms');
+})->name('terms');
 
 // Guest routes
 Route::group(['middleware' => ['auth', 'role:Guest'], 'prefix' => 'guest'], function () {

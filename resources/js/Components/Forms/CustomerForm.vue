@@ -66,7 +66,7 @@
                 <label v-if="form.order_type == 2" class="font-semibold text-xs mt-3 dark:text-white" for="pickup_time">
                     Pickup Time
                 </label>
-                <h4 class="text-xs mt-3 dark:text-white">[{{ delivery_info }}]</h4>
+                <h4 class="text-xs mt-3 dark:text-golden-yellow" v-if="form.order_type == 1">[{{ delivery_info }}]</h4>
             </div>
             <v-date-picker :model-config="{ mask: 'iso', type: 'string' }" timezone="utc" v-model="form.order_time"
                 mode="dateTime" :available-dates='[
