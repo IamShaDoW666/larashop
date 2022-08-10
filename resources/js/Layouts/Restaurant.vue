@@ -25,6 +25,12 @@
                 <span class="font-semibold text-white text-sm mr-2">Payment</span>
                 <span class="material-icons text-white">payment</span>
             </Link>
+            <Link :href="route('owner.restorant.smtp')"
+                class="flex justify-between items-center px-4 py-2 bg-emerald-500 rounded shadow cursor-pointer hover:bg-emerald-400"
+            >
+                <span class="font-semibold text-white text-sm mr-2">SMTP</span>
+                <span class="material-icons text-white">email</span>
+            </Link>
         </div>
         <slot />
     </div>

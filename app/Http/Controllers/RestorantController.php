@@ -11,6 +11,7 @@ use App\Http\Requests\StoreRestorantRequest;
 use App\Http\Requests\UpdateRestorantRequest;
 use App\Models\Config;
 use App\Models\Hour;
+use App\Models\Product;
 use App\Services\ConfChanger;
 use App\Services\RestorantService;
 use Nwidart\Modules\Facades\Module;
@@ -26,7 +27,7 @@ class RestorantController extends Controller
   public function index()
   {
     if (auth()->user()->hasRole('Owner')) {
-      $confs = Restorant::find(1)->getAllConfigs();      
+      $confs = Restorant::find(1)->getAllConfigs();
       return inertia('views/admin/Restorant', compact('confs'));
     }
 
@@ -81,7 +82,7 @@ class RestorantController extends Controller
         $q->whereHas('products')->with('products.variants');
       }], 'config')
       ->with('hours')
-      ->firstOrFail();    
+      ->firstOrFail();
     $restorant->openStatus = RestorantService::getOpeningTime($restorant->hours);
     // return $restorant;
     ConfChanger::switchCurrency($restorant);
@@ -214,7 +215,7 @@ class RestorantController extends Controller
       $this->imagePath,
       $image,
       [
-        ['name' => 'xl', 'w' => 500, 'h' => 480, 'type' => 'webp', 'quality' => 100],        
+        ['name' => 'xl', 'w' => 500, 'h' => 480, 'type' => 'webp', 'quality' => 100],
         ['name' => 'thumbnail', 'w' => 200, 'h' => 200, 'type' => 'webp', 'quality' => 100],
       ]
     );
@@ -231,7 +232,7 @@ class RestorantController extends Controller
     );
   }
 
-  private function uploadlogo($image) 
+  private function uploadlogo($image)
   {
     return $this->saveImageVersions(
       $this->imagePath,
@@ -243,8 +244,8 @@ class RestorantController extends Controller
   }
 
   public function apps()
-  {        
-    $hasTaxConfig = Module::has('TaxConfig');        
+  {
+    $hasTaxConfig = Module::has('TaxConfig');
     return inertia('Restorant/Apps', compact('hasTaxConfig'));
   }
 
@@ -252,7 +253,8 @@ class RestorantController extends Controller
   {
     $restorant->config->update([
       'tax' => $request->tax,
-      'tax_name' => $request->tax_name
+      'tax_name' => $request->tax_name,
+      'google_maps_api_key' => $request->google_maps_api_key
     ]);
 
     return back();
@@ -262,5 +264,67 @@ class RestorantController extends Controller
   {
     return inertia('Restorant/Payments');
   }
+  public function setEnvironmentValue(array $values)
+  {
+    $envFile = app()->environmentFilePath();
+    $str = "\n";
+    $str .= file_get_contents($envFile);
+    $str .= "\n"; // In case the searched variable is in the last line without \n
+    if (count($values) > 0) {
+      foreach ($values as $envKey => $envValue) {
+        if ($envValue == trim($envValue) && strpos($envValue, ' ') !== false) {
+          $envValue = '"' . $envValue . '"';
+        }
 
+        $keyPosition = strpos($str, "{$envKey}=");
+        $endOfLinePosition = strpos($str, "\n", $keyPosition);
+        $oldLine = substr($str, $keyPosition, $endOfLinePosition - $keyPosition);
+
+        // If key does not exist, add it
+        if ((!$keyPosition && $keyPosition != 0) || !$endOfLinePosition || !$oldLine) {
+          $str .= "{$envKey}={$envValue}\n";
+        } else {
+          if ($envKey == "DB_PASSWORD") {
+            $str = str_replace($oldLine, "{$envKey}=\"{$envValue}\"", $str);
+          } else {
+            $str = str_replace($oldLine, "{$envKey}={$envValue}", $str);
+          }
+        }
+      }
+    }
+
+    $str = substr($str, 1, -1);
+    if (!file_put_contents($envFile, $str)) {
+      return false;
+    }
+
+    return true;
+  }
+  public function smtp()
+  {
+    $restorant = auth()->user()->restorant;
+    $mail_host = $restorant->getConfig('MAIL_HOST');
+    $mail_port = $restorant->getConfig('MAIL_PORT');
+    $mail_username = $restorant->getConfig('MAIL_USERNAME');
+    $mail_password = $restorant->getConfig('MAIL_PASSWORD');
+    $mail_encryption = $restorant->getConfig('MAIL_ENCRYPTION');
+    $mail_from_address = $restorant->getConfig('MAIL_FROM_ADDRESS');
+
+    $data = [
+      'mail_host' => $mail_host,
+      'mail_port' => $mail_port,
+      'mail_username' => $mail_username,
+      'mail_password' => $mail_password,
+      'mail_encryption' => $mail_encryption,
+      'mail_from_address' => $mail_from_address,
+    ];
+    return inertia('Restorant/Smtp', compact('data'));
+  }
+
+  public function updateSmtp(Request $request, Restorant $restorant)
+  {
+    $restorant->setMultipleConfig($request->all());
+    $this->setEnvironmentValue($request->all());
+    return back();
+  }
 }

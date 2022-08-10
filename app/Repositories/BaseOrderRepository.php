@@ -184,14 +184,14 @@ class BaseOrderRepository extends Controller
 
         $this->order->subtotal = $order_price;
 
+        
         //calculate tax if module available
         if (Module::has('TaxConfig')) {
-            $orderTaxValue = ($order_price * $this->vendor->config->tax) / 100;            
+            $orderTaxValue = (int)round(($order_price * $this->vendor->config->tax) / 100);            
             $this->order->tax = $orderTaxValue;
             $order_price +=  $orderTaxValue;
-        }
-
-
+        }                
+        
         if ($this->order->delivery_fee) {
             $order_price += $this->order->delivery_fee;
         }

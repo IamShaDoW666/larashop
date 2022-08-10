@@ -17,34 +17,7 @@
             <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                 <BreezeValidationErrors class="mb-4 bg-red-100 rounded my-4 py-2 px-4" />
                 <form @submit.prevent="update">
-                    <div class="flex items-center mt-3 mb-6">
-                        <h6 class="text-blueGray-400 text-sm mr-4 font-bold uppercase">
-                            Google
-                        </h6>
-                        <GoogleIcon width="24" height="24" />
-                    </div>
-                    <div class="flex flex-wrap">
-                        <div class="w-full lg:w-12/12 px-4">
-                            <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                    htmlFor="grid-password">
-                                    Google Maps API Key
-                                </label>
-                                <input v-model="form.google_maps_api_key" type="text"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
-                            </div>
-                        </div>
-                        <div class="w-full lg:w-12/12 px-4">
-                            <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                    htmlFor="grid-password">
-                                    Google Analytics Key
-                                </label>
-                                <input v-model="form.google_analytics_key" type="text"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="flex items-center mt-3 mb-6">
                         <!-- <h6 class="text-blueGray-400 text-sm mr-4 font-bold uppercase">
                             Razorpay
@@ -96,8 +69,7 @@ import Swal from 'sweetalert2';
 let restorant = usePage().props.value.auth.restorant;
 let conf = restorant.config;
 const form = useForm({
-    google_maps_api_key: conf.google_maps_api_key ?? '',
-    google_analytics_key: conf.google_maps_api_key ?? '',
+   
     razorpay_api_key: conf.razorpay_api_key ?? '',
     razorpay_api_secret: conf.razorpay_api_secret ?? '',
     stripe_api_key: conf.stripe_api_key ?? '',
