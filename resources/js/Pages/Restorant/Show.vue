@@ -272,10 +272,10 @@
             </ul>
             <!-- Checkout Options -->
             <form @submit.prevent="checkout">
-              <p class="text-sm p-3 mt-4 dark:text-golden-yellow font-medium" v-if="!cart.isAboveMinimum">Minimum order value is {{ formatPrice(cart.minimum_order) }}</p>
+              <p class="text-sm p-3 mt-4 dark:text-golden-yellow font-medium" v-if="!cart.isAboveMinimum && cart.isAboveMinimum">Minimum order value is {{ formatPrice(cart.minimum_order) }}</p>
               <div class="p-3 mt-4 flex gap-x-4 justify-between float-right">
                 <button :class="{
-                  'opacity-25 hover:bg-green-500': (form.processing || !cart.isAboveMinimum),
+                  'opacity-25 hover:bg-green-500': (form.processing || (!cart.isAboveMinimum && cart.isAboveMinimum)),
                 }" :disabled="form.processing || !cart.isAboveMinimum" class="
                     bg-green-500
                     dark:bg-golden-yellow

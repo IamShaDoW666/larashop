@@ -168,12 +168,12 @@
                                             {{ order.delivery_fee }}
                                         </td>
                                     </tr>
-                                    <tr v-if="order.tax && order.tax != 0">
+                                    <tr v-if="order.tax && order.tax != 0 && order.tax_percent && order.tax_percent != 0">
                                         <td colspan="3" class="">
                                             &nbsp;
                                         </td>
                                         <td class="sm:px-8 px-4 py-4 text-sm">
-                                            {{ order.tax_name + " " + order.tax_percent + '%' }}
+                                            {{ (order.tax_name ?? 'Tax') + " " + order.tax_percent + '%' }}
                                         </td>
                                         <td class="sm:px-8 px-4 py-4 text-right">
                                             {{ order.tax }}

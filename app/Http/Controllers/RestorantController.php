@@ -148,7 +148,7 @@ class RestorantController extends Controller
       'can_deliver' => $request->can_deliver,
       'can_dinein' => $request->can_dinein,
       'can_pickup' => $request->can_pickup,
-      'minimum_order' => $request->minimum_order,
+      'minimum_order' => $request->minimum_order ?? 0,
       'currency' => $request->currency
     ]);
 
@@ -252,7 +252,7 @@ class RestorantController extends Controller
   }
 
   public function updateApps(Request $request, Restorant $restorant)
-  {
+  {    
     $restorant->config->update([
       'tax' => $request->tax,
       'tax_name' => $request->tax_name,

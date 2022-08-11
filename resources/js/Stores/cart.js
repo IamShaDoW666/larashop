@@ -51,7 +51,7 @@ export const useCart = defineStore("cart", {
         },
         
         isAboveMinimum: (state) => {
-            if (state.minimum_order) {
+            if (state.minimum_order && state.minimum_order != 0) {
                 return state.subTotal >= state.minimum_order;            
             }
 
@@ -119,7 +119,7 @@ export const useCart = defineStore("cart", {
         getProps(props) {
             //Function to assign props state
             this.products = props.products;
-            this.minimum_order = Number(props.restaurant.config.minimum_order);
+            this.minimum_order = Number(props.restaurant.config.minimum_order) ?? null;
             this.tax = Number(props.restaurant.config.tax)
         },
 

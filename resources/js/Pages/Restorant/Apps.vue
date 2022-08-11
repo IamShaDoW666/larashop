@@ -240,7 +240,7 @@ const props = defineProps({
 
 const form = useForm({
   tax: usePage().props.value.auth.restorant.config.tax,
-  tax_name: usePage().props.value.auth.restorant.config.tax_name,
+  tax_name: usePage().props.value.auth.restorant.config.tax_name ?? "Tax",
   google_maps_api_key: conf.google_maps_api_key ?? "",
   google_analytics_key: "",
 });

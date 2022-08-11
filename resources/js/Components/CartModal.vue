@@ -39,7 +39,7 @@ w
                             <div class="mt-4">
 
                                 <div class="flex justify-between my-2 py-4 border-b border-gray-400 px-2 dark:text-white"
-                                    v-for="(item) in cart.items" :key="item.id">
+                                    v-for="(item, index) in cart.items" :key="item.id">
 
 
                                     <div class="flex items-center gap-x-2">
@@ -53,7 +53,7 @@ w
                                     </div>
 
                                     <div class="flex items-center">
-                                        <button tabindex="-1" @click="fromCart(item.id)" class="px-1 py-1 rounded-full">
+                                        <button tabindex="-1" @click="cart.removeFromCart(item, item.variantId, index)" class="px-1 py-1 rounded-full">
                                             <span class="material-icons">remove</span>
                                         </button>
                                         <span
@@ -61,7 +61,7 @@ w
                                             {{
                                                     item.quantity
                                             }}</span>
-                                        <button tabindex="-1" @click="cart.addCart(item.id)"
+                                        <button tabindex="-1" @click="cart.addCart(item, item.variantId)"
                                             class="px-1 py-1 rounded-full">
                                             <span class="material-icons">add</span>
                                         </button>
