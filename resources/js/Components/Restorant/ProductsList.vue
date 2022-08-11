@@ -58,21 +58,13 @@
 </template>
 
 <script setup>
+import useCommon from '@/utils/common';
+
 const props = defineProps({
   prod: Object,
   restaurant: Object,
   toCart: Function
 })
 
-const isImage = (url) => {
-  return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
-}
-
-const getImagePath = (imagePath) => {
-  if (isImage(imagePath)) {
-    return imagePath;
-  } else {
-    return imagePath + '_large.webp'
-  }
-}
+const { getImagePath } = useCommon()
 </script>

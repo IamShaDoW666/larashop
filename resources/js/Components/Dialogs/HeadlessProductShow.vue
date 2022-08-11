@@ -60,7 +60,7 @@
                 <div
                   class="imagePreviewWrapper shrink-0 w-[300px] h-[200px] sm:h-[200px] sm:w-[400px] lg:h-[200px] lg:w-[200px] mb-3 rounded mx-auto lg:mx-0"
                   :style="{
-                    'background-image': `url(${product.image_path}_large.webp)`,
+                    'background-image': `url(${getImagePath(product.imagePath)})`,
                   }"
                 />
                 <div class="p-2 mt-4 lg:mt-0 flex-1 max-w-2xl dark:text-white">
@@ -222,8 +222,10 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/vue";
+import useCommon from "@/utils/common";
 
 const { currentTheme } = useThemeSwitcher();
+const { getImagePath } = useCommon();
 
 const cart = useCart();
 const p_variant = ref();
