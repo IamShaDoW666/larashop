@@ -21,7 +21,7 @@
             class="shadow border select-none cursor-pointer bg-white dark:bg-secondary-dark sm:rounded-md flex flex-1 items-center p-4">
             <div class="flex flex-col w-10 h-10 justify-center items-center mr-4">
               <a href="#" class="block relative">
-                <img alt="profil" :src="`${item.image_path}_thumbnail.webp`" class="mx-auto object-cover sm:rounded-full h-10 w-10" />
+                <img alt="profil" :src="getImagePath(item.image_path, 'thumbnail')" class="mx-auto object-cover sm:rounded-full h-10 w-10" />
               </a>
             </div>
             <div class="flex-1 pl-1 md:mr-16">
@@ -65,7 +65,8 @@
 import { useCart } from '@/Stores/cart.js';
 import { usePage } from '@inertiajs/inertia-vue3';
 import { useThemeSwitcher } from "@/Composables/useThemeSwitcher";
-
+import useCommon from '@/utils/common';
+const { getImagePath } = useCommon();
 const { currentTheme } = useThemeSwitcher();
 const cart = useCart();
 const props = defineProps({

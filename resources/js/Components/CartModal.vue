@@ -43,7 +43,7 @@ w
 
 
                                     <div class="flex items-center gap-x-2">
-                                        <img alt="product-image" :src="`${item.image_path}_thumbnail.webp`"
+                                        <img alt="product-image" :src="getImagePath(item.image_path, 'thumbnail')"
                                             class="mx-auto object-cover rounded-full h-10 w-10" />
                                         <span class="font-semibold text-sm dark:text-white">{{ item.name }}</span>
                                         <span
@@ -113,7 +113,9 @@ import {
 import { useScroll } from "@vueuse/core";
 import { useCart } from "@/Stores/cart";
 import { useThemeSwitcher } from "@/Composables/useThemeSwitcher.js";
+import useCommon from "@/utils/common";
 
+const { getImagePath } = useCommon();
 const { currentTheme } = useThemeSwitcher();
 
 const isOpen = ref(false);
