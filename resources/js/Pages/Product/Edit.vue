@@ -112,7 +112,7 @@ const { getImagePath } = useCommon();
 const variantOpen = ref(false);
 const variantEditOpen = ref(false);
 const emit = defineEmits(['input'])
-const previewImage = ref(getImagePath(props.product.image_path))
+const previewImage = ref(getImagePath(props.product.image_path, 'large'))
 const fileInput = ref();
 const props = defineProps({
     product: Object,
