@@ -57,12 +57,13 @@
                   items-start
                 "
               >
-                <div
+                <!-- <div
                   class="imagePreviewWrapper shrink-0 w-[300px] h-[200px] sm:h-[200px] sm:w-[400px] lg:h-[200px] lg:w-[200px] mb-3 rounded mx-auto lg:mx-0"
                   :style="{
-                    'background-image': `url(${getImagePath(product.imagePath)})`,
+                    'background-image': url(getImagePath(product.imagePath, 'large')),
                   }"
-                />
+                /> -->
+                <img :alt="product.name" :src="getImagePath(product.image_path, 'large')" class="shrink-0 w-[300px] h-[200px] sm:h-[200px] sm:w-[400px] lg:h-[200px] lg:w-[200px] mb-3 rounded mx-auto lg:mx-0 object-cover" />
                 <div class="p-2 mt-4 lg:mt-0 flex-1 max-w-2xl dark:text-white">
                   <h1 class="text-center text-2xl sm:text-3xl p-0.5 font-bold">
                     {{ product.name }}

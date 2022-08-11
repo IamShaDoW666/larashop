@@ -7,11 +7,11 @@ export default function useCommon() {
         return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
     };
 
-    const getImagePath = (imagePath) => {
+    const getImagePath = (imagePath, size) => {
         if (isImage(imagePath)) {
             return imagePath;
         } else {
-            return imagePath + "_large.webp";
+            return imagePath + `_${size}.webp`;
         }
     };
 

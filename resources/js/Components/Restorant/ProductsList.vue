@@ -18,7 +18,7 @@
                   bg-blue-400
                   rounded-t
                 ">
-              <img :src="getImagePath(product.image_path)" class="shadow rounded-t object-cover h-48 w-full" />
+              <img :src="getImagePath(product.image_path, 'large')" class="shadow rounded-t object-cover h-48 w-full" />
             </div>
             <div class="pl-4 pb-2 pt-6 pr-2 bg-gray-300 dark:rounded-b dark:bg-golden-yellow shadow-md">
               <h1 class="truncate font-bold mb-2">{{ product.name }}</h1>
