@@ -38,9 +38,9 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-8">
               <div class="px-4 py-2" v-for="(product, index) in category.products" :key="product.id">
-                <div @click="openProductEdit(product, category)" class="shadow md:transform md:transition md:duration-300 md:hover:scale-110 rounded">
+                <Link :href="route('products.edit', { product: product.id })" class="shadow md:transform md:transition md:duration-300 md:hover:scale-110 rounded">
                   <img :src="getImagePath(product.image_path, 'large')" class="object-cover shadow rounded w-full h-full h-48 max-h-48">
-                </div>
+                </Link>
                 <div class="-mt-1 flex items-end pl-4 pb-2 pt-6 pr-2 justify-between bg-gray-300 rounded-lg shadow-md">
                   <div>
                     <h1 class="font-bold">{{ product.name }}</h1>
@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { Head, useForm } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import { ref, provide } from 'vue';
 
 import Admin from "@/Layouts/Admin.vue";

@@ -15,9 +15,11 @@
                     <div class="w-1/2 px-4 mb-5 mt-4">
                         <input id="image" ref="fileInput" type="file" class="mt-1 block w-full" @input="pickFile">
                     </div>
-                    <div v-if="previewImage" class="imagePreviewWrapper mb-3"
-                        :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage">
-                    </div>
+                    <!-- <div v-if="previewImage" class="imagePreviewWrapper mb-3"
+                        :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage"> -->
+                    <img v-if="previewImage" @click="selectImage" :alt="product.name" :src="previewImage"
+                        class="object-cover imagePreviewWrapper mb-3" />
+                    <!-- </div> -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-2">
                         <div>
                             <BreezeLabel for="name" value="Product Name" />
@@ -104,11 +106,13 @@ import HeadlessList from '@/Components/Dropdowns/HeadlessList.vue';
 import HeadlessVariant from '@/Components/Dialogs/HeadlessVariant.vue';
 import HeadlessVariantEdit from '@/Components/Dialogs/HeadlessVariantEdit.vue';
 import Swal from 'sweetalert2';
+import useCommon from '@/utils/common';
 
+const { getImagePath } = useCommon();
 const variantOpen = ref(false);
 const variantEditOpen = ref(false);
 const emit = defineEmits(['input'])
-const previewImage = ref(`${props.product.image_path}_large.webp`)
+const previewImage = ref(getImagePath(props.product.image_path))
 const fileInput = ref();
 const props = defineProps({
     product: Object,
