@@ -1,9 +1,6 @@
 <template>
-  <div>
-    <div class="min-h-screen bg-gray-100 dark:bg-secondary-dark">
-      <nav
-        id="navBar"
-        class="
+  <div class="min-h-screen bg-gray-100 dark:bg-secondary-dark">
+    <nav id="navBar" class="
           bg-transparent
           text-white
           transition-all
@@ -14,59 +11,51 @@
           flex
           justify-between
           items-center
-          sticky
-          -mt-20
+          sticky          
           top-0
           z-30
           py-4
-        "
-      >
-        <div class="flex items-center">
-          <img
-            :src="restaurant.logo + '_logo.webp'"
-            class="w-12 h-12 rounded-full"
-          />
-          <h1 class="ml-4 sm:text-lg md:text-xl font-bold">
-            {{ restaurant ? restaurant.name : "Restaurant Name" }}
-          </h1>
-        </div>
-        <div class="flex gap-x-4 items-center">
-          <LanguageList />
-          <ThemeSwitcher />          
-        </div>
-      </nav>
-      <!-- Page Heading / Image -->
-      <header class="bg-white shadow">
-        <div class="mx-auto h-96">
-          <img
-            class="opacity-90 object-cover h-96 w-full"
-            :src="restaurant.banner + '_large.webp'"
-          />
-        </div>
-      </header>
-      <!-- Page Content -->
-      <main>
-        <slot />
-      </main>
-      <FooterEnd :restaurant="restaurant" />
-    </div>
+        ">
+      <div class="flex items-center">
+        <img :src="restaurant.logo + '_logo.webp'" class="w-12 h-12 rounded-full" />
+        <h1 class="ml-4 sm:text-lg md:text-xl font-bold">
+          {{ restaurant ? restaurant.name : "Restaurant Name" }}
+        </h1>
+      </div>
+      <div class="flex gap-x-4 items-center">
+        <LanguageList />
+        <ThemeSwitcher />
+      </div>
+    </nav>
+    <!-- Page Heading / Image -->
+    <header class="bg-white shadow">
+      <div class="mx-auto h-96">
+        <img class="opacity-90 object-cover h-96 w-full" :src="restaurant.banner + '_large.webp'" />
+      </div>
+    </header>
+    <!-- Page Content -->
+    <main>
+      <slot />
+    </main>
+    <FooterEnd :restaurant="restaurant" />
   </div>
 </template>
 
 <script setup>
-import { watch } from "vue";
-import { useWindowScroll } from "@vueuse/core";
+import { watch, ref, onMounted, onUnmounted } from "vue";
 import FooterEnd from "@/Components/Footers/Footer.vue";
 import ThemeSwitcher from "@/Components/ThemeSwitcher.vue";
 import LanguageList from '@/Components/Dropdowns/LanguageList.vue';
-
 
 const props = defineProps({
   restaurant: Object,
 });
 
-const { x, y } = useWindowScroll();
-watch(y, (newValue) => {
+const windowTop = ref(window.pageYOffset);
+
+
+onUnmounted(() => window.removeEventListener('scroll', scrollListen))
+watch(windowTop, (newValue) => {
   console.log(newValue);
   if (newValue != 0) {
     document

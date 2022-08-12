@@ -26,7 +26,7 @@
             rounded-tr-none
             rounded-br-none
             rounded
-            bg-red-500
+            bg-green-400
             dark:bg-golden-yellow
             text-light text-sm
             font-semibold
@@ -63,18 +63,12 @@
         <div class="flex px-4 items-center md:mr-4 md:ml-8 my-2 justify-between">
           <div class="sm:flex sm:space-x-4 items-center">
             <div class="flex space-x-2 items-center">
-              <span
-                class="rounded px-2 my-2 text-white dark:text-black font-bold overflow-visible"
-                :class="restaurant.open_status ? 'bg-green-400 dark:bg-golden-yellow' : 'bg-blood-red'"
-              >
+              <span class="rounded px-2 my-2 text-white dark:text-black font-bold overflow-visible"
+                :class="restaurant.open_status ? 'bg-green-400 dark:bg-golden-yellow' : 'bg-blood-red'">
                 {{ restaurant.open_status ? __('Open') : __('Closed') }}
               </span>
-              <span
-                :class="restaurant.open_status ? 'bg-green-800 dark:bg-golden-yellow' : 'bg-blood-red'"
-                class="animate-bounce inline-flex h-2 w-2 rounded opacity-75"
-               
-
-              ></span>        
+              <span :class="restaurant.open_status ? 'bg-green-800 dark:bg-golden-yellow' : 'bg-blood-red'"
+                class="animate-bounce inline-flex h-2 w-2 rounded opacity-75"></span>
             </div>
 
 
@@ -258,10 +252,11 @@
                     <div class="rounded">
                       <span class="text-sm dark:text-white">
                         {{ __('Subtotal') }}: {{ formatPrice(cart.getSubTotal) }}
-                      </span>                      
+                      </span>
                     </div>
                     <div v-if="cart.getTaxValue" class="text-sm">
-                      {{ restaurant.config.tax_name }}({{ restaurant.config.tax }}%): {{ formatPrice(cart.getTaxValue) }}
+                      {{ restaurant.config.tax_name }}({{ restaurant.config.tax }}%): {{ formatPrice(cart.getTaxValue)
+                      }}
                     </div>
                     <div class="font-bold text-lg text-green-700 dark:text-white">
                       {{ __('Total') }}: {{ formatPrice(cart.getTotal) }}
@@ -272,11 +267,14 @@
             </ul>
             <!-- Checkout Options -->
             <form @submit.prevent="checkout">
-              <p class="text-sm p-3 mt-4 dark:text-golden-yellow font-medium" v-if="!cart.isAboveMinimum && cart.isAboveMinimum">Minimum order value is {{ formatPrice(cart.minimum_order) }}</p>
+              <p class="text-sm p-3 mt-4 dark:text-golden-yellow font-medium"
+                v-if="!cart.isAboveMinimum && cart.isAboveMinimum != null">Minimum order value is {{
+                    formatPrice(cart.minimum_order)
+                }}</p>
               <div class="p-3 mt-4 flex gap-x-4 justify-between float-right">
                 <button :class="{
-                  'opacity-25 hover:bg-green-500': (form.processing || (!cart.isAboveMinimum && cart.isAboveMinimum)),
-                }" :disabled="form.processing || !cart.isAboveMinimum" class="
+                  'opacity-25 hover:bg-green-500': (form.processing || (!cart.isAboveMinimum && cart.isAboveMinimum != null)),
+                }" :disabled="form.processing || (!cart.isAboveMinimum && cart.isAboveMinimum != null)" class="
                     bg-green-500
                     dark:bg-golden-yellow
                     dark:text-black
@@ -303,7 +301,7 @@
             sm:block
             w-1/3
             float-right
-            bg-grey-500
+            bg-white
             dark:bg-primary-dark
             ml-5
             px-4
@@ -371,7 +369,7 @@ import SideCart from "@/Components/Restorant/SideCart.vue";
 import { useThrottleFn } from "@vueuse/core";
 import FooterEnd from "@/Components/Footers/Footer.vue";
 import { useThemeSwitcher } from "@/Composables/useThemeSwitcher";
-
+import { useWindowScroll } from "@vueuse/core";
 
 export default {
   components: {
@@ -404,7 +402,11 @@ export default {
     const { currentTheme } = useThemeSwitcher()
     const productShow = ref(false);
     const dproduct = ref(prod[0]);
-
+    onMounted(() => {
+      window.addEventListener("scroll", () => {
+        console.log('Hello')
+      })
+    })
     watch(category_slider, (newvalue) => {
       console.log(newvalue);
     });
