@@ -16,11 +16,13 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        Category::factory(15)
+        Category::factory(3)
                     ->has(Product::factory()->has(Variant::factory()->count(3))->count(3))
                     ->create();
-        Product::factory(50)
+        Product::factory(10)
                     ->has(Variant::factory()->count(3))
                     ->create();
+        Product::factory(10)
+                    ->create();                    
     }
 }

@@ -15,7 +15,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => $this->faker->text(15),
-            'restorant_id' => $this->faker->randomElement([1,2,3,4,5]),
+            'restorant_id' => 1
 
         ];
     }

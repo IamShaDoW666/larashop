@@ -12,13 +12,14 @@ class ProductFactory extends Factory
      * @return array
      */
     public function definition()
-    {
+    {   $names = ['Burger', 'Pizza', 'Chicken', 'Sandwich', 'Taco', 'Pastry', 'Cake', 'Pancake', 'Fruit Salad', 'Beef'];
+        $subNames = ['Royal', 'Special', 'Delight', 'Delicious'];
         return [
-            'name' => $this->faker->unique()->text(10),
+            'name' => $this->faker->randomElement($subNames) . ' ' . $this->faker->randomElement($names),
             'description' => $this->faker->text(25),
             'price' => $this->faker->numberBetween(10, 99) * 100,
-            'category_id' => $this->faker->numberBetween(1,10),
-            // 'image_paht' => $this->faker->randomElement()
+            'category_id' => $this->faker->numberBetween(1,3),
+            'image_path' => '/images/products/' . $this->faker->numberBetween(1,15)
         ];
     }
 }

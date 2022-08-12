@@ -26,22 +26,6 @@ class RestorantSeeder extends Seeder
             ]);
             Hour::create(['restorant_id' => $restorant->id]);
             $restorant->areas(rand(1, 9))->saveMany($areas);
-        });
-
-        Restorant::factory(3)->create()->each(function ($restorant, $index) {
-            $areas = Area::factory(3)->make();
-            Config::create([
-                'can_deliver' => true,
-                'can_dinein' => true,
-                'restorant_id' => $restorant->id
-            ]);
-            Hour::create(['restorant_id' => $restorant->id]);
-            $restorant->areas(rand(1, 9))->saveMany($areas);
-            if ($index == 1) {
-                $restorant->user_id = 2;
-            } else {
-                $restorant->user_id = 3;
-            }
-        });
+        });        
     }
 }
