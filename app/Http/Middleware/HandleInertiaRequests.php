@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use App\Http\Resources\RestorantResource;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
-use phpDocumentor\Reflection\Types\Parent_;
 use Tightenco\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
@@ -35,7 +34,10 @@ class HandleInertiaRequests extends Middleware
    * @return array
    */
   public function share(Request $request)
-  {
+  {    
+    if(!file_exists(storage_path('installed'))) {
+      return [];
+    }
     $authArray = !$request->user() ? [] : [
       'auth' => [
         'user' => $request->user(),

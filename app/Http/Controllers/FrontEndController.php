@@ -22,7 +22,7 @@ class FrontEndController extends Controller
     }
 
     public function index()
-    {
+    {        
         try {
             \DB::connection()->getPdo();
         } catch (\Exception $e) {

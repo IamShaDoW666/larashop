@@ -402,11 +402,7 @@ export default {
     const { currentTheme } = useThemeSwitcher()
     const productShow = ref(false);
     const dproduct = ref(prod[0]);
-    onMounted(() => {
-      window.addEventListener("scroll", () => {
-        console.log('Hello')
-      })
-    })
+    
     watch(category_slider, (newvalue) => {
       console.log(newvalue);
     });

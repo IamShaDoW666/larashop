@@ -4330,12 +4330,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/IamShaDoW666/laravel-installer.git",
-                "reference": "02b9f2f98e0042da5517420fe5500bf5e77ff7d7"
+                "reference": "f340369b4caecaee628dcff373042b6bd59dd519"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/IamShaDoW666/laravel-installer/zipball/02b9f2f98e0042da5517420fe5500bf5e77ff7d7",
-                "reference": "02b9f2f98e0042da5517420fe5500bf5e77ff7d7",
+                "url": "https://api.github.com/repos/IamShaDoW666/laravel-installer/zipball/f340369b4caecaee628dcff373042b6bd59dd519",
+                "reference": "f340369b4caecaee628dcff373042b6bd59dd519",
                 "shasum": ""
             },
             "require": {
@@ -4349,13 +4349,13 @@
             "extra": {
                 "laravel": {
                     "providers": [
-                        "Spot\\LaravelInstaller\\LaravelInstallerProvider"
+                        "spot\\LaravelInstaller\\LaravelInstallerProvider"
                     ]
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Spot\\LaravelInstaller\\": "src/"
+                    "spot\\LaravelInstaller\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -4373,7 +4373,7 @@
                 "issues": "https://github.com/IamShaDoW666/laravel-installer/issues",
                 "source": "https://github.com/IamShaDoW666/laravel-installer/tree/main"
             },
-            "time": "2022-08-06T14:53:34+00:00"
+            "time": "2022-08-12T19:29:38+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { watch, ref, onMounted, onUnmounted } from "vue";
+import { watch, ref } from "vue";
 import FooterEnd from "@/Components/Footers/Footer.vue";
 import ThemeSwitcher from "@/Components/ThemeSwitcher.vue";
 import LanguageList from '@/Components/Dropdowns/LanguageList.vue';
@@ -51,26 +51,22 @@ const props = defineProps({
   restaurant: Object,
 });
 
-const windowTop = ref(window.pageYOffset);
-
-
-onUnmounted(() => window.removeEventListener('scroll', scrollListen))
-watch(windowTop, (newValue) => {
-  console.log(newValue);
-  if (newValue != 0) {
-    document
-      .getElementById("navBar")
-      .classList.add("bg-white", "text-black", "shadow-lg");
-    document
-      .getElementById("navBar")
-      .classList.remove("bg-transparent", "text-white", "shadow-0");
-  } else {
-    document
-      .getElementById("navBar")
-      .classList.remove("bg-white", "text-black", "shadow-lg");
-    document
-      .getElementById("navBar")
-      .classList.add("bg-transparent", "text-white", "shadow-lg-0");
-  }
-});
+// watch(windowTop, (newValue) => {
+//   console.log(newValue);
+//   if (newValue != 0) {
+//     document
+//       .getElementById("navBar")
+//       .classList.add("bg-white", "text-black", "shadow-lg");
+//     document
+//       .getElementById("navBar")
+//       .classList.remove("bg-transparent", "text-white", "shadow-0");
+//   } else {
+//     document
+//       .getElementById("navBar")
+//       .classList.remove("bg-white", "text-black", "shadow-lg");
+//     document
+//       .getElementById("navBar")
+//       .classList.add("bg-transparent", "text-white", "shadow-lg-0");
+//   }
+// });
 </script>
