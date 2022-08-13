@@ -17,8 +17,8 @@ class RestorantFactory extends Factory
         $name = $this->faker->company();
         $slug = Str::slug($name);
         return [
-            'name' => $name,
-            'slug' => $slug,
+            'name' => 'Demo Restaurant',
+            'slug' => 'demo-restaurant',
             'email' => $this->faker->email(),
             'phone' => $this->faker->e164PhoneNumber(),
             'address' => $this->faker->address(),
@@ -27,6 +27,8 @@ class RestorantFactory extends Factory
             'uuid' => $this->faker->unique()->uuid(),
             'postal_code' => $this->faker->postcode(),
             'user_id' => $this->faker->unique()->numberBetween(1,50),
+            'banner' => '/images/banner',
+            'logo' => '/images/installer/spot.png'
         ];
     }
 }

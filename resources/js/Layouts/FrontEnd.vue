@@ -17,7 +17,7 @@
           py-4
         ">
       <div class="flex items-center">
-        <img :src="restaurant.logo + '_logo.webp'" class="w-12 h-12 rounded-full" />
+        <img :src="getImagePath(restaurant.logo, 'logo')" class="w-12 h-12 rounded-full" />
         <h1 class="ml-4 sm:text-lg md:text-xl font-bold">
           {{ restaurant ? restaurant.name : "Restaurant Name" }}
         </h1>
@@ -30,7 +30,7 @@
     <!-- Page Heading / Image -->
     <header class="bg-white shadow">
       <div class="mx-auto h-96">
-        <img class="opacity-90 object-cover h-96 w-full" :src="restaurant.banner + '_large.webp'" />
+        <img class="opacity-90 object-cover h-96 w-full" :src="getImagePath(restaurant.banner, 'large')" />
       </div>
     </header>
     <!-- Page Content -->
@@ -46,7 +46,9 @@ import { watch, ref } from "vue";
 import FooterEnd from "@/Components/Footers/Footer.vue";
 import ThemeSwitcher from "@/Components/ThemeSwitcher.vue";
 import LanguageList from '@/Components/Dropdowns/LanguageList.vue';
+import useCommon from '@/utils/common';
 
+const { getImagePath } = useCommon()
 const props = defineProps({
   restaurant: Object,
 });
