@@ -151,7 +151,7 @@
 
         <ProductsList :prod="prod" :restaurant="restaurant" :toCart="toCart" />
 
-        <CartModal v-if="cart.items.length" :checkout="checkout" :cart="cart" :formatPrice="formatPrice"
+        <CartModal v-if="cart.items.length" :restaurant="restaurant" :checkout="checkout" :cart="cart" :formatPrice="formatPrice"
           :fromCart="fromCart" />
       </FrontEnd>
     </div>

@@ -15,7 +15,7 @@
                 leave="duration-300 ease-in" as="template">
                 <div class="fixed inset-0 bg-black bg-opacity-25" />
             </TransitionChild>
-w
+            w
             <div class="fixed bottom-0 w-screen h-3/4">
                 <div class="flex rounded-2xl h-full items-center justify-center text-center">
                     <TransitionChild as="template" enter="duration-300 ease-out"
@@ -53,7 +53,8 @@ w
                                     </div>
 
                                     <div class="flex items-center">
-                                        <button tabindex="-1" @click="cart.removeFromCart(item, item.variantId, index)" class="px-1 py-1 rounded-full">
+                                        <button tabindex="-1" @click="cart.removeFromCart(item, item.variantId, index)"
+                                            class="px-1 py-1 rounded-full">
                                             <span class="material-icons">remove</span>
                                         </button>
                                         <span
@@ -72,11 +73,33 @@ w
 
                             </div>
                             <div class="flex items-center justify-between mx-4">
-                                <div class="flex text-sm gap-x-2">
-                                    <span class="font-bold dark:text-white">Subtotal: </span>
-                                    <span class="bg-green-400 dark:bg-golden-yellow dark:text-black shadow-md px-1 rounded text-white font-extrabold">{{
-                                            formatPrice(cart.getSubTotal)
-                                    }}</span>
+                                <div>
+                                    <div class="flex text-sm gap-x-2 mb-2">
+                                        <span class="font-bold dark:text-white">Subtotal: </span>
+                                        <span
+                                            :class="{ 'bg-green-400 dark:bg-golden-yellow dark:text-black text-white' : !cart.getTaxValue }"
+                                            class="dark:text-white shadow-md px-1 rounded text-black font-extrabold">{{
+                                                    formatPrice(cart.getSubTotal)
+                                            }}</span>
+                                    </div>
+                                    <div v-if="cart.getTaxValue" class="flex text-sm gap-x-2 mb-2">
+                                        <span class="font-bold dark:text-white">{{ restaurant.config.tax_name }}({{
+                                                restaurant.config.tax
+                                        }}%): </span>
+                                        <span
+                                            class="shadow-md px-1 rounded text-black dark:text-white font-extrabold">
+                                            {{
+                                                    formatPrice(cart.getTaxValue)
+                                            }}
+                                        </span>
+                                    </div>
+                                    <div v-if="cart.getTaxValue" class="flex text-sm gap-x-2 mb-2">
+                                        <span class="font-bold dark:text-white">Total: </span>
+                                        <span
+                                            class="bg-green-400 dark:bg-golden-yellow dark:text-black shadow-md px-1 rounded text-white font-extrabold">{{
+                                                    formatPrice(cart.getTotal)
+                                            }}</span>
+                                    </div>
                                 </div>
                                 <div class="mt-4 mr-2 pb-4">
                                     <button type="button"
@@ -134,7 +157,8 @@ const props = defineProps({
     cart: Object,
     fromCart: Function,
     formatPrice: Function,
-    checkout: Function
+    checkout: Function,
+    restaurant: Object
 });
 
 function closeModal() {
