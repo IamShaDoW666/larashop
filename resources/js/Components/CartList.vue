@@ -61,6 +61,7 @@
   </div>
 </template>
 
+
 <script setup>
 import { useCart } from '@/Stores/cart.js';
 import { usePage } from '@inertiajs/inertia-vue3';

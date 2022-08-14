@@ -132,8 +132,6 @@ const form = reactive({
     order_type: 1,
     order_time: null
 });
-const restorant = usePage().props.value.auth.restorant;
-const config = restorant.config;
 
 const razorpay = () => {
     loading.value = true;
@@ -145,7 +143,7 @@ const razorpay = () => {
         .then((res) => {
             loading.value = false;
             const options = {
-                key: config.razorpay_api_key, // Enter the Key ID generated from the Dashboard
+                key: props.restorant.config.razorpay_api_key, // Enter the Key ID generated from the Dashboard
                 amount: cart.getTotal * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
                 currency: props.restorant.currency,
                 name: props.restorant.name,
