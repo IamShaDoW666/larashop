@@ -59,9 +59,9 @@ const submit = () => {
                     Forgot your password?
                 </Link>
 
-                <BlackOutlineLink :active="route().current('login')" class="ml-4" :href="route('register')" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <!-- <BlackOutlineLink :active="route().current('login')" class="ml-4" :href="route('register')" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Sign Up
-                </BlackOutlineLink>
+                </BlackOutlineLink> -->
                 <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in
                 </BreezeButton>
