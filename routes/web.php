@@ -52,6 +52,10 @@ require __DIR__ . '/auth.php';
 
 
 // Public Routes
+Route::post('/demo/login', function() {
+  Auth::login(User::findOrFail(1));
+  return back();
+})->name('demo.login');
 Route::get('/products/filter/{id}', [ProductController::class, 'filter'])->name('products.filter');
 Route::get('/restorants/{restorant:slug}', [FrontEndController::class, 'restorant'])->name('restorants.show'); //restorantS.show for public
 Route::get('/order/{restorant}', [OrderController::class, 'checkin'])->name('orders.checkin');

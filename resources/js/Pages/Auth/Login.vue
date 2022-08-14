@@ -7,6 +7,7 @@ import BreezeLabel from '@/Components/Label.vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 import BlackOutlineLink from '@/Components/Buttons/BlackOutline.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import { Inertia } from '@inertiajs/inertia';
 
 defineProps({
     canResetPassword: Boolean,
@@ -24,6 +25,10 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+
+const demoLogin = () => {
+    Inertia.post(route('demo.login'))
+}
 </script>
 
 <template>
@@ -67,5 +72,8 @@ const submit = () => {
                 </BreezeButton>
             </div>
         </form>
+        <div class="flex justify-center mt-4">
+            <button @click="demoLogin" class="text-gray-600 border border-gray-600 hover:bg-gray-600 hover:text-white px-4 py-2 rounded shadow">Demo Login</button>
+        </div>        
     </BreezeGuestLayout>
 </template>
