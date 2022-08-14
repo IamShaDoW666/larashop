@@ -26,7 +26,7 @@ export const useCart = defineStore("cart", {
         },
 
         getTotal: (state) => {
-            let sum = unformat(state.subTotal);
+            let sum = unformat(state.subTotal) + 0; // plus 0 for re-render
             if (state.tax) {
                 sum += (unformat(state.subTotal) * state.tax) / 100;
             }

@@ -49,11 +49,14 @@
           <div v-if="cart.delivery" class="flex justify-between">
             <h1>Delivery Fee: </h1><span>{{ cart.delivery }}</span>
           </div>
-          <div v-if="cart.tax" class="flex justify-between">
+          <div v-if="cart.getTaxValue" class="flex justify-between">
             <h1>{{ restorant.config.tax_name }}<span class="text-sm">({{ cart.tax }}%)</span>: </h1><span>{{ formatPrice(cart.getTaxValue) }}</span>
           </div>
-          <div class="flex justify-between">
+          <div v-if="cart.getTaxValue || cart.delivery" class="flex justify-between">
             <h1>Payable </h1><span>{{ formatPrice(cart.getTotal) }}</span>
+          </div>
+          <div v-else class="flex justify-between">
+            <h1>Payable </h1><span>{{ formatPrice(cart.getSubTotal) }}</span>
           </div>
         </li>
       </ul>
