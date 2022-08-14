@@ -56,6 +56,7 @@ foreach ($order->products()->get() as $key => $item) {
 {{ "*". __('Address')."*".": ". set($order->address)}}
 {{ "*". __('Date')."*".": ". set($orderTimeDate)}}
 {{ "*". __('Time')."*".": ". set($orderTimeFormat)}}
+{{ "*". __('Payment Method')."*".": ". set($order->payment_method)}}
 
 {{ "*Order No*: " . $order->id}}
 {{ __('Track your Order') }}

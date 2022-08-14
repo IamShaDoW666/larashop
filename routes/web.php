@@ -61,6 +61,8 @@ Route::get('/terms-and-conditions', function() {
   return inertia('Terms');
 })->name('terms');
 
+Route::post('/pay/razorpay', [PaymentController::class, 'payWithRazorpay'])->name('pay.razorpay');
+
 // Guest routes
 Route::group(['middleware' => ['auth', 'role:Guest'], 'prefix' => 'guest'], function () {
   Route::inertia('/dashboard', 'views/guest/Dashboard')->name('guest.dashboard');

@@ -47,7 +47,8 @@ class OrderResource extends JsonResource
             ],
             'items' => ProductResource::collection($this->whenLoaded('products')),
             'restorant' => RestorantResource::make($this->whenLoaded('restorant')),
-            'status_text' => $this->status_text
+            'status_text' => $this->status_text,
+            'payment_method' => $this->payment_method
         ];
     }
 }

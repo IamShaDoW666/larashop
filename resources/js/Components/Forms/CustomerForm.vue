@@ -132,18 +132,20 @@ const form = reactive({
     order_type: 1,
     order_time: null
 });
+const restorant = usePage().props.value.auth.restorant;
+const config = restorant.config;
 
 const razorpay = () => {
     loading.value = true;
     axios
-        .post(route("debug.post"), {
+        .post(route("pay.razorpay"), {
             restorant: props.restorant.id,
             amount: cart.getTotal,
         })
         .then((res) => {
             loading.value = false;
             const options = {
-                key: process.env.RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
+                key: config.razorpay_api_key, // Enter the Key ID generated from the Dashboard
                 amount: cart.getTotal * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
                 currency: props.restorant.currency,
                 name: props.restorant.name,
@@ -152,7 +154,17 @@ const razorpay = () => {
                     }_logo.webp`, //${usePage().props.value.app.url}${usePage().props.auth.restorant.logo}_logo.webp
                 order_id: res.data, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
                 handler: function (response) {
-                    submit()
+                    Inertia.post(route("orders.store", { restorant: props.restorant.uuid }), {
+                        form,
+                        payment_method: 'razorpay',
+                        cart: props.cart.getCart(),
+                    }),
+                    {
+                        onSuccess: () => {
+                            alert("Order Successful");
+                            loading.value = false;
+                        },
+                    };
                     // Swal.fire({
                     //     icon: "success",
                     //     title: "Payment Successful!",
@@ -173,6 +185,7 @@ const razorpay = () => {
             var rzp1 = new Razorpay(options);
             rzp1.open();
         }).catch((err) => {
+            loading.value = false;
             console.log(err)
         })
 
@@ -185,32 +198,32 @@ const props = defineProps({
 });
 const cart = useCart();
 
-const options = reactive({
-    key: "rzp_test_VZYVRqJIO3Esoy", // Enter the Key ID generated from the Dashboard
-    amount: cart.getTotal * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-    currency: props.restorant.currency,
-    name: props.restorant.name,
-    description: "",
-    image: `${usePage().props.value.app.url}${props.restorant.logo
-        }_logo.webp`, //${usePage().props.value.app.url}${usePage().props.auth.restorant.logo}_logo.webp
-    order_id: order_id.value, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-    handler: function (response) {
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature);
-    },
-    prefill: {
-        name: form.customer_name,
-        // "email": "gaurav.kumar@example.com",
-        contact: form.customer_phone,
-    },
-    notes: {
-        address: "Razorpay Corporate Office",
-    },
-    theme: {
-        color: "#3399cc",
-    },
-});
+// const options = reactive({
+//     key: "rzp_test_VZYVRqJIO3Esoy", // Enter the Key ID generated from the Dashboard
+//     amount: cart.getTotal * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+//     currency: props.restorant.currency,
+//     name: props.restorant.name,
+//     description: "",
+//     image: `${usePage().props.value.app.url}${props.restorant.logo
+//         }_logo.webp`, //${usePage().props.value.app.url}${usePage().props.auth.restorant.logo}_logo.webp
+//     order_id: order_id.value, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+//     handler: function (response) {
+//         alert(response.razorpay_payment_id);
+//         alert(response.razorpay_order_id);
+//         alert(response.razorpay_signature);
+//     },
+//     prefill: {
+//         name: form.customer_name,
+//         // "email": "gaurav.kumar@example.com",
+//         contact: form.customer_phone,
+//     },
+//     notes: {
+//         address: "Razorpay Corporate Office",
+//     },
+//     theme: {
+//         color: "#3399cc",
+//     },
+// });
 
 watch(form, (value) => {
     if (value.order_type != 1) {
@@ -221,6 +234,7 @@ watch(form, (value) => {
 const submit = () => {
     Inertia.post(route("orders.store", { restorant: props.restorant.uuid }), {
         form,
+        payment_method: "cod",
         cart: props.cart.getCart(),
     }),
     {

@@ -68,8 +68,11 @@ import { Link, usePage, useForm } from "@inertiajs/inertia-vue3";
 import Swal from 'sweetalert2';
 let restorant = usePage().props.value.auth.restorant;
 let conf = restorant.config;
-const form = useForm({
-   
+
+const props = defineProps({
+    razorpay_data: Object
+})
+const form = useForm({   
     razorpay_api_key: conf.razorpay_api_key ?? '',
     razorpay_api_secret: conf.razorpay_api_secret ?? '',
     stripe_api_key: conf.stripe_api_key ?? '',

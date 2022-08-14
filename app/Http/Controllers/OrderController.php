@@ -73,6 +73,8 @@ class OrderController extends Controller
 
         //Order method in a integer format
         $order_method = $request->form['order_type'];
+        //Payment Method
+        $payment_type = $request->payment_method ?? 'cod';
 
         $requestData = [
             'order_method' => $order_method,
@@ -81,14 +83,15 @@ class OrderController extends Controller
             "comment" => $request->comment,
             "phone" => $phone,
             "customer_name" => $request->form['customer_name'],
-            "delivery_fee" => $request->cart['delivery'] ?? null
+            "delivery_fee" => $request->cart['delivery'] ?? null,
+            "payment_method" => $payment_type
         ];
 
         return new Request($requestData);
     }
 
     public function store(StoreOrderRequest $request, Restorant $restorant)
-    {        
+    {                
         $mobileRequest = $this->toMobileRequest($request);
         // dd($mobileRequest);       
         ConfChanger::switchCurrency($restorant);

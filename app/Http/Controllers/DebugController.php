@@ -32,13 +32,14 @@ class DebugController extends Controller
 
   public function post(Request $request)
   {
-    ConfChanger::switchCurrency(Restorant::find($request->restorant));
+    $restorant = Restorant::findOrFail($request->restorant);
+    ConfChanger::switchCurrency($restorant);
     $values = [
       'receipt' => 'Payment',
       'amount' => $request->amount * 100,
       'currency' => config('global.currency')
-    ];
-    $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+    ];    
+    $api = new Api($restorant->config->razorpay_api_key, $restorant->config->razorpay_api_secret);
     $order = $api->order->create($values);
     return response($order->id);
   }

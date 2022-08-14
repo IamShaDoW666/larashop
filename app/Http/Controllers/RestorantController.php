@@ -264,7 +264,12 @@ class RestorantController extends Controller
 
   public function payments()
   {
-    return inertia('Restorant/Payments');
+    $config = auth()->user()->restorant->config;
+    $razorpay_data = [
+      'razorpay_api_key' => $config->razorpay_api_key,
+      'razorpay_api_secret' => $config->razorpay_api_secret,
+    ];
+    return inertia('Restorant/Payments', compact('razorpay_data'));
   }
   public function setEnvironmentValue(array $values)
   {

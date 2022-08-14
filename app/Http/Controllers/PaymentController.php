@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Config;
+use App\Models\Order;
+use App\Models\Restorant;
+use App\Services\ConfChanger;
+use Razorpay\Api\Api;
+
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -68,8 +73,9 @@ class PaymentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Config $config)
-    {   
-        $config->google_maps_api_key = $request->google_maps_api_key ?? $config->google_maps_api_key;
+    {
+        $config->razorpay_api_key = $request->razorpay_api_key;
+        $config->razorpay_api_secret = $request->razorpay_api_secret;
         $config->save();
         return back();
     }
@@ -83,5 +89,20 @@ class PaymentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function payWithRazorpay(Request $request)
+    {                
+        $restorant = Restorant::findOrFail($request->restorant);
+        // dd($restorant->config->razorpay_api_key, $restorant->config->razorpay_api_secret);
+        ConfChanger::switchCurrency($restorant);
+        $values = [
+            'receipt' => 'Payment',
+            'amount' => $request->amount * 100,
+            'currency' => config('global.currency')
+        ];        
+        $api = new Api($restorant->config->razorpay_api_key, $restorant->config->razorpay_api_secret);
+        $order = $api->order->create($values);
+        return response($order->id);
     }
 }

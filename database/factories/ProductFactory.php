@@ -19,7 +19,7 @@ class ProductFactory extends Factory
             'description' => $this->faker->text(25),
             'price' => $this->faker->numberBetween(10, 99) * 100,
             'category_id' => $this->faker->numberBetween(1,3),
-            'image_path' => '/images/products/' . $this->faker->numberBetween(1,15)
+            'image_path' => '/images/products/' . $this->faker->numberBetween(1,6)
         ];
     }
 }

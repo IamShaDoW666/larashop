@@ -110,7 +110,7 @@ class BaseOrderRepository extends Controller
             $this->order->customer_phone = $this->request->phone;
             $this->order->address = $this->request->address;
             $this->order->delivery_fee = money($this->request->delivery_fee, config('global.currency', true))->getAmount();
-
+            $this->order->payment_method = $this->request->payment_method;            
             //Client
             // if(auth()->user()){
             //     $this->order->client_id=auth()->user()->id;

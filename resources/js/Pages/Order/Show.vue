@@ -86,7 +86,7 @@
                                         Payment method
                                     </dt>
                                     <dd class="text-right">
-                                        PayPal
+                                        {{ paymentMethod }}
                                     </dd>
                                 </div>
                             </dl>
@@ -212,7 +212,15 @@ import OrderStatusBadge from "@/Components/Badges/OrderStatusBadge.vue";
 import OrderTypeBadge from "@/Components/Badges/OrderTypeBadge.vue";
 import useCommon from "@/utils/common";
 import { ref } from "vue";
+import { computed } from "@vue/reactivity";
 
+const paymentMethod = computed(() => {
+    if (props.order.payment_method === 'cod') {
+        return "Cash on Delivery"
+    } else if (props.order.payment_method === 'razorpay') {
+        return "Razorpay"
+    }
+})
 const { switchTimeFormat } = useCommon();
 const props = defineProps({
     order: Object,
