@@ -168,7 +168,7 @@ class OrderController extends Controller
     public function show($order)
     {
         $order = OrderResource::make(Order::find($order)->load('products'));
-        return $order;
+        // return $order;
         return inertia('Order/Show', compact('order'));
     }
 

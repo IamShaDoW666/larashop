@@ -30,7 +30,7 @@ class ProductResource extends JsonResource
 
     $subtotalFormatted = null;
     $subtotal = null;
-    if ($pivot_qty && $pivot_qty != null) {
+    if ($pivot_qty && (is_string($pivot_qty) || is_integer($pivot_qty))) {
       if ($variant_price_int) {
         $subtotal = $variant_price_int * $pivot_qty;
       } else {
