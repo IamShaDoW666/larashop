@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('image_path')->default('/imgs/5f7d1e78-550c-4a4d-af29-aba1b6af156b_large.webp');
             $table->integer('price');
             $table->foreignId('category_id')->nullable();
+            $table->boolean('available')->default(true);
             $table->timestamps();
         });
     }

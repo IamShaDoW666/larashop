@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Seeder;
-use App\Models\Restorant;
+use App\Models\Grocery;
 use App\Models\Area;
 use App\Models\Config;
 use App\Models\User;

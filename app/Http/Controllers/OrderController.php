@@ -91,7 +91,7 @@ class OrderController extends Controller
     }
 
     public function store(StoreOrderRequest $request, Restorant $restorant)
-    {                
+    {            
         $mobileRequest = $this->toMobileRequest($request);
         // dd($mobileRequest);       
         ConfChanger::switchCurrency($restorant);
@@ -108,7 +108,7 @@ class OrderController extends Controller
         $validatorValue = $orderRepo->makeOrder();
         if ($validatorValue->fails()) {
             abort(401);
-            return $orderRepo->redirectOrInform();
+            // return $orderRepo->redirectOrInform();
         }        
         return $orderRepo->redirectOrInform();
 
@@ -148,14 +148,18 @@ class OrderController extends Controller
     {
         $restorant_id = Crypt::decrypt($id);
         $restorant = Restorant::with('config')->find($restorant_id);
+        $restorantConfigs = [
+            'stripe_enable' => (boolean)$restorant->getConfig('stripe_enable'),
+            'razorpay_enable' => (boolean)$restorant->getConfig('razorpay_enable'),
+        ];
         $delivery_info = $restorant->getConfig('delivery_info');
         ConfChanger::switchCurrency($restorant);
-        $areas = AreaResource::collection($restorant->areas);
-
+        $areas = AreaResource::collection($restorant->areas);        
         return inertia('Order/Checkout', compact(
             'restorant',
             'areas',
-            'delivery_info'
+            'delivery_info',
+            'restorantConfigs'
         ));
     }
 

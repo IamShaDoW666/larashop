@@ -15,6 +15,7 @@ use App\Http\Controllers\DebugController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\SiteController;
 use App\Http\Resources\RestorantResource;
 use App\Models\Restorant;
@@ -66,8 +67,9 @@ Route::get('/terms-and-conditions', function() {
 })->name('terms');
 
 Route::post('/pay/razorpay', [PaymentController::class, 'payWithRazorpay'])->name('pay.razorpay');
-
-// Guest routes
+Route::post('/pay/stripelinks', [PaymentController::class, 'payWithStripeLinks'])->name('pay.stripelinks');
+Route::get('/getSession',[PaymentController::class,'getSession']);
+// Guest route's
 Route::group(['middleware' => ['auth', 'role:Guest'], 'prefix' => 'guest'], function () {
   Route::inertia('/dashboard', 'views/guest/Dashboard')->name('guest.dashboard');
   Route::inertia('/settings', 'views/guest/Settings')->name('guest.settings');

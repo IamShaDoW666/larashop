@@ -32,6 +32,8 @@ class RestorantResource extends JsonResource
             'config' => $this->whenLoaded('config'),
             'counts' => $this->whenAppended('counts'),
             'salesCount' => $this->whenAppended('salesCount'),
+            'todaySales' => $this->whenAppended('todaySales'),
+            'yesterdaySales' => $this->whenAppended('yesterdaySales'),
             'lat' => $this->lat,
             'lng' => $this->lng,
             'open_msg' => $this->openStatus['openMsg'] ?? null,

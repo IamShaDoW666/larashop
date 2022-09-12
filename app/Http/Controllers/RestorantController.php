@@ -79,7 +79,7 @@ class RestorantController extends Controller
   {
     $restorant = Restorant::where('slug', $slug)
       ->with(['categories' => function ($q) {
-        $q->whereHas('products')->with('products.variants');
+        $q->whereHas('products')->with('products.variants')->where('available', true);
       }], 'config')
       ->with('hours')
       ->firstOrFail();
@@ -265,11 +265,15 @@ class RestorantController extends Controller
   public function payments()
   {
     $config = auth()->user()->restorant->config;
+    $restorant_configs = [
+      'stripe_enable' => auth()->user()->restorant->getConfig('stripe_enable'),
+      'razorpay_enable' => auth()->user()->restorant->getConfig('razorpay_enable'),
+    ];
     $razorpay_data = [
       'razorpay_api_key' => $config->razorpay_api_key,
       'razorpay_api_secret' => $config->razorpay_api_secret,
-    ];
-    return inertia('Restorant/Payments', compact('razorpay_data'));
+    ];    
+    return inertia('Restorant/Payments', compact('razorpay_data', 'restorant_configs'));
   }
   public function setEnvironmentValue(array $values)
   {

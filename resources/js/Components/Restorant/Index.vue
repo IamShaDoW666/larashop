@@ -27,7 +27,7 @@
                                 {{ __('Restaurant Name') }}
                             </label>
                             <input v-model="form.name" type="text"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                         </div>
                     </div>
                     <div class="w-full lg:w-6/12 px-4">
@@ -54,7 +54,7 @@
                                 {{ __('Country') }}
                             </label>
                             <input type="text" v-model="form.country"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                         </div>
                     </div>
                     <div class="w-full lg:w-6/12 px-4">
@@ -64,7 +64,7 @@
                                 {{__('City')}}
                             </label>
                             <input type="text" v-model="form.city"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                         </div>
                     </div>
                     <div class="w-full lg:w-12/12 px-4">
@@ -74,7 +74,7 @@
                                 {{__('Address')}}
                             </label>
                             <input type="text" v-model="form.address"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                               {{ __('Minimum Order') }}
                             </label>
                             <input type="number" v-model="form.minimum_order"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                 placeholed="100" />
                         </div>
                     </div>
@@ -107,21 +107,21 @@
                                     <label class="mr-2 block uppercase text-blueGray-600 text-xs"
                                         for="Delivery">{{ __('Delivery') }}</label>
                                     <input type="checkbox" v-model="form.can_deliver"
-                                        class="border-0 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
+                                        class="border-1 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
                                         value="Delivery" />
                                 </div>
                                 <div class="flex items-center">
                                     <label class="mr-2 block uppercase text-blueGray-600 text-xs"
                                         for="Delivery">{{ __('Pickup') }}</label>
                                     <input type="checkbox" v-model="form.can_pickup"
-                                        class="border-0 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
+                                        class="border-1 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
                                         value="Pickup" />
                                 </div>
                                 <div class="flex items-center">
                                     <label class="mr-2 block uppercase text-blueGray-600 text-xs"
                                         for="Delivery">{{ __('Dine-in') }}</label>
                                     <input type="checkbox" v-model="form.can_dinein"
-                                        class="border-0 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
+                                        class="border-1 px-2 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
                                         value="Dine-in" />
                                 </div>
                             </div>
@@ -134,7 +134,7 @@
                                {{ __('Postal Code') }}
                             </label>
                             <input type="number" v-model="form.postal_code"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                         </div>
                     </div>
                     <div class="w-full lg:w-4/12 px-4">
@@ -145,7 +145,7 @@
                             </label>
                             <input type="text" :value="form.currency"
                                 @input="event => form.currency = event.target.value.toUpperCase()"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                         </div>
                     </div>
                     <div class="w-full lg:w-8/12 px-4">
@@ -155,7 +155,7 @@
                                 {{ __('Delivery Info') }}
                             </label>
                             <input type="text" v-model="form.delivery_info"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                         </div>
                     </div>
                 </div>
@@ -176,12 +176,12 @@
                                 'background-image': `url(${logoPreviewImage})`,
                             }"></div>
                             <input @input="pickLogo" ref="logoFileInput" type="file"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                         </div>
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                 htmlFor="grid-password">
-                                {{ __('Restaurant Banner') }}
+                                {{ __('Restaurant Banner') }} {{ __('1920x1280 image size') }}
                             </label>
                             <div v-if="previewImage" class="bannerPreviewWrapper mb-3" :style="{
                                 'background-image': `url(${previewImage})`,
@@ -208,7 +208,7 @@
                                 <FacebookIcon class="ml-2 mb-4" width="6" height="6" />
                             </div>
                             <input v-model="form.facebook" placeholder="https://facebook.com/example" type="text"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                         </div>
                     </div>
                     <div class="w-full lg:w-6/12 px-4">
@@ -221,7 +221,7 @@
                                 <InstagramIcon class="ml-2 mb-4" width="6" height="6" />
                             </div>
                             <input v-model="form.instagram" type="text" placeholder="https://instagram.com/example"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                         </div>
                     </div>
                     <div class="w-full lg:w-6/12 px-4">
@@ -234,7 +234,7 @@
                                 <TwitterIcon class="ml-2 mb-4" width="6" height="6" />
                             </div>
                             <input v-model="form.twitter" type="text" placeholder="https://twitter.com/example"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                         </div>
                     </div>
                     <!-- <div class="w-full lg:w-12/12 px-4">
@@ -243,7 +243,7 @@
                         Address
                      </label>
                      <input type="text" v-model="form.address"
-                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                        class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                   </div>
                </div> -->
                 </div>

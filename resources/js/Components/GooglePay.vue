@@ -1,9 +1,15 @@
 <template>
     <div class="demo">
-        <google-pay-button environment="TEST" :button-color="buttonColor" :button-type="buttonType"
-            :button-size-mode="isCustomSize ? 'fill' : 'static'" :paymentRequest.prop="paymentRequest"
-            @loadpaymentdata="onLoadPaymentData" @error="onError"
-            :style="{ width: `${buttonWidth}px`, height: `${buttonHeight}px` }"></google-pay-button>
+        <google-pay-button
+            environment="TEST"
+            :button-color="buttonColor"
+            :button-type="buttonType"
+            :button-size-mode="isCustomSize ? 'fill' : 'static'"
+            :paymentRequest.prop="paymentRequest"
+            @loadpaymentdata="onLoadPaymentData"
+            @error="onError"
+            :style="{ width: `${buttonWidth}px`, height: `${buttonHeight}px` }"
+        ></google-pay-button>
     </div>
 
     <div class="note" :style="{ display: isTop ? 'none' : '' }">
@@ -35,38 +41,38 @@ export default {
                     type: "CARD",
                     parameters: {
                         allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-                        allowedCardNetworks: ["AMEX", "VISA", "MASTERCARD"]
+                        allowedCardNetworks: ["AMEX", "VISA", "MASTERCARD"],
                     },
                     tokenizationSpecification: {
                         type: "PAYMENT_GATEWAY",
                         parameters: {
                             gateway: "example",
-                            gatewayMerchantId: "exampleGatewayMerchantId"
-                        }
-                    }
-                }
+                            gatewayMerchantId: "exampleGatewayMerchantId",
+                        },
+                    },
+                },
             ],
             merchantInfo: {
                 merchantId: "12345678901234567890",
-                merchantName: "Demo Merchant"
+                merchantName: "Demo Merchant",
             },
             transactionInfo: {
                 totalPriceStatus: "FINAL",
                 totalPriceLabel: "Total",
                 totalPrice: "100.00",
                 currencyCode: "USD",
-                countryCode: "US"
-            }
-        }
+                countryCode: "US",
+            },
+        },
     }),
     methods: {
-        onLoadPaymentData: event => {
+        onLoadPaymentData: (event) => {
             console.log("load payment data", event.detail);
         },
-        onError: event => {
+        onError: (event) => {
             console.error("error", event.error);
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -101,12 +107,12 @@ form label.control {
     margin: 4px 5px;
 }
 
-form label>span {
+form label > span {
     display: inline-block;
     margin-right: 5px;
 }
 
-form label.control>span {
+form label.control > span {
     display: block;
 }
 
@@ -137,7 +143,8 @@ form select {
     transition: background-color 0.2s;
     vertical-align: middle;
     white-space: nowrap;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="4" viewBox="0 0 20 4"><path d="M0,0l4,4l4-4H0z" fill="%23212121"/></svg>') #fff no-repeat 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="4" viewBox="0 0 20 4"><path d="M0,0l4,4l4-4H0z" fill="%23212121"/></svg>')
+        #fff no-repeat 100%;
 }
 
 form.top-bottom select {

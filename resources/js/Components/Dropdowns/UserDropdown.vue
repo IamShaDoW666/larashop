@@ -26,10 +26,10 @@
         :href="route('restorants.show', { restorant: $page.props.auth.restorant.slug })"
         class="text-sm py-2 hover:bg-gray-200 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
       View Restaurant </Link>
-      <a href="javascript:void(0);"
+      <!-- <a href="javascript:void(0);"
         class="text-sm py-2 hover:bg-gray-200 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
         Something else here
-      </a>
+      </a> -->
       <div class="h-0 my-2 border border-solid border-blueGray-100" />
       <Link :href="route('logout')" method="post" as="button"
         class="text-sm py-2 px-4 font-normal hover:bg-gray-200 text-left block w-full whitespace-nowrap bg-transparent text-blueGray-700">
@@ -42,7 +42,7 @@
 <script>
 import { createPopper } from "@popperjs/core";
 import { Link } from '@inertiajs/inertia-vue3';
-import image from "@/assets/img/team-1-800x800.jpg";
+import image from "@/assets/img/profile.png";
 
 export default {
   data() {

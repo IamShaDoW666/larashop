@@ -4,7 +4,7 @@
       <div class="lg:flex justify-between text-center lg:text-left">
         <div class="px-4">
           <h4 class="text-3xl font-semibold dark:text-white mb-1">
-            Ordering as easy as chatwith friend!
+            Ordering is easy as chatwith friend!
           </h4>
           <h5 class="text-lg mt-0 mb-2 text-blueGray-600 dark:text-white mb-2">
             Whatsapp ordering system.

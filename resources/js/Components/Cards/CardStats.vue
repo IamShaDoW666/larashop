@@ -1,5 +1,6 @@
 <template>
   <div
+    :class="{ 'hover:opacity-70 hover:bg-gray-100': hoverClass }"
     class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg"
   v-cloak>
     <div class="flex-auto p-4">
@@ -78,6 +79,10 @@ export default {
       type: String,
 
     },
+
+    hoverClass: {
+      type: Boolean
+    }
   },
 };
 </script>

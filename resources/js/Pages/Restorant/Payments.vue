@@ -24,7 +24,7 @@
                         </h6> -->
                         <RazorpayIcon width="128" height="56" />
                     </div>
-                    <div class="flex flex-wrap">
+                    <div class="flex flex-wrap">                        
                         <div class="w-full lg:w-6/12 px-4">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -32,7 +32,7 @@
                                     Razorpay API Key
                                 </label>
                                 <input v-model="form.razorpay_api_key" type="text"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                    class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                             </div>
                         </div>
                         <div class="w-full lg:w-6/12 px-4">
@@ -42,7 +42,55 @@
                                     Razorpay API Secret
                                 </label>
                                 <input v-model="form.razorpay_api_secret" type="text"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                    class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                    htmlFor="grid-password">
+                                    Enable Razorpay
+                                </label>
+                                <input v-model="form.razorpay_enable" type="checkbox"
+                                    class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center mt-3 mb-6">
+                        <!-- <h6 class="text-blueGray-400 text-sm mr-4 font-bold uppercase">
+                            StripePay
+                        </h6> -->
+                        <StripepayIcon width="128" height="56" />
+                    </div>
+                    <div class="flex flex-wrap">
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                    htmlFor="grid-password">
+                                    Stripe API Key
+                                </label>
+                                <input v-model="form.stripe_api_key" type="text"
+                                    class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                    htmlFor="grid-password">
+                                    Stripe API Secret
+                                </label>
+                                <input v-model="form.stripe_api_secret" type="text"
+                                    class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                    htmlFor="grid-password">
+                                    Enable Stripe
+                                </label>
+                                <input v-model="form.stripe_enable" type="checkbox"
+                                    class="border-1 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150" />
                             </div>
                         </div>
                     </div>
@@ -64,17 +112,22 @@ import BreezeValidationErrors from "@/Components/ValidationErrors.vue";
 import RestaurantLayout from "@/Layouts/Restaurant.vue";
 import GoogleIcon from "@/Components/Social/Icons/GoogleIcon";
 import RazorpayIcon from "@/Components/Social/Icons/RazorpayIcon";
+import StripepayIcon from "@/Components/Social/Icons/StripepayIcon";
 import { Link, usePage, useForm } from "@inertiajs/inertia-vue3";
 import Swal from 'sweetalert2';
 let restorant = usePage().props.value.auth.restorant;
 let conf = restorant.config;
 
 const props = defineProps({
-    razorpay_data: Object
+    razorpay_data: Object,
+    stripe_data: Object,
+    restorant_configs: Object,
 })
 const form = useForm({   
     razorpay_api_key: conf.razorpay_api_key ?? '',
     razorpay_api_secret: conf.razorpay_api_secret ?? '',
+    razorpay_enable: Boolean(Number(props.restorant_configs.razorpay_enable)),
+    stripe_enable: Boolean(Number(props.restorant_configs.stripe_enable)),
     stripe_api_key: conf.stripe_api_key ?? '',
     stripe_api_secret: conf.stripe_api_secret ?? '',
 })

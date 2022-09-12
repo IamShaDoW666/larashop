@@ -27,7 +27,8 @@ class UpdateProductRequest extends FormRequest
           'name' => [],
           'description' => [],
           'price' => [],
-          'category' => []
+          'category' => [],
+          'available' => []
         ];
     }
 }

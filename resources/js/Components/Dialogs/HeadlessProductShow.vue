@@ -54,7 +54,7 @@
                   lg:flex
                   gap-x-8
                   justify-between
-                  items-start
+                  items-start                                    
                 "
               >
                 <!-- <div
@@ -72,7 +72,7 @@
                     class="
                       mt-4
                       p-3
-                      break-all
+                      break-all                      
                       border-2
                       rounded-lg
                       bg-gray-100
@@ -104,7 +104,7 @@
                                             }}
                                         </div>-->
                   </div>
-                  <div v-if="product.variants.length" class="flex justify-center gap-x-2 sm:gap-x-5">
+                  <div v-if="product.variants.length" class="flex flex-wrap gap-x-2 sm:gap-x-5">
                     <div
                       v-for="variant in product.variants"
                       :key="variant.id"

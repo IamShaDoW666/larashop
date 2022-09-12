@@ -1,0 +1,13 @@
+{
+    "name": "Stripelinks",
+    "alias": "stripelinks",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Stripelinks\\Providers\\StripelinksServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

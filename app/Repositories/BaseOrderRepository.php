@@ -43,7 +43,6 @@ class BaseOrderRepository extends Controller
     public function __construct($vendor_id, $request)
     {
         $this->request = $request;
-
         $this->orderType = $request->order_method;
         // $this->hasPayment=$hasPayment;
         // $this->isStripe=$isStripe;
@@ -110,7 +109,7 @@ class BaseOrderRepository extends Controller
             $this->order->customer_phone = $this->request->phone;
             $this->order->address = $this->request->address;
             $this->order->delivery_fee = money($this->request->delivery_fee, config('global.currency', true))->getAmount();
-            $this->order->payment_method = $this->request->payment_method;            
+            $this->order->payment_method = $this->request->payment_method;
             //Client
             // if(auth()->user()){
             //     $this->order->client_id=auth()->user()->id;
@@ -187,13 +186,13 @@ class BaseOrderRepository extends Controller
 
         //calculate tax if module available
         if (Module::has('TaxConfig')) {
-            if ($this->order->tax && $this->order->tax != 0) {
+            if ($this->vendor->config->tax && $this->vendor->config->tax != 0) {
                 $orderTaxValue = (int)round(($order_price * $this->vendor->config->tax) / 100);
+                // dd($orderTaxValue);
                 $this->order->tax = $orderTaxValue;
                 $order_price +=  $orderTaxValue;
             }
         }
-
         if ($this->order->delivery_fee) {
             $order_price += $this->order->delivery_fee;
         }

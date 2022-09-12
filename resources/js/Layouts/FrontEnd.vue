@@ -23,6 +23,7 @@
         </h1>
       </div>
       <div class="flex gap-x-4 items-center">
+        <button @click="trackOrder" v-if="$page.props.trackingLink" class="px-4 py-2 bg-blue-400 rounded text-white font-bold hover:bg-blue-500">Track Your Order</button>
         <LanguageList />
         <ThemeSwitcher />
       </div>
@@ -47,11 +48,17 @@ import FooterEnd from "@/Components/Footers/Footer.vue";
 import ThemeSwitcher from "@/Components/ThemeSwitcher.vue";
 import LanguageList from '@/Components/Dropdowns/LanguageList.vue';
 import useCommon from '@/utils/common';
+import { Inertia } from "@inertiajs/inertia";
+import { usePage } from "@inertiajs/inertia-vue3";
 
 const { getImagePath } = useCommon()
 const props = defineProps({
   restaurant: Object,
 });
+
+const trackOrder = () => {
+  Inertia.visit(usePage().props.value.trackingLink)
+}
 
 // watch(windowTop, (newValue) => {
 //   console.log(newValue);

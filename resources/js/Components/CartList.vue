@@ -70,6 +70,7 @@ import { useCart } from '@/Stores/cart.js';
 import { usePage } from '@inertiajs/inertia-vue3';
 import { useThemeSwitcher } from "@/Composables/useThemeSwitcher";
 import useCommon from '@/utils/common';
+import { onMounted, watch } from 'vue';
 const { getImagePath } = useCommon();
 const { currentTheme } = useThemeSwitcher();
 const cart = useCart();
@@ -85,6 +86,13 @@ var formatter = new Intl.NumberFormat(locale, {
   style: 'currency',
   currency: currency,
 });
+
+onMounted(() => {
+  if (cart.getTotalItems === 0) {
+    window.location.href = route('front')
+  }
+})
+
 
 const formatPrice = (amount) => {
   if (amount == '') {

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Http\Resources\RestorantResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 
@@ -50,7 +51,7 @@ class HandleInertiaRequests extends Middleware
         $authArray = !$request->user() ? [] : [
           'auth' => [
             'user' => $request->user(),
-            'restorant' => $request->user()->restorant ? RestorantResource::make($request->user()->restorant->load('config')->append(['counts', 'salesCount'])) : null,
+            'restorant' => $request->user()->restorant ? RestorantResource::make($request->user()->restorant->load('config')->append(['counts', 'salesCount', 'todaySales', 'yesterdaySales'])) : null,
             'role' => $request->user()->roles()->first()->name,
           ],
         ];
@@ -67,9 +68,14 @@ class HandleInertiaRequests extends Middleware
       $pusherArray = !$request->user() ? [] : [
         'pusher' => config('pusher')
       ];
-    }
-        
-    return array_merge(parent::share($request), $authArray, $pusherArray, [
+    }      
+
+    $orderArray = !session()->has('order_token') ? [] : [
+      'trackingLink' => route('order.status', ['order' => Crypt::decrypt(session()->get('order_token'))])
+    ];
+    
+    
+    return array_merge(parent::share($request), $authArray, $pusherArray, $orderArray, [
       'flash' => [
         'message' => session('message')
       ],

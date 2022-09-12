@@ -42,9 +42,7 @@ class StoreOrderRequest extends FormRequest
             'form.customer_phone.digits_between' => 'Please enter valid phone number',
             // 'form.address.string' => 'Invalid address',
             'form.order_type.required' => 'Select order type',
-            'form.order_type.required' => 'Invalid Order Time',
-
-
+            'form.order_time.required' => 'Invalid Order Time',            
         ];
     }
 }

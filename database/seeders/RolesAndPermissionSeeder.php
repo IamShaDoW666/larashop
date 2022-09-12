@@ -22,7 +22,7 @@ class RolesAndPermissionSeeder extends Seeder
 
           'manage_products',
 
-          'manage_restorants',
+          'manage_restaurants',
           'restorant_create',
           'restorant_show',
           'restorant_edit',

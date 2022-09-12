@@ -65,7 +65,7 @@
                   v-model="form.MAIL_HOST"
                   type="text"
                   class="
-                    border-0
+                    border-1
                     px-3
                     py-3
                     placeholder-blueGray-300
@@ -101,7 +101,7 @@
                   v-model="form.MAIL_PORT"
                   type="text"
                   class="
-                    border-0
+                    border-1
                     px-3
                     py-3
                     placeholder-blueGray-300
@@ -137,7 +137,7 @@
                   v-model="form.MAIL_USERNAME"
                   type="text"
                   class="
-                    border-0
+                    border-1
                     px-3
                     py-3
                     placeholder-blueGray-300
@@ -173,7 +173,7 @@
                   v-model="form.MAIL_PASSWORD"
                   type="text"
                   class="
-                    border-0
+                    border-1
                     px-3
                     py-3
                     placeholder-blueGray-300
@@ -210,7 +210,7 @@
                   v-model="form.MAIL_ENCRYPTION"
                   type="text"
                   class="
-                    border-0
+                    border-1
                     px-3
                     py-3
                     placeholder-blueGray-300
@@ -246,7 +246,7 @@
                   v-model="form.MAIL_FROM_ADDRESS"
                   type="text"
                   class="
-                    border-0
+                    border-1
                     px-3
                     py-3
                     placeholder-blueGray-300

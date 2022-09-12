@@ -13,10 +13,10 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
+        $names = ['FRUITS & VEGETABLES', 'SNACKS & BRANDED FOODS', 'BEVERAGES', 'FOODGRAINS', 'OIL & MASALA'];
         return [
-            'name' => $this->faker->text(15),
+            'name' => $this->faker->unique()->randomElement($names),
             'restorant_id' => 1
-
         ];
     }
 }

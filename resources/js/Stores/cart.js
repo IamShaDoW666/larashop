@@ -33,7 +33,7 @@ export const useCart = defineStore("cart", {
             if (state.delivery) {
                 return sum += unformat(state.delivery);
             }
-            
+            state.total = sum;
             return sum;
         },
 
@@ -167,7 +167,7 @@ export const useCart = defineStore("cart", {
         enabled: true,
         strategies: [
             {
-                storage: sessionStorage,
+                storage: sessionStorage,                
             },
         ],
     },

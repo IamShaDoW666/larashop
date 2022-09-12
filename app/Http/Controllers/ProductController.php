@@ -45,7 +45,10 @@ class ProductController extends Controller
       ->where('restorant_id', $restorant->id)
       ->get();
     $c = CategoryResource::collection($categories);
-    return inertia('Product/Index', compact('c'));
+    $products = $c->map(function ($category, $key) {            
+      return $category->products->values()->all();
+    })->flatten();  
+    return inertia('Product/Index', compact('c', 'products'));
   }
 
   /** 
@@ -108,7 +111,7 @@ class ProductController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function edit(Product $product)
-  {
+  {    
     $product->load('variants');
     $product = ProductResource::make($product);
     $categories = CategoryResource::collection(Category::query()
@@ -126,6 +129,7 @@ class ProductController extends Controller
    */
   public function update(UpdateProductRequest $request, Product $product)
   {
+    // dd($request->available);
     if (auth()->user()->id != $product->category->restorant->user_id) {
       abort(403);
     }
@@ -142,6 +146,7 @@ class ProductController extends Controller
       'price' => money($request->price, env('APP_CURRENCY'), true)->getAmount(),
       'image' => 'default',
       'image_path' => ($imgpath != $product->image_path) ? $this->imagePath . $imgpath : $imgpath,
+      'available' => $request->available
     ];
     $product->update($data);
 
@@ -160,7 +165,7 @@ class ProductController extends Controller
   {
     // dd($product);
     $product->delete();
-    return back();
+    return redirect(route('products.index'));
   }
 
   public function filter($id)
@@ -169,6 +174,7 @@ class ProductController extends Controller
     ConfChanger::switchCurrency($restaurant);
     return ProductResource::collection(Product::where('category_id', $id)
       ->with('variants')
+      ->where('available', true)
       ->get());
   }
 

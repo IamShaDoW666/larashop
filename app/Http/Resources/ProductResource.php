@@ -50,6 +50,7 @@ class ProductResource extends JsonResource
       'image' => $this->image,
       'image_path' => $this->image_path,
       'imglarge' => $this->imglarge,
+      'available' => (boolean)$this->available,
       'quantity' => null, //quantity for show.vue 
       'variants' => VariantResource::collection($this->whenLoaded('variants')),
       'pivot_quantity' => $this->whenPivotLoaded('order_product', $this->pivot ? $this->pivot->quantity : null), //quantity from order

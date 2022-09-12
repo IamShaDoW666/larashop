@@ -65,7 +65,7 @@
                   v-model="form.google_maps_api_key"
                   type="text"
                   class="
-                    border-0
+                    border-1
                     px-3
                     py-3
                     placeholder-blueGray-300
@@ -101,7 +101,7 @@
                   v-model="form.google_analytics_key"
                   type="text"
                   class="
-                    border-0
+                    border-1
                     px-3
                     py-3
                     placeholder-blueGray-300
@@ -146,7 +146,7 @@
                     v-model="form.tax_name"
                     type="text"
                     class="
-                      border-0
+                      border-1
                       px-3
                       py-3
                       placeholder-blueGray-300
@@ -182,7 +182,7 @@
                     v-model="form.tax"
                     type="number"
                     class="
-                      border-0
+                      border-1
                       px-3
                       py-3
                       placeholder-blueGray-300

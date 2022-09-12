@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->text('address')->nullable();
             $table->string('order_type');
             $table->string('payment_method')->nullable();
+            $table->string('payment_link')->nullable();
             $table->string('uuid')->unique()->nullable();
             $table->foreignId('restorant_id');
             $table->unsignedInteger('total');
