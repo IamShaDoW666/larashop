@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\ProductResource;
-use App\Http\Resources\RestorantResource;
+use App\Http\Resources\groceryResource;
 use Carbon\Carbon;
 
 class OrderResource extends JsonResource
@@ -46,7 +46,7 @@ class OrderResource extends JsonResource
                 'date' => $this->created_at->toDateString(),
             ],
             'items' => ProductResource::collection($this->whenLoaded('products')),
-            'restorant' => RestorantResource::make($this->whenLoaded('restorant')),
+            'grocery' => groceryResource::make($this->whenLoaded('grocery')),
             'status_text' => $this->status_text,
             'payment_method' => $this->payment_method
         ];

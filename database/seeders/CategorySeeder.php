@@ -19,10 +19,10 @@ class CategorySeeder extends Seeder
         Category::factory(3)
                     ->has(Product::factory()->has(Variant::factory()->count(3))->count(3))
                     ->create();
-        Product::factory(10)
+        Product::factory(20)
                     ->has(Variant::factory()->count(3))
                     ->create();
-        Product::factory(10)
+        Product::factory(30)
                     ->create();                    
     }
 }

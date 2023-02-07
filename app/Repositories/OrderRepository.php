@@ -63,6 +63,7 @@ class OrderRepository extends BaseOrderRepository
             // }            
             
             $message = $this->order->getSocialMessageAttribute(true);
+            //dd($message);
             $url = 'https://api.whatsapp.com/send?phone=' . $this->vendor->phone . '&text=' . $message;
             // dd($this->order->payment_link);
             //Set session token for customer viewing order status

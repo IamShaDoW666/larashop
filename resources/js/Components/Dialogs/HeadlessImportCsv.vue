@@ -61,7 +61,7 @@ import { useForm, usePage } from '@inertiajs/inertia-vue3';
 
 const form = useForm({
     csv: null,
-    restorant_id: usePage().props.value.auth.restorant.id
+    grocery_id: usePage().props.value.auth.grocery.id
 })
 
 const { importOpen } = inject('data')

@@ -4,18 +4,18 @@
       <div class="lg:flex justify-between text-center lg:text-left">
         <div class="px-4">
           <h4 class="text-3xl font-semibold dark:text-white mb-1">
-            Ordering as easy as chatwith friend!
+            Buy Online Pickup in Store
           </h4>
           <h5 class="text-lg mt-0 mb-2 text-blueGray-600 dark:text-white mb-2">
             Whatsapp ordering system.
           </h5>
           <div class="flex gap-y-4 sm:gap-y-0 gap-x-4 justify-center lg:justify-start mb-4">
-            <Facebook v-if="restaurant.facebook" :link="restaurant.facebook" />
-            <Whatsapp v-if="restaurant.phone" :phone="restaurant.phone" />
-            <Twitter v-if="restaurant.twitter" :link="restaurant.twitter" />
+            <Facebook v-if="store.facebook" :link="store.facebook" />
+            <Whatsapp v-if="store.phone" :phone="store.phone" />
+            <Twitter v-if="store.twitter" :link="store.twitter" />
             <Instagram
-              v-if="restaurant.instagram"
-              :link="restaurant.instagram"
+              v-if="store.instagram"
+              :link="store.instagram"
             />
           </div>
         </div>
@@ -46,7 +46,7 @@
                   pb-2
                   text-sm
                 "
-                href="https://creative-tim.com/privacy?ref=vn-footer"
+                href=""
               >
                 Privacy Policy
               </a>
@@ -60,7 +60,7 @@
       >
         <div class="w-full md:w-4/12 px-4 mx-auto text-center">
           <div class="text-sm text-blueGray-500 font-semibold py-1">
-            Copyright © {{ date }} {{ restaurant.name }}
+            Copyright © {{ date }} {{ store.name }}
                       
           </div>
         </div>
@@ -80,6 +80,6 @@ import { Link } from "@inertiajs/inertia-vue3";
 const date = ref(new Date().getFullYear());
 
 const props = defineProps({
-  restaurant: Object,
+  store: Object,
 });
 </script>

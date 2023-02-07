@@ -9,6 +9,7 @@ function set($value)
 }
 
 $currency = config('global.currency');
+
 $orderTimeDate = Carbon::make($order->order_time) ? Carbon::make($order->order_time)->toDateString() : '';
 $orderTimeFormat = Carbon::make($order->order_time) ? Carbon::make($order->order_time)->format('g:i A') : '';
 ?>
@@ -48,7 +49,7 @@ foreach ($order->products()->get() as $key => $item) {
 {{ "    *". __('Delivery Fee')."*".": ". set(money($order->delivery_fee, $currency)->format())}}
 @endif
 @if(Module::has('TaxConfig') && $order->tax)
-{{ "    *". __($order->tax_name). " " . $order->restorant->config->tax . "%" . "*".": ". set(money($order->tax, $currency)->format())}}
+{{ "    *". __($order->tax_name). " " . $order->grocery->config->tax . "%" . "*".": ". set(money($order->tax, $currency)->format())}}
 @endif
 {{ "    *". __('Total')."*".": ". set(money($order->total, $currency)->format())}}
 ************************************************

@@ -16,7 +16,7 @@ class AreaFactory extends Factory
         return [
             'name' => $this->faker->unique()->city(),
             'delivery_fee' => $this->faker->numberBetween(100,1000),
-            'restorant_id' => 1
+            'grocery_id' => 1
         ];
     }
 }

@@ -17,9 +17,11 @@ class AreaController extends Controller
      */
     public function index()
     {
-      $restorant = auth()->user()->restorant;
-      ConfChanger::switchCurrency($restorant);
-      $areas = AreaResource::collection($restorant->areas);
+      $grocery = auth()->user()->grocery;
+      //dd($grocery->areas);
+      ConfChanger::switchCurrency($grocery);
+      $areas = AreaResource::collection($grocery->areas);
+      
       return inertia('Area/Index', compact('areas'));
 
     }
@@ -48,9 +50,9 @@ class AreaController extends Controller
       ]);
       $area = Area::create([
         'name' => $request->name,
-        'delivery_fee' => $this->formatprice($request->delivery_fee)
+        'delivery_fee' => formatprice($request->delivery_fee)
       ]);
-      $area->restorant()->associate(auth()->user()->restorant->id);
+      $area->grocery()->associate(auth()->user()->grocery->id);
       $area->save();
       return back();
     }
@@ -93,7 +95,7 @@ class AreaController extends Controller
 
       $area->update([
         'name' => $request->name,
-        'delivery_fee' => $this->formatprice($request->delivery_fee)
+        'delivery_fee' => formatprice($request->delivery_fee)
       ]);
       
       return back();
@@ -109,20 +111,5 @@ class AreaController extends Controller
     {
       $area->delete();
       return back();
-    }
-
-    private function formatprice($price)
-    {
-      $formatArray = explode(".", $price);
-      if (sizeof($formatArray) > 1) {
-        $formatArray[0] = (int)$formatArray[0].'00';
-        $formattedPrice = (int)$formatArray[0] + (int)$formatArray[1];
-        return $formattedPrice;
-
-      } else {
-        $formattedPrice = $formatArray[0].'00';
-        return (int)$formattedPrice;
-      }
-    }
-
+    }    
 }

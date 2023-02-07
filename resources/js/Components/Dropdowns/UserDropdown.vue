@@ -23,9 +23,9 @@
       {{ $page.props.auth.user.name }}
       </Link>
       <Link v-if="$page.props.auth.role == 'Owner'"
-        :href="route('restorants.show', { restorant: $page.props.auth.restorant.slug })"
+        :href="route('grocerys.show', { grocery: $page.props.auth.grocery.slug })"
         class="text-sm py-2 hover:bg-gray-200 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
-      View Restaurant </Link>
+      View store </Link>
       <a href="javascript:void(0);"
         class="text-sm py-2 hover:bg-gray-200 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
         Something else here

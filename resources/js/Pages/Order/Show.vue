@@ -40,16 +40,16 @@
                     <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
 
                         <div class="flex flex-col">
-                            <h2 class="text-4xl sm:py-5">{{ $page.props.auth.restorant ? $page.props.auth.restorant.name
+                            <h2 class="text-4xl sm:py-5">{{ $page.props.auth.grocery ? $page.props.auth.grocery.name
                                     :
-                                    'Restaurant Name'
+                                    'store Name'
                             }}</h2>
-                            <span class="text-gray-500">{{ $page.props.auth.restorant ? $page.props.auth.restorant.phone
+                            <span class="text-gray-500">{{ $page.props.auth.grocery ? $page.props.auth.grocery.phone
                                     :
                                     ''
                             }}</span>
-                            <span class="text-gray-500 mt-4">{{ $page.props.auth.restorant ?
-                                    $page.props.auth.restorant.address : ''
+                            <span class="text-gray-500 mt-4">{{ $page.props.auth.grocery ?
+                                    $page.props.auth.grocery.address : ''
                             }}</span>
                         </div>
 
@@ -205,7 +205,6 @@
 
     </Admin>
 </template>
-
 <script setup>
 import Admin from "@/Layouts/Admin.vue";
 import OrderStatusBadge from "@/Components/Badges/OrderStatusBadge.vue";

@@ -11,13 +11,14 @@ use App\Http\Resources\ProductResource;
 use App\Http\Resources\CategoryResource;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Http\Resources\RestorantResource;
-use App\Models\Restorant;
+use App\Http\Resources\groceryResource;
+use App\Models\Grocery;
 use App\Services\ConfChanger;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ProductsImport;
 use App\Models\Variant;
+use App\Services\groceryService;
 use Image;
 
 use Cknow\Money\Currency;
@@ -34,15 +35,15 @@ class ProductController extends Controller
    */
   public function index()
   {
-    $restorant = auth()->user()->restorant;
-    ConfChanger::switchCurrency($restorant);
-    // $restaurant = RestorantResource::make(Restorant::with('categories.products')
-    //   ->where('id', $restorant->id)
+    $grocery = auth()->user()->grocery;
+    ConfChanger::switchCurrency($grocery);
+    // $store = groceryResource::make(grocery::with('categories.products')
+    //   ->where('id', $grocery->id)
     //   ->first());
 
     $categories = Category::query()
       ->with('products.variants')
-      ->where('restorant_id', $restorant->id)
+      ->where('grocery_id', $grocery->id)
       ->get();
     $c = CategoryResource::collection($categories);
     return inertia('Product/Index', compact('c'));
@@ -67,7 +68,11 @@ class ProductController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function store(StoreProductRequest $request)
-  {
+  {        
+    if (groceryService::verifyPlan(auth()->user()->grocery)) {    
+      return back()->withErrors(['error' => ['Plan limit reached!']]);
+    }
+
     //Save Image Versions
     if ($request->hasFile('product_image')) {
       $imgpath = $this->uploadimage($request->product_image);
@@ -112,7 +117,7 @@ class ProductController extends Controller
     $product->load('variants');
     $product = ProductResource::make($product);
     $categories = CategoryResource::collection(Category::query()
-      ->where('restorant_id', $product->category->restorant->id)
+      ->where('grocery_id', $product->category->grocery->id)
       ->get());
     return inertia('Product/Edit', compact('product', 'categories'));
   }
@@ -126,7 +131,7 @@ class ProductController extends Controller
    */
   public function update(UpdateProductRequest $request, Product $product)
   {
-    if (auth()->user()->id != $product->category->restorant->user_id) {
+    if (auth()->user()->id != $product->category->grocery->user_id) {
       abort(403);
     }
 
@@ -165,8 +170,9 @@ class ProductController extends Controller
 
   public function filter($id)
   {
-    $restaurant = Category::findOrFail($id)->restorant;
-    ConfChanger::switchCurrency($restaurant);
+    $store = Category::findOrFail($id)->Grocery;
+    
+    ConfChanger::switchCurrency($store);
     return ProductResource::collection(Product::where('category_id', $id)
       ->with('variants')
       ->get());
@@ -190,9 +196,9 @@ class ProductController extends Controller
 
   public function import(Request $request)
   {
-    $restorant = Restorant::findOrFail($request->restorant_id);
+    $grocery = grocery::findOrFail($request->grocery_id);
 
-    Excel::import(new ProductsImport($restorant), request()->file('csv'));
+    Excel::import(new ProductsImport($grocery), request()->file('csv'));
 
     return back()->with(['message' => 'Imported Successfully!']);
   }

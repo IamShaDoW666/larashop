@@ -27,8 +27,7 @@ class StoreOrderRequest extends FormRequest
             'form.customer_name' => ['required'],
             'form.customer_phone' => ['required', 'digits_between:9,17'],
             'form.address' => [],
-            'form.order_type' => ['required'],
-            'form.order_time' => ['required'],
+            'form.order_type' => ['required'],            
             'cart' => [''],
             'payment_method' => []
         ];

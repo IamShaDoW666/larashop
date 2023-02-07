@@ -9,13 +9,13 @@ use App\Http\Requests\StoreOrderRequest;
 
 use App\Http\Resources\AreaResource;
 use App\Http\Resources\OrderResource;
-use App\Http\Resources\RestorantResource;
+use App\Http\Resources\groceryResource;
 
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Variant;
-use App\Models\Restorant;
-
+use App\Models\grocery;
+use App\Models\Table;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Inertia\Inertia;
@@ -31,13 +31,14 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $restorant = auth()->user()->restorant;
-        ConfChanger::switchCurrency($restorant);
-        $restaurant = RestorantResource::make($restorant);
-        $orders = OrderResource::collection(Order::where('restorant_id', $restorant->id)
+        $grocery = auth()->user()->grocery;
+        ConfChanger::switchCurrency($grocery);
+        $store = groceryResource::make($grocery);
+        $orders = OrderResource::collection(Order::where('grocery_id', $grocery->id)
             ->with('products')
             ->orderBy('created_at', 'DESC')
             ->paginate(15));
+
         // return $orders;
         return inertia('Order/Index1', compact('orders'));
     }
@@ -90,11 +91,11 @@ class OrderController extends Controller
         return new Request($requestData);
     }
 
-    public function store(StoreOrderRequest $request, Restorant $restorant)
-    {                
+    public function store(StoreOrderRequest $request, grocery $grocery)
+    {
         $mobileRequest = $this->toMobileRequest($request);
         // dd($mobileRequest);       
-        ConfChanger::switchCurrency($restorant);
+        ConfChanger::switchCurrency($grocery);
         $cart = $request->cart;
 
 
@@ -104,12 +105,12 @@ class OrderController extends Controller
         //     $arr[$key] = ['quantity' => $items_id];
         // }
         // dd($mobileRequest);
-        $orderRepo = new OrderRepository($restorant->id, $mobileRequest);
+        $orderRepo = new OrderRepository($grocery->id, $mobileRequest);
         $validatorValue = $orderRepo->makeOrder();
         if ($validatorValue->fails()) {
             abort(401);
             return $orderRepo->redirectOrInform();
-        }        
+        }
         return $orderRepo->redirectOrInform();
 
 
@@ -122,7 +123,7 @@ class OrderController extends Controller
         //     'delivery_fee' => money($cart['delivery'], config('global.currency'), true)->getAmount(),
         //     'total' => money($cart['total'], config('global.currency'), true)->getAmount()
         // ]);
-        // $order->restorant()->associate($restorant);
+        // $order->grocery()->associate($grocery);
 
         // $order->products()->attach($item['id'], [
         //     'quantity'=>$item['quantity'],                     
@@ -138,7 +139,7 @@ class OrderController extends Controller
         //     broadcast(new PusherNewOrder(new OrderResource($order)));
         // }
 
-        // $url = 'https://api.whatsapp.com/send?phone=' . $order->restorant->phone . '&text=' . $message;
+        // $url = 'https://api.whatsapp.com/send?phone=' . $order->grocery->phone . '&text=' . $message;
         //Set session token for customer viewing order status
         // session(['order_token' => Crypt::encrypt($order->id)]);
         // return Inertia::location($url);
@@ -146,17 +147,23 @@ class OrderController extends Controller
 
     public function checkin($id)
     {
-        $restorant_id = Crypt::decrypt($id);
-        $restorant = Restorant::with('config')->find($restorant_id);
-        $delivery_info = $restorant->getConfig('delivery_info');
-        ConfChanger::switchCurrency($restorant);
-        $areas = AreaResource::collection($restorant->areas);
+        $grocery_id = Crypt::decrypt($id);
+        $grocery = grocery::with('config')->find($grocery_id);
+        $delivery_info = $grocery->getConfig('delivery_info');
+        ConfChanger::switchCurrency($grocery);
+        $areas = AreaResource::collection($grocery->areas);
+        $table = null;
+        if (session()->has('table_id')) {
+            $tid = session()->get('table_id') ?? null;
+            $table = Table::findOrFail($tid);
+        }
 
-        return inertia('Order/Checkout', compact(
-            'restorant',
-            'areas',
-            'delivery_info'
-        ));
+        return inertia('Order/Checkout', [
+            'grocery' => $grocery,
+            'areas' => $areas,
+            'delivery_info' => $delivery_info,
+            'table' => $table ?? null
+        ]);
     }
 
     /**
@@ -209,7 +216,7 @@ class OrderController extends Controller
     public function sendWhatsappOrder($order)
     {
         $message = $order->getSocialMessageAttribute(true);
-        $url = 'https://api.whatsapp.com/send?phone=' . $order->restorant->phone . '&text=' . $message;
+        $url = 'https://api.whatsapp.com/send?phone=' . $order->grocery->phone . '&text=' . $message;
         return Inertia::location($url);
     }
 
@@ -252,14 +259,14 @@ class OrderController extends Controller
 
     public function orderStatus(Order $order)
     {
-        ConfChanger::switchCurrency($order->restorant);
+        ConfChanger::switchCurrency($order->grocery);
         switch ($order->status) {
             case "pending":
                 $order->status_text = "Recieved your order, preparing your order.";
-                break;                
+                break;
             case "accepted":
                 $order->status_text = "Recieved your order, preparing your order.";
-                break;                
+                break;
             case "prepared":
                 $order->status_text = "Your order is ready!";
                 break;
@@ -267,17 +274,25 @@ class OrderController extends Controller
                 $order->status_text = "Order delivered!";
                 break;
             case "closed":
-                $order->status_text = "Order closed!";            
+                $order->status_text = "Order closed!";
                 break;
             case "rejected":
-                $order->status_text = "Your order was rejected!";            
+                $order->status_text = "Your order was rejected!";
                 break;
             default:
                 $order->status_text = null;
-                break;            
-        }        
-        $order = OrderResource::make($order);     
-        
+                break;
+        }
+        $order = OrderResource::make($order);
+
         return inertia('Order/Status', compact('order'));
+    }
+
+    public function orderShow()
+    {
+        $orders = OrderResource::collection(Order::with(['products','grocery'])
+            ->orderBy('created_at', 'DESC')
+            ->paginate(15));
+        return inertia('views/super/Orders', compact('orders'));
     }
 }

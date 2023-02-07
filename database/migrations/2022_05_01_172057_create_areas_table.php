@@ -17,7 +17,7 @@ class CreateAreasTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('delivery_fee')->default(0);
-            $table->foreignId('restorant_id')->nullable();
+            $table->foreignId('grocery_id')->nullable();
             $table->timestamps();
         });
     }

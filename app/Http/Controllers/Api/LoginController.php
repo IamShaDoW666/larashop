@@ -32,7 +32,7 @@ class LoginController extends Controller
             'token' => $user->createToken($request->device_name)->plainTextToken,
             'name' => $user->name,
             'email' => $user->email,
-            'restorant_id' => $user->restorant->id,
+            'grocery_id' => $user->grocery->id,
         ];
 
         return json_encode($data);

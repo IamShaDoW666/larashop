@@ -6,31 +6,31 @@ namespace App\Services;
 
 class ConfChanger
 {
-    public static function switchCurrency($restaurant)
+    public static function switchCurrency($store)
     {
-        if (strlen($restaurant->config->currency) > 1) {
-            config(['global.currency' => $restaurant->config->currency]);
+        if (strlen($store->config->currency) > 1) {
+            config(['global.currency' => $store->config->currency]);
         }
     }
 
-    public static function switchGoogleMapsApiKey($restaurant)
+    public static function switchGoogleMapsApiKey($store)
     {
-        if (strlen($restaurant->config->google_maps_api_key) > 1) {
-            config(['global.google_maps_api_key' => $restaurant->config->google_maps_api_key]);
+        if (strlen($store->config->google_maps_api_key) > 1) {
+            config(['global.google_maps_api_key' => $store->config->google_maps_api_key]);
         }
     }
 
-    public static function setConfs($restaurant)
+    public static function setConfs($store)
     {
-        if ($restaurant->config) {
-            config(['global.conf' => $restaurant->config]);
+        if ($store->config) {
+            config(['global.conf' => $store->config]);
         }
     }
 
 
 
 
-    // public static function switchLanguage($restaurant)
+    // public static function switchLanguage($store)
     // {
 
     //     //If we have enabled miltilanguage_menus
@@ -42,9 +42,9 @@ class ConfChanger
     //             session(['applocale_change' => $_GET['lang']]);
     //         } else {
     //             //If current locale is not in the list of menus, use the default menu
-    //             if ($restaurant->localMenus()->where('language', config('app.locale'))->first() == null) {
+    //             if ($store->localMenus()->where('language', config('app.locale'))->first() == null) {
     //                 //Find default
-    //                 $defaultLanguage = $restaurant
+    //                 $defaultLanguage = $store
     //                     ->localMenus()->where('default', 1)->first();
     //                 if ($defaultLanguage) {
     //                     app()->setLocale($defaultLanguage->language);

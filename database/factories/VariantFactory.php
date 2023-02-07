@@ -14,7 +14,7 @@ class VariantFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->randomElement(['Small', 'Medium', 'Large']),
+            'name' => $this->faker->randomElement(['500gms', '1kg', '2kg']),
             'price' => $this->faker->numberBetween(16, 99) * 100,         
         ];
     }

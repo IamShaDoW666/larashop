@@ -22,11 +22,11 @@ class RolesAndPermissionSeeder extends Seeder
 
           'manage_products',
 
-          'manage_restorants',
-          'restorant_create',
-          'restorant_show',
-          'restorant_edit',
-          'restorant_delete',
+          'manage_grocerys',
+          'grocery_create',
+          'grocery_show',
+          'grocery_edit',
+          'grocery_delete',
 
 
 
@@ -41,7 +41,7 @@ class RolesAndPermissionSeeder extends Seeder
         $role = Role::create(['name' => 'Guest']);
 
         $guestPermissions = [
-          'restorant_create',
+          'grocery_create',
 
         ];
 
@@ -52,9 +52,9 @@ class RolesAndPermissionSeeder extends Seeder
         $role = Role::create(['name' => 'Owner']);
 
         $ownerPermissions = [
-          'restorant_show',
-          'restorant_edit',
-          'restorant_delete',
+          'grocery_show',
+          'grocery_edit',
+          'grocery_delete',
 
           'manage_categories',
           'manage_products'
@@ -62,6 +62,16 @@ class RolesAndPermissionSeeder extends Seeder
 
         foreach ($ownerPermissions as $ownerPermission) {
           $role->givePermissionTo($ownerPermission);
+        }
+        $role = Role::create(['name' => 'SuperAdmin']);
+
+        $adminPermissions = [
+          'grocery_create',
+
+        ];
+
+        foreach ($adminPermissions as $adminPermission) {
+          $role->givePermissionTo($adminPermission);
         }
 
 

@@ -15,7 +15,7 @@ class CreateHoursTable extends Migration
     {
         Schema::create('hours', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('restorant_id');
+            $table->foreignId('grocery_id');
             $table->string('m_from')->nullable()->default('00:01');
             $table->string('m_to')->nullable()->default('23:58');
             $table->string('t_from')->nullable()->default('00:01');

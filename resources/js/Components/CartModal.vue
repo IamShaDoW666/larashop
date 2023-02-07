@@ -1,6 +1,6 @@
 <template>
     <div @click="openModal"
-        class="flex justify-between items-center mx-auto max-w-md sm:hidden z-50 hover:bg-blue-300 shadow dark:bg-green-800 bg-blue-400 rounded-lg w-full p-4 absolute mb-2 bottom-0 left-0 right-0">
+        class="flex justify-between items-center mx-auto max-w-md sm:hidden z-50 fixed  transition-all  hover:bg-blue-300 shadow dark:bg-green-800 bg-blue-400 rounded-lg w-full p-4  mb-2 bottom-0 left-0 right-0">
         <div class="font-bold dark:text-white">
             <i class="pr-2 fa-solid fa-cart-shopping dark:text-white"></i>Cart({{
                     cart.getTotalItems
@@ -83,8 +83,8 @@
                                             }}</span>
                                     </div>
                                     <div v-if="cart.getTaxValue" class="flex text-sm gap-x-2 mb-2">
-                                        <span class="font-bold dark:text-white">{{ restaurant.config.tax_name }}({{
-                                                restaurant.config.tax
+                                        <span class="font-bold dark:text-white">{{ store.config.tax_name }}({{
+                                                store.config.tax
                                         }}%): </span>
                                         <span
                                             class="shadow-md px-1 rounded text-black dark:text-white font-extrabold">
@@ -153,12 +153,15 @@ watch(x, (newValue) => {
 
 const cart = useCart();
 
+   
+
+
 const props = defineProps({
     cart: Object,
     fromCart: Function,
     formatPrice: Function,
     checkout: Function,
-    restaurant: Object
+    store: Object
 });
 
 function closeModal() {

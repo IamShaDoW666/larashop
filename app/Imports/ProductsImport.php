@@ -4,16 +4,16 @@ namespace App\Imports;
 
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\Restorant;
+use App\Models\grocery;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class ProductsImport implements ToModel, WithHeadingRow
 {
-    public function __construct(Restorant $restorant)
+    public function __construct(grocery $grocery)
     {
-        $this->restorant = $restorant;
+        $this->grocery = $grocery;
         $this->lastCategoryName = "";
         $this->lastCategoryID = 0;
     }
@@ -25,7 +25,7 @@ class ProductsImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        $category = Category::where(['name' => $row['category'], 'restorant_id' => $this->restorant->id])->first();
+        $category = Category::where(['name' => $row['category'], 'grocery_id' => $this->grocery->id])->first();
         $CATID = null;
         if ($category != null) {
             $CATID = $category->id;
@@ -58,7 +58,7 @@ class ProductsImport implements ToModel, WithHeadingRow
 
             $categoryID = DB::table('categories')->insertGetId([
                 'name' => $row['category'],
-                'restorant_id' => $this->restorant->id,
+                'grocery_id' => $this->grocery->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

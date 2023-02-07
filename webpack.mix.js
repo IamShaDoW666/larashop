@@ -11,6 +11,13 @@ mix.js('resources/js/app.js', 'public/js')
         '@': 'resources/js',
     });
 
+mix.options({
+    hmrOptions: {
+        host: 'localhost',
+        port: 8080
+    }
+})
+
 if (mix.inProduction()) {
     mix.version();
 }

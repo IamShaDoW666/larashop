@@ -15,7 +15,7 @@ class CreateConfigsTable extends Migration
     {
         Schema::create('configs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('restorant_id')->nullable();
+            $table->foreignId('grocery_id')->nullable();
             $table->boolean('can_order')->default(false);
             $table->boolean('can_deliver')->default(false);
             $table->boolean('can_dinein')->default(false);
@@ -30,6 +30,8 @@ class CreateConfigsTable extends Migration
             $table->string('stripe_api_key')->nullable();
             $table->string('stripe_api_secret')->nullable();
             $table->string('google_maps_api_key')->nullable();
+            $table->string('bulk_whatsapp_api_key')->nullable();
+            $table->string('custom_domain_name')->nullable();
             $table->timestamps();
         });
     }

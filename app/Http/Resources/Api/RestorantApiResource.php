@@ -8,7 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Resources\CategoryResource;
 
-class RestorantApiResource extends JsonResource
+class groceryApiResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -26,7 +26,7 @@ class RestorantApiResource extends JsonResource
             'country' => $this->country,
             'address' => $this->address,
             'city' => $this->city,
-            'url' => config('app.url') . '/restorants/' . $this->slug,
+            'url' => config('app.url') . '/grocerys/' . $this->slug,
             'postal_code' => $this->postal_code,
             'products' => ProductApiResource::collection($this->whenLoaded('products')),
             'categories' => CategoryResource::collection($this->whenLoaded('categories')),

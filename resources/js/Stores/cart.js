@@ -119,8 +119,8 @@ export const useCart = defineStore("cart", {
         getProps(props) {
             //Function to assign props state
             this.products = props.products;
-            this.minimum_order = Number(props.restaurant.config.minimum_order) ?? null;
-            this.tax = Number(props.restaurant.config.tax)
+            this.minimum_order = Number(props.store.config.minimum_order) ?? null;
+            this.tax = Number(props.store.config.tax)
         },
 
         getCart() {

@@ -17,7 +17,7 @@ class OrderDeviceCheck
      */
     public function handle(Request $request, Closure $next)
     {
-        // Grant for restaurant owner
+        // Grant for store owner
         if ($request->user()) {
             if ($request->user()->hasRole('Owner')) {
                 return $next($request);

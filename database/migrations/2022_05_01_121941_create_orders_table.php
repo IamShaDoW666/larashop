@@ -22,7 +22,7 @@ class CreateOrdersTable extends Migration
             $table->string('order_type');
             $table->string('payment_method')->nullable();
             $table->string('uuid')->unique()->nullable();
-            $table->foreignId('restorant_id');
+            $table->foreignId('grocery_id');
             $table->unsignedInteger('total');
             $table->unsignedInteger('subtotal')->nullable();
             $table->integer('delivery_fee')->nullable();

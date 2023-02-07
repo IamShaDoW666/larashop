@@ -7,11 +7,11 @@
       class="w-full mx-auto items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4"
     >
       <!-- Brand -->
-      <Link :href="route('admin.dashboard')" v-if="$page.props.auth.user.restorant"
+      <Link :href="route('admin.dashboard')" v-if="$page.props.auth.user.grocery"
         class="text-black text-sm uppercase hidden lg:inline-block font-semibold"
       >
         {{ __('Dashboard') }}
-      </Link>
+      </Link>      
       <!-- Form -->
       <!-- <form
         class="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3"

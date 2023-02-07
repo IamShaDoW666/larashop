@@ -1,6 +1,6 @@
 <template>
   <!-- Header -->
-  <div class="relative bg-emerald-600 md:pt-32 pb-32 pt-12" v-if="$page.props.auth.restorant.counts">
+  <div class="relative bg-emerald-600 md:pt-32 pb-32 pt-12" v-if="$page.props.auth.grocery.counts">
     <div class="px-4 md:px-10 mx-auto w-full">
       <div>
         <!-- Card stats -->
@@ -8,7 +8,7 @@
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4" data-index="1" key="1">
             <card-stats
               statSubtitle="CATEGORIES"
-              :statTitle="$page.props.auth.restorant.counts.categories"
+              :statTitle="$page.props.auth.grocery.counts.categories"
               statIconName="view_list"
               statIconColor="bg-orange-500"
             />
@@ -16,7 +16,7 @@
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4" data-index="2" key="2">
             <card-stats
               statSubtitle="PRODUCTS"
-              :statTitle="$page.props.auth.restorant.counts.products"
+              :statTitle="$page.props.auth.grocery.counts.products"
               statIconName="lunch_dining"
               statIconColor="bg-pink-500"
             />
@@ -24,8 +24,17 @@
           <div class="w-full lg:w-6/12 xl:w-3/12 px-4" data-index="3" key="3">
             <card-stats
               statSubtitle="SALES"
-              :statTitle="$page.props.auth.restorant.salesCount"
-              :statDescripiron="$page.props.auth.restorant.counts.salesValue"
+              :statTitle="$page.props.auth.grocery.salesCount"
+              :statDescripiron="$page.props.auth.grocery.counts.salesValue"
+              statIconName="shopping_cart"
+              statIconColor="bg-pink-500"
+            />
+          </div>
+           <div class="w-full lg:w-6/12 xl:w-3/12 px-4" data-index="3" key="3">
+            <card-stats
+              statSubtitle="SALES"
+              :statTitle="$page.props.auth.grocery.salesCount"
+              :statDescripiron="$page.props.auth.grocery.counts.salesValue"
               statIconName="shopping_cart"
               statIconColor="bg-pink-500"
             />

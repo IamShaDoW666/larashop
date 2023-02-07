@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\NewOrder;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\ProductController;
@@ -13,9 +14,11 @@ use App\Models\Variant;
 
 
 use App\Models\User;
+use Database\Factories\OrderFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Validation\ValidationException;
 
 /*
@@ -31,18 +34,23 @@ use Illuminate\Validation\ValidationException;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function() {
-        return auth()->user()->restorant->load('user');
+        return auth()->user()->grocery->load('user');
     });
     Route::get('/get-order/{order}', [OrderController::class, 'show']);
     Route::post('/auth-check', [LoginController::class, 'check']);
     Route::post('/logout', [LoginController::class, 'logout']);
 });
 
-Route::get('/get-orders/{restorant}', [OrderController::class, 'index']);
+Route::get('/get-orders/{grocery}', [OrderController::class, 'index']);
 Route::post('/update-order-status/{order}', [OrderController::class, 'updateStatus']);
 Route::post('/sanctum/token', [LoginController::class, 'createToken']);
 
 
 Route::get('/order/test/{id}', function($id) {
     return OrderResource::make(Order::findOrFail($id));
+});
+
+Route::get('/testroute', function() {    
+    $order = Order::factory()->create();    
+    event(new NewOrder(new OrderResource($order)));
 });

@@ -13,9 +13,12 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
+
+        $names = ['FRUITS & VEGETABLES', 'SNACKS & BRANDED FOODS', 'BEVERAGES', 'FOODGRAINS', 'OIL & MASALA'];
+
         return [
-            'name' => $this->faker->text(15),
-            'restorant_id' => 1
+            'name' => $this->faker->randomElement($names),
+            'grocery_id' => 1
 
         ];
     }

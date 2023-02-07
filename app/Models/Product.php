@@ -13,7 +13,7 @@ class Product extends Model
 
     protected $fillable = ['name', 'description', 'price', 'category_id', 'image', 'image_path'];
     // protected $appends = ['imglarge'];
-    protected $imagePath = '/imgs/restorants/';
+    protected $imagePath = '/imgs/grocerys/';
 
     protected function getImge($imageValue, $default, $version = '_large.jpg')
     {
@@ -32,7 +32,7 @@ class Product extends Model
           }
         } else {
           //Local image
-          return ($this->imagePath.$this->category->restorant->slug.'/'.$imageValue).$version;
+          return ($this->imagePath.$this->category->grocery->slug.'/'.$imageValue).$version;
         }
       }
     }

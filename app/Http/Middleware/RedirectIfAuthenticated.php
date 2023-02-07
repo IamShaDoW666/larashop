@@ -23,13 +23,15 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
         // dd($next);
         foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
+            if (Auth::guard($guard)->check()) {              
                 if (Auth::user()->hasRole('Owner')) {
                   return redirect('/admin/dashboard');
 
+                } else if (Auth::user()->hasRole('SuperAdmin')) {
+                  return redirect('/super/dashboard');                  
                 } else {
                   auth()->user()->hasRole('Guest') ?: auth()->user()->assignRole('Guest');
-                  return redirect('/guest/restorant');
+                  return redirect('/guest/grocery');
                 }
             }
         }

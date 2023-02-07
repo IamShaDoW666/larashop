@@ -5,10 +5,10 @@ namespace App\Repositories;
 
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\Restorant as Vendor;
+use App\Models\grocery as Vendor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Events\NewOrder as PusherNewOrder;
+use App\Events\NewOrder;
 use App\Http\Resources\OrderResource;
 use App\Models\Variant;
 use Nwidart\Modules\Facades\Module;
@@ -104,7 +104,7 @@ class BaseOrderRepository extends Controller
     {
         if ($this->order == null) {
             $this->order = new Order;
-            $this->order->restorant_id = $this->vendor->id;
+            $this->order->grocery_id = $this->vendor->id;
             $this->order->order_type = $this->orderType;
             $this->order->customer_name = $this->request->customer_name;
             $this->order->customer_phone = $this->request->phone;
@@ -247,13 +247,14 @@ class BaseOrderRepository extends Controller
     public function notifyOwner()
     {
         //Inform owner - via email, sms or db
-        // $this->vendor->user->notify((new OrderNotification($this->order))->locale(strtolower(config('settings.app_locale'))));
+         //$this->vendor->user->notify((new OrderNotification($this->order))->locale(strtolower(config('settings.app_locale'))));
 
         // Broadcast Pusher if exists        
-        if (config('pusher') && config('pusher.exists')) {
-            broadcast(new PusherNewOrder(new OrderResource($this->order)));
-        }
-
+        //if (!config('pusher') && !config('pusher.exists')) {
+        NewOrder::dispatch(new OrderResource($this->order));
+           
+        //}
+       
         //Dispatch Approved by admin event
         // OrderAcceptedByAdmin::dispatch($this->order);
     }

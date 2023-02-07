@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\OrderResource;
-use App\Http\Resources\RestorantResource;
+use App\Http\Resources\groceryResource;
 use App\Models\Order;
-use App\Models\Restorant;
+use App\Models\grocery;
 use App\Services\ConfChanger;
-use App\Services\RestorantService;
+use App\Services\groceryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Razorpay\Api\Api;
@@ -32,14 +32,14 @@ class DebugController extends Controller
 
   public function post(Request $request)
   {
-    $restorant = Restorant::findOrFail($request->restorant);
-    ConfChanger::switchCurrency($restorant);
+    $grocery = grocery::findOrFail($request->grocery);
+    ConfChanger::switchCurrency($grocery);
     $values = [
       'receipt' => 'Payment',
       'amount' => $request->amount * 100,
       'currency' => config('global.currency')
     ];    
-    $api = new Api($restorant->config->razorpay_api_key, $restorant->config->razorpay_api_secret);
+    $api = new Api($grocery->config->razorpay_api_key, $grocery->config->razorpay_api_secret);
     $order = $api->order->create($values);
     return response($order->id);
   }
@@ -47,9 +47,9 @@ class DebugController extends Controller
 
   public function show($slug)
   {
-    $restorant = Restorant::with('categories.products')
+    $grocery = grocery::with('categories.products')
       ->where('slug', $slug)
       ->firstOrFail();
-    return RestorantResource::make($restorant);
+    return groceryResource::make($grocery);
   }
 }

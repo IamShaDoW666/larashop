@@ -14,7 +14,30 @@ module.exports = {
     colors: {
       ...colors,
     },
+    fontSize: {
+      '4xl': ['3.5rem', {
+        lineHeight: '5rem',
+        letterSpacing: '-0.01em',
+        fontWeight: '500',
+      }]},
     extend: {
+      keyframes: {
+        wiggle: {
+            '0%, 100%': {
+                transform: 'rotate(-45deg)'
+            },
+            '100%': {
+                transform: 'rotate(360deg)'
+            },
+        }
+    },
+    animation: {
+        wiggle: 'wiggle 50s linear infinite',
+    },
+
+
+
+
       colors: {
         'primary-light': '#F7F8FC',
 				'secondary-light': '#FFFFFF',

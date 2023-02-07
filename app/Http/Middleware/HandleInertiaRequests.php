@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Http\Middleware;
-
-use App\Http\Resources\RestorantResource;
+use App\Http\Resources\groceryResource;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
-
 class HandleInertiaRequests extends Middleware
 {
   /**
@@ -50,7 +47,7 @@ class HandleInertiaRequests extends Middleware
         $authArray = !$request->user() ? [] : [
           'auth' => [
             'user' => $request->user(),
-            'restorant' => $request->user()->restorant ? RestorantResource::make($request->user()->restorant->load('config')->append(['counts', 'salesCount'])) : null,
+            'grocery' => $request->user()->grocery ? groceryResource::make($request->user()->grocery->load('config')->append(['counts', 'salesCount'])) : null,
             'role' => $request->user()->roles()->first()->name,
           ],
         ];
@@ -58,7 +55,7 @@ class HandleInertiaRequests extends Middleware
         $authArray = !$request->user() ? [] : [
           'auth' => [
             'user' => $request->user(),
-            'restorant' => $request->user()->restorant ? $request->user()->restorant->load('config') : null,
+            'grocery' => $request->user()->grocery ? $request->user()->grocery->load('config') : null,
             'role' => $request->user()->roles()->first()->name,
           ],
         ];
@@ -85,6 +82,10 @@ class HandleInertiaRequests extends Middleware
       'ziggy' => function () {
         return (new Ziggy)->toArray();
       },
+
+      'impersonate' => function () {
+        return auth()->user() ? auth()->user()->Impersonating() : false;
+      }
 
     ]);
   }

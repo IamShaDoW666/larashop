@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Checkout;
 use App\Models\Product;
-use App\Models\Restorant;
+use App\Models\Grocery;
 use App\Services\ConfChanger;
 
 class Order extends Model
@@ -19,9 +19,9 @@ class Order extends Model
     return $this->hasOne(Checkout::class);
   }
 
-  public function restorant()
+  public function grocery()
   {
-    return $this->belongsTo(Restorant::class);
+    return $this->belongsTo(grocery::class);
   }
 
   public function products()
@@ -31,7 +31,7 @@ class Order extends Model
 
   public function getSocialMessageAttribute($encode = false)
   {
-    ConfChanger::switchCurrency($this->restorant);
+    ConfChanger::switchCurrency($this->grocery);
     $message = view('messages.social', ['order' => $this])->render();
     $message = str_replace('&#039;', "'", $message);
     if ($encode) {

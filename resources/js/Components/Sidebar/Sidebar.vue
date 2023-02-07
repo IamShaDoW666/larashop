@@ -10,9 +10,9 @@
         <i class="fas fa-bars"></i>
       </button>
       <!-- Brand -->
-      <Link :href="route('restorants.show', { restorant: $page.props.auth.restorant.slug })"
+      <Link :href="route('grocerys.show', { grocery: $page.props.auth.grocery.slug ?? 'nothn' })"
         class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
-      {{ $page.props.auth.restorant.name }}
+      {{ $page.props.auth.grocery.name }}
       </Link>
       <!-- User -->
       <ul class="md:hidden items-center flex flex-wrap list-none">
@@ -28,9 +28,9 @@
         <div class="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-blueGray-200">
           <div class="flex flex-wrap">
             <div class="w-6/12">
-              <Link :href="route('restorants.show', { restorant: $page.props.auth.restorant.slug })"
+              <Link :href="route('grocerys.show', { grocery: $page.props.auth.grocery.slug ?? 'Nothing' })"
                 class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
-              {{ $page.props.auth.restorant.name }}
+              {{ $page.props.auth.grocery.name }}
               </Link>
             </div>
             <div class="w-6/12 flex justify-end">
@@ -49,7 +49,15 @@
         <!-- Navigation -->
 
         <ul class="md:flex-col md:min-w-full flex flex-col space-y-4 list-none">
-
+          <li v-if="$page.props.impersonate" :class="{ 'text-black font-bold': route().current('admin.dashboard') }"
+            class="items-center hover:text-gray-500">
+            <div>
+              <button @click="stopImpersonate">
+              <i class="fas fa-tv mr-2 text-sm"></i>
+              {{ __('Go back') }}
+              </button>
+            </div>
+          </li>
           <li :class="{ 'text-black font-bold': route().current('admin.dashboard') }"
             class="items-center hover:text-gray-500">
             <div>
@@ -70,12 +78,12 @@
             </div>
           </li>
 
-          <li :class="{ 'text-black font-bold': route().current('owner.restorant.index') }"
+          <li :class="{ 'text-black font-bold': route().current('owner.grocery.index') }"
             class="items-center hover:text-gray-500">
             <div>
-              <Link :href="route('owner.restorant.index')" preserve-scroll>
-              <i class="mr-2 text-sm lni lni-restaurant"></i>
-             {{ __(' Restaurant') }}
+              <Link :href="route('owner.grocery.index')" preserve-scroll>
+              <i class="mr-2 fa-solid fa-store"></i>
+             {{ __(' store') }}
               </Link>
             </div>
           </li>
@@ -84,8 +92,8 @@
             class="items-center hover:text-gray-500">
             <div>
               <Link :href="route('products.index')" preserve-scroll>
-              <i class="fa-solid fa-utensils mr-2 text-sm"></i>
-              {{ __('Menu') }}
+              <i class="fa-solid fa-cart-arrow-down"></i>
+              {{ __('Items') }}
               </Link>
             </div>
           </li>
@@ -109,31 +117,50 @@
               </Link>
             </div>
           </li>
-
-          <li :class="{ 'text-black font-bold': route().current('owner.restorant.share') }"
+          <li :class="{ 'text-black font-bold': route().current('tables.index') }"
             class="items-center hover:text-gray-500">
             <div>
-              <Link :href="route('owner.restorant.share')" preserve-scroll>
+              <Link :href="route('tables.index')" preserve-scroll>
+              <i class="fa-solid fa-truck mr-2 text-sm"></i>
+              {{ __('Table') }}
+              </Link>
+            </div>
+          </li>
+
+          <li :class="{ 'text-black font-bold': route().current('owner.grocery.share') }"
+            class="items-center hover:text-gray-500">
+            <div>
+              <Link :href="route('owner.grocery.share')" preserve-scroll>
               <i class="material-icons mr-2 text-sm">mobile_screen_share</i>
               {{ __('Share') }}
               </Link>
             </div>
           </li>
 
-          <li :class="{ 'text-black font-bold': route().current('owner.restorant.working-hours') }"
+          <li :class="{ 'text-black font-bold': route().current('owner.grocery.working-hours') }"
             class="items-center hover:text-gray-500">
             <div>
-              <Link :href="route('owner.restorant.working-hours')" preserve-scroll>
+              <Link :href="route('owner.grocery.working-hours')" preserve-scroll>
               <i class="material-icons mr-2 text-sm">schedule</i>
               {{ __('Working Hours') }}
               </Link>
             </div>
           </li>
 
-          <li :class="{ 'text-black font-bold': route().current('owner.restorant.location') }"
+          <li :class="{ 'text-black font-bold': route().current('owner.grocery.plan.show') }"
             class="items-center hover:text-gray-500">
             <div>
-              <Link :href="route('owner.restorant.location')" preserve-scroll>
+              <Link :href="route('owner.grocery.plan.show')" preserve-scroll>
+              <i class="material-icons mr-2 text-sm">sticky_note_2</i>
+              {{ __('Plan') }}
+              </Link>
+            </div>
+          </li>
+
+          <li :class="{ 'text-black font-bold': route().current('owner.grocery.location') }"
+            class="items-center hover:text-gray-500">
+            <div>
+              <Link :href="route('owner.grocery.location')" preserve-scroll>
               <i class="material-icons mr-2 text-sm">place</i>
               {{ __('Location') }}
               </Link>
@@ -162,7 +189,7 @@
 <script>
 import UserDropdown from "@/Components/Dropdowns/UserDropdown.vue";
 import { Link } from "@inertiajs/inertia-vue3";
-
+import { Inertia } from "@inertiajs/inertia";
 export default {
   data() {
     return {
@@ -173,6 +200,10 @@ export default {
     toggleCollapseShow: function (classes) {
       this.collapseShow = classes;
     },
+
+    stopImpersonate: function () {
+      Inertia.post(route('stopimpersonate'))
+    }
   },
   components: {
     UserDropdown,

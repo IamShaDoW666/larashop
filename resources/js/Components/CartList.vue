@@ -50,7 +50,7 @@
             <h1>Delivery Fee: </h1><span>{{ cart.delivery }}</span>
           </div>
           <div v-if="cart.getTaxValue" class="flex justify-between">
-            <h1>{{ restorant.config.tax_name }}<span class="text-sm">({{ cart.tax }}%)</span>: </h1><span>{{ formatPrice(cart.getTaxValue) }}</span>
+            <h1>{{ grocery.config.tax_name }}<span class="text-sm">({{ cart.tax }}%)</span>: </h1><span>{{ formatPrice(cart.getTaxValue) }}</span>
           </div>
           <div v-if="cart.getTaxValue || cart.delivery" class="flex justify-between">
             <h1>Payable </h1><span>{{ formatPrice(cart.getTotal) }}</span>
@@ -75,12 +75,12 @@ const { currentTheme } = useThemeSwitcher();
 const cart = useCart();
 const props = defineProps({
   areas: Object,
-  restorant: Object
+  grocery: Object
 });
 
 //Currency Formatter
 let locale = usePage().props.value.app.locale;
-let currency = props.restorant.config.currency;
+let currency = props.grocery.config.currency;
 var formatter = new Intl.NumberFormat(locale, {
   style: 'currency',
   currency: currency,

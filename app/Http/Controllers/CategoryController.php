@@ -1,13 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Resources\CategoryResource;
 use App\Services\ConfChanger;
-
 class CategoryController extends Controller
 {
   /**
@@ -43,18 +41,18 @@ class CategoryController extends Controller
     ]);
     $category = Category::create([
       'name' => $request->name,
-      'restorant_id' => auth()->user()->restorant->id
+      'grocery_id' => auth()->user()->grocery->id
     ]);
-    $category->restorant()->associate(auth()->user()->restorant->id);
-    $restorant = auth()->user()->restorant;
-    ConfChanger::switchCurrency($restorant);
-    // $restaurant = RestorantResource::make(Restorant::with('categories.products')
-    //   ->where('id', $restorant->id)
+    $category->grocery()->associate(auth()->user()->grocery->id);
+    $grocery = auth()->user()->grocery;
+    ConfChanger::switchCurrency($grocery);
+    // $store = groceryResource::make(grocery::with('categories.products')
+    //   ->where('id', $grocery->id)
     //   ->first());
 
     $categories = Category::query()
       ->with('products')
-      ->where('restorant_id', $restorant->id)
+      ->where('grocery_id', $grocery->id)
       ->get();
     $c = CategoryResource::collection($categories);
     return back()->with(['c' => $c]);
@@ -91,7 +89,7 @@ class CategoryController extends Controller
    */
   public function update(Request $request, Category $category)
   {
-    if ($category->restorant_id != auth()->user()->restorant->id) {
+    if ($category->grocery_id != auth()->user()->grocery->id) {
       abort(404);
     }
     $request->validate([

@@ -13,7 +13,7 @@ class CreateRestorantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('restorants', function (Blueprint $table) {
+        Schema::create('groceries', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('slug');
@@ -43,6 +43,6 @@ class CreateRestorantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('restorants');
+        Schema::dropIfExists('groceries');
     }
 }

@@ -229,7 +229,6 @@ const submit = () => {
                 price: form.price,
                 category: form.category,
                 product_image: form.product_image,
-
                 _method: 'put',  //disguise as put method
 
             },

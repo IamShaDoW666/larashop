@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Restorant;
+use App\Models\Grocery;
 
 class User extends Authenticatable
 {
@@ -44,8 +44,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function restorant()
+    public function grocery()
     {
-      return $this->hasOne(Restorant::class);
+        return $this->hasOne(grocery::class);
+    }
+
+    public function setImpersonating($id)
+    {
+        session()->put('impersonate', $id);
+    }
+
+    public function stopImpersonating()
+    {
+        session()->forget('impersonate');
+    }
+
+    public function Impersonating()
+    {
+        return session()->has('impersonate');
     }
 }

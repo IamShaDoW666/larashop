@@ -41,7 +41,7 @@ class OrderApiResource extends JsonResource
             'created_at' => $this->created_at,
             'ordered_at' => $this->created_at->diffForhumans(),
             'items' => ProductApiResource::collection($this->whenLoaded('products')),
-            'restorant' => RestorantApiResource::make($this->whenLoaded('restorant'))
+            'grocery' => groceryApiResource::make($this->whenLoaded('grocery'))
         ];
     }
 }

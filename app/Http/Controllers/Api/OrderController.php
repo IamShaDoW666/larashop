@@ -1,20 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
 use Illuminate\Http\Request;
-
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\OrderApiResource;
-
 use App\Models\Order;
-use App\Models\Restorant;
-
+use App\Models\Grocery;
 class OrderController extends Controller
 {
-    public function index(Restorant $restorant)
+    public function index(grocery $grocery)
     {
-        return OrderApiResource::collection(Order::where('restorant_id', $restorant->id)
+        return OrderApiResource::collection(Order::where('grocery_id', $grocery->id)
             ->with('products')
             ->orderBy('created_at', 'DESC')
             ->get());
@@ -22,7 +18,7 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        return OrderApiResource::make($order->load('restorant', 'products'));
+        return OrderApiResource::make($order->load('grocery', 'products'));
     }
 
     public function updateStatus(Request $request, Order $order)

@@ -1,17 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Product;
 use App\Models\Variant;
 use App\Services\ConfChanger;
 use Illuminate\Http\Request;
-
 class VariantController extends Controller
 {
     public function store(Request $request, Product $product)
     {        
-        ConfChanger::switchCurrency($product->category->restorant);
+        ConfChanger::switchCurrency($product->category->grocery);
         $variant = Variant::create([
             'name' => $request->name,
             'price' => money($request->price, config('global.currency'), true)->getAmount()
@@ -29,7 +27,7 @@ class VariantController extends Controller
 
     public function update(Request $request, Variant $variant)
     {
-        ConfChanger::switchCurrency($variant->product->category->restorant);
+        ConfChanger::switchCurrency($variant->product->category->grocery);
         $variant = $variant->update([
             'name' => $request->name,
             'price' => money($request->price, config('global.currency'), true)->getAmount()

@@ -29,17 +29,15 @@ class Kernel extends HttpKernel
      * @var array<string, array<int, class-string|string>>
      */
     protected $middlewareGroups = [
-        'web' => [
+        'web' => [            
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\HandleInertiaRequests::class,
-            \App\Http\Middleware\LanguageMiddleware::class,
-            
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,            
+            \App\Http\Middleware\LanguageMiddleware::class,            
         ],
 
         'api' => [
@@ -57,6 +55,7 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
+        'impersonate' => \App\Http\Middleware\Impersonate::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'owner' => \App\Http\Middleware\OwnerMiddleware::class,
         'order_device_check' => \App\Http\Middleware\OrderDeviceCheck::class,
@@ -69,10 +68,12 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'inertia' => \App\Http\Middleware\HandleInertiaRequests::class,
     ];
 
     protected $middlewarePriority = [                
         \Illuminate\Session\Middleware\StartSession::class,
+        \App\Http\Middleware\Impersonate::class,
         \App\Http\Middleware\SetLocale::class,        
     ];
 

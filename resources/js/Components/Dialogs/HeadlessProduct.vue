@@ -172,6 +172,9 @@ const submit = () => {
           timer: 2000,
           position: 'top'
         })
+      },
+      onError: (err) => {
+        Swal.fire(err.error, '', 'error')
       }
     })
   }

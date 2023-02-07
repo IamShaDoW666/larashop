@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Seeder;
-use App\Models\Restorant;
+use App\Models\grocery;
 use App\Models\Area;
 use App\Models\Config;
 use App\Models\User;
@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
     $this->call([RolesAndPermissionSeeder::class]);
     $this->call([UserSeeder::class]);
     $this->call([CategorySeeder::class]);
-    $this->call([RestorantSeeder::class]); 
+    $this->call([grocerySeeder::class]); 
+    $this->call([PlanSeeder::class]);
   }
 }

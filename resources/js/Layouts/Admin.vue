@@ -3,7 +3,7 @@
     <sidebar />
     <div class="relative md:ml-64 bg-blueGray-100">
       <admin-navbar />
-      <header-stats v-if="showStats && $page.props.auth.restorant.counts" />
+      <header-stats v-if="showStats && $page.props.auth.grocery.counts" />
       <div class="px-4 md:px-10 mx-auto w-full" :class="{ '-m-24': showStats }">
         <slot />
       </div>
@@ -20,14 +20,18 @@ import { usePage } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 import Echo from 'laravel-echo';
 
-const Pusher = require('pusher-js');
-// window.Pusher.logToConsole = true;
+window.Pusher = require('pusher-js');
+window.Pusher.logToConsole = true;
 
-let echo = new Echo({
+window.echo = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
-    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    forceTLS: true
+    // cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    forceTLS: false,
+    wsHost: window.location.hostname,
+    wsPort: 6001,
+    forceTLS: false,    
+    enabledTransports: ['ws']
 });
 
 export default {
@@ -46,11 +50,14 @@ export default {
   setup(props) {
     const showStats = ref(true);
     const response = reactive({});
-    let audio = new Audio('https://soundbible.com/mp3/Phone%20Ringing-SoundBible.com-1579776269.mp3');
+    window.audio = new Audio('https://soundbible.com/mp3/Phone%20Ringing-SoundBible.com-1579776269.mp3');
     onMounted(() => {
-      showStats.value = props.headerStats;
-      console.log(process)
-      echo.channel('test.' + usePage().props.value.auth.restorant.user_id)
+      showStats.value = props.headerStats;      
+      // const channel = Echo.channel('test');
+      // channel.subscribed(() => {
+      //   console.log('subbed')
+      // })
+      const channel = echo.channel('test')
         .listen('NewOrder', (e) => {
           audio.play();
           if (usePage().component.value == 'Order/Index1') {
@@ -102,7 +109,7 @@ export default {
 };
 </script>
 
-<!-- <style scoped>
+<style scoped>
 .colored-toast.swal2-icon-success {
   background-color: #a5dc86 !important;
 }
@@ -118,4 +125,4 @@ export default {
 .colored-toast .swal2-html-container {
   color: white;
 }
-</style> -->
+</style>

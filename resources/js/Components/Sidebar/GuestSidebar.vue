@@ -10,9 +10,9 @@
         <i class="fas fa-bars"></i>
       </button>
       <!-- Brand -->
-      <Link :href="route('guest.restorant.create')" preserve-scroll
+      <Link :href="route('guest.grocery.create')" preserve-scroll
         class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
-        Create Restaurant
+        Create store
       </Link>
       <!-- User -->
       <ul class="md:hidden items-center flex flex-wrap list-none">
@@ -31,7 +31,7 @@
               <div
                 class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
                 to="/">
-                Create Restaurant  
+                Create store  
               </div>
             </div>
             <div class="w-6/12 flex justify-end">
@@ -70,12 +70,12 @@
             </div>
           </li>
 
-          <li :class="{ 'text-black font-bold': route().current('guest.restorant.create') }"
+          <li :class="{ 'text-black font-bold': route().current('guest.grocery.create') }"
             class="items-center hover:text-gray-500">
             <div>
-              <Link :href="route('guest.restorant.create')" preserve-scroll>
-              <i class="mr-2 text-sm lni lni-restaurant"></i>
-              Restaurant
+              <Link :href="route('guest.grocery.create')" preserve-scroll>
+              <i class="mr-2 text-sm lni lni-store"></i>
+              store
               </Link>
             </div>
           </li>

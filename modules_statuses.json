@@ -1,3 +1,5 @@
 {
-    "TaxConfig": true
+    "TaxConfig": true,
+    "Domain": true,
+    "Template": true
 }

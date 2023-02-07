@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Config;
 use App\Models\Order;
-use App\Models\Restorant;
+use App\Models\Plan;
+
+
+use App\Models\Grocery;
 use App\Services\ConfChanger;
 use Razorpay\Api\Api;
 
@@ -76,6 +79,8 @@ class PaymentController extends Controller
     {
         $config->razorpay_api_key = $request->razorpay_api_key;
         $config->razorpay_api_secret = $request->razorpay_api_secret;
+        $config->stripe_api_key = $request->stripe_api_key;
+        $config->stripe_api_secret = $request->stripe_api_secret;
         $config->save();
         return back();
     }
@@ -92,17 +97,42 @@ class PaymentController extends Controller
     }
 
     public function payWithRazorpay(Request $request)
-    {                
-        $restorant = Restorant::findOrFail($request->restorant);
-        // dd($restorant->config->razorpay_api_key, $restorant->config->razorpay_api_secret);
-        ConfChanger::switchCurrency($restorant);
+    {
+        $grocery = grocery::findOrFail($request->grocery);
+        //dd($grocery->config->razorpay_api_key, $grocery->config->razorpay_api_secret);
+
+        ConfChanger::switchCurrency($grocery);
         $values = [
             'receipt' => 'Payment',
             'amount' => $request->amount * 100,
             'currency' => config('global.currency')
-        ];        
-        $api = new Api($restorant->config->razorpay_api_key, $restorant->config->razorpay_api_secret);
+        ];
+        $api = new Api($grocery->config->razorpay_api_key, $grocery->config->razorpay_api_secret);
         $order = $api->order->create($values);
         return response($order->id);
+    }
+
+    public function payPlanWithRazorpay(Request $request)
+    {        
+        $grocery = grocery::findOrFail($request->grocery);
+        //dd($grocery->config->razorpay_api_key, $grocery->config->razorpay_api_secret);
+
+        // ConfChanger::switchCurrency($grocery);
+        $values = [
+            'receipt' => 'Payment',
+            'amount' => $request->amount * 100,
+            'currency' => 'INR'
+        ];
+        $api = new Api('rzp_test_XJj4QGo5nLEoAa', 'Q4gMFuW2X7QyT9i9FYOOCV3p');
+        $order = $api->order->create($values);
+        return response($order->id);
+    }
+
+    public function buyPlan(Grocery $grocery, Request $request)
+    {        
+        $plan = Plan::findOrFail($request->plan);
+        $grocery->plan()->detach();
+        $grocery->plan()->attach($request->plan);
+        return back();
     }
 }

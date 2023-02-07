@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Events;
-
 use Carbon\Carbon;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -21,7 +20,11 @@ class NewOrder implements ShouldBroadcast
      */
     public function __construct($order)
     {
+
+        
         $this->order = $order;
+
+        
     }
 
     /**
@@ -31,6 +34,6 @@ class NewOrder implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('test.' . $this->order->restorant->id);
+        return new Channel('test');
     }
 }
